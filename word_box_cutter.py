@@ -1,20 +1,22 @@
+# Cuts out all word boxes and saves as separate files
+
 from toolbox import wordio
 from PIL import Image
 import os
 import shutil
+import dirs
 
-words_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/charannotations/"
-page_image_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/pages/Stanford"
-word_image_dir = "/Users/rmencis/RUG/Handwriting_Recognition/word_images/"
+pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+word_image_dir_path = dirs.BASE_DIR_PATH + "/word_images/"
 
-if os.path.exists(word_image_dir):
-    shutil.rmtree(word_image_dir)
-os.makedirs(word_image_dir)
+if os.path.exists(word_image_dir_path):
+    shutil.rmtree(word_image_dir_path)
+os.makedirs(word_image_dir_path)
 
-for page_image_name in [f for f in os.listdir(page_image_dir_path) if f.endswith(".jpg")]:
+for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jpg")]:
     print page_image_name
-    page_image_file_path = os.path.join(page_image_dir_path,page_image_name)
-    words_file_path = os.path.join(words_dir_path,page_image_name.replace(".jpg",".words"))
+    page_image_file_path = os.path.join(pages_dir_path,page_image_name)
+    words_file_path = os.path.join(dirs.WORDS_DIR_PATH,page_image_name.replace(".jpg",".words"))
 
     page_image = Image.open(page_image_file_path)
 
@@ -25,7 +27,7 @@ for page_image_name in [f for f in os.listdir(page_image_dir_path) if f.endswith
         for word in words:
             box = (word.left,word.top,word.right,word.bottom)
             word_image = page_image.crop(box)
-            word_image.save(os.path.join(word_image_dir,page_image_name.replace(".jpg","_") + str(word.left) + "_" + str(word.top) + ".png"))
+            word_image.save(os.path.join(word_image_dir_path, page_image_name.replace(".jpg", "_") + str(word.left) + "_" + str(word.top) + ".png"))
             #print word
             # chars = word.characters
             # for char in chars:
