@@ -1,6 +1,6 @@
 # Outputs page images with word boxes as rectangles
 
-from toolbox import wordio
+from toolbox import wordio2
 from PIL import Image
 from PIL import ImageDraw
 import os
@@ -22,10 +22,15 @@ for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jp
     page_image = Image.open(page_image_file_path)
     page_draw = ImageDraw.Draw(page_image)
 
-    lines, image_name = wordio.read(words_file_path)
+    lines, image_name = wordio2.read(words_file_path)
 
     for line in lines:
-        words = line
+        print line
+        for lw in range(5):
+            box = (line.left+lw,line.top+lw,line.right-lw,line.bottom-lw)
+            page_draw.rectangle(box,outline="green")
+
+        words = line.words
         for word in words:
             for lw in range(5):
                 box = (word.left+lw,word.top+lw,word.right-lw,word.bottom-lw)
