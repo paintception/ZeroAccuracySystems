@@ -7,7 +7,7 @@ import os
 import shutil
 import dirs
 
-pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
 pages_with_boxes_dir_path = dirs.BASE_DIR_PATH + "/pages_with_word_boxes/"
 
 if os.path.exists(pages_with_boxes_dir_path):
@@ -26,7 +26,7 @@ for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jp
 
     for line in lines:
         print line
-        for lw in range(5):
+        for lw in range(-3,2):
             box = (line.left+lw,line.top+lw,line.right-lw,line.bottom-lw)
             page_draw.rectangle(box,outline="green")
 
