@@ -7,7 +7,7 @@ import shutil
 import dirs
 
 pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
-word_image_dir_path = dirs.BASE_DIR_PATH + "/word_images/"
+word_image_dir_path = dirs.BASE_DIR_PATH + "/word_boxes/"
 
 if os.path.exists(word_image_dir_path):
     shutil.rmtree(word_image_dir_path)
