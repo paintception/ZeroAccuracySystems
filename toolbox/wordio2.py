@@ -7,7 +7,7 @@ import os
 import xml.sax.handler
 import xml.sax
 from xml.sax.saxutils import escape
-from word import Word, Character, TextLine
+from .word import Word, Character, TextLine
 import codecs
 
 def avg(items):
@@ -121,4 +121,4 @@ def save(word_lines, xml_file):
 			file.write('    </TextLine>\n')
 	file.write('</Image>\n')
 	file.close()
-	print "File %s saved." % xml_file
+	#print "File %s saved." % xml_file

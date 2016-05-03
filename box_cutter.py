@@ -23,7 +23,7 @@ def write_box(page_image, box_dir_path, box, label_text):
             os.makedirs(label_dir_path)
         box_image.save(os.path.join(label_dir_path, box_image_name))
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print("Unexpected error:", sys.exc_info()[0])
 
 # Parameters
 pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
@@ -41,7 +41,7 @@ os.makedirs(char_image_dir_path)
 
 # Go through page files
 for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jpg")]:
-    print page_image_name
+    print(page_image_name)
     page_image_file_path = os.path.join(pages_dir_path,page_image_name)
 
     # Find label file
