@@ -7,8 +7,8 @@ import shutil
 import dirs
 import sys
 
-pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
-char_image_dir_path = dirs.BASE_DIR_PATH + "/char_boxes/"
+pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
+char_image_dir_path = dirs.BASE_DIR_PATH + "/knmp_char_boxes/"
 
 if os.path.exists(char_image_dir_path):
     shutil.rmtree(char_image_dir_path)
