@@ -104,8 +104,8 @@
         </Word>
     </TextLine>
     <TextLine no="9" top="1004" bottom="1063" left="1136" right="1622" shear="0">
-        <Word no="1" top="1004" bottom="1063" left="1136" right="1259" shear="0" text="sine">
-            <Character no="1" top="1004" bottom="1063" left="1143" right="1164" shear="0" text="s"/>
+        <Word no="1" top="1004" bottom="1063" left="1136" right="1259" shear="0" text="fine">
+            <Character no="1" top="1004" bottom="1063" left="1143" right="1164" shear="0" text="f"/>
             <Character no="2" top="1004" bottom="1063" left="1164" right="1182" shear="0" text="i"/>
             <Character no="3" top="1004" bottom="1063" left="1182" right="1216" shear="0" text="n"/>
             <Character no="4" top="1004" bottom="1063" left="1216" right="1247" shear="0" text="e"/>
@@ -188,12 +188,12 @@
             <Character no="6" top="1585" bottom="1651" left="870" right="897" shear="0" text="r"/>
             <Character no="7" top="1585" bottom="1651" left="897" right="920" shear="0" text="e"/>
         </Word>
-        <Word no="5" top="1571" bottom="1634" left="980" right="1173" shear="0" text="sinistra">
-            <Character no="1" top="1571" bottom="1634" left="984" right="1006" shear="0" text="s"/>
+        <Word no="5" top="1571" bottom="1634" left="980" right="1173" shear="0" text="finiftra">
+            <Character no="1" top="1571" bottom="1634" left="984" right="1006" shear="0" text="f"/>
             <Character no="2" top="1571" bottom="1634" left="1006" right="1023" shear="0" text="i"/>
             <Character no="3" top="1571" bottom="1634" left="1023" right="1056" shear="0" text="n"/>
             <Character no="4" top="1571" bottom="1634" left="1056" right="1076" shear="0" text="i"/>
-            <Character no="5" top="1571" bottom="1634" left="1076" right="1097" shear="0" text="s"/>
+            <Character no="5" top="1571" bottom="1634" left="1076" right="1097" shear="0" text="f"/>
             <Character no="6" top="1571" bottom="1634" left="1097" right="1117" shear="0" text="t"/>
             <Character no="7" top="1571" bottom="1634" left="1117" right="1137" shear="0" text="r"/>
             <Character no="8" top="1571" bottom="1634" left="1137" right="1171" shear="0" text="a"/>
@@ -208,10 +208,10 @@
         <Word no="1" top="1769" bottom="1809" left="1408" right="1446" shear="0" text="a">
             <Character no="1" top="1769" bottom="1809" left="1414" right="1444" shear="0" text="a"/>
         </Word>
-        <Word no="2" top="1743" bottom="1805" left="527" right="809" shear="0" text="descendere">
+        <Word no="2" top="1743" bottom="1805" left="527" right="809" shear="0" text="defcendere">
             <Character no="1" top="1743" bottom="1805" left="534" right="564" shear="0" text="d"/>
             <Character no="2" top="1743" bottom="1805" left="564" right="589" shear="0" text="e"/>
-            <Character no="3" top="1743" bottom="1805" left="589" right="604" shear="0" text="s"/>
+            <Character no="3" top="1743" bottom="1805" left="589" right="604" shear="0" text="f"/>
             <Character no="4" top="1743" bottom="1805" left="604" right="628" shear="0" text="c"/>
             <Character no="5" top="1743" bottom="1805" left="628" right="652" shear="0" text="e"/>
             <Character no="6" top="1743" bottom="1805" left="652" right="683" shear="0" text="n"/>
@@ -301,7 +301,7 @@
         <Word no="4" top="2417" bottom="2477" left="1636" right="1673" shear="0" text="d">
             <Character no="1" top="2417" bottom="2477" left="1641" right="1669" shear="0" text="d"/>
         </Word>
-        <Word no="5" top="2398" bottom="2499" left="1104" right="1365" shear="0" text="Dobrogost">
+        <Word no="5" top="2398" bottom="2499" left="1104" right="1365" shear="0" text="Dobrogoft">
             <Character no="1" top="2398" bottom="2499" left="1110" right="1141" shear="0" text="D"/>
             <Character no="2" top="2398" bottom="2499" left="1141" right="1171" shear="0" text="o"/>
             <Character no="3" top="2398" bottom="2499" left="1171" right="1201" shear="0" text="b"/>
@@ -309,7 +309,7 @@
             <Character no="5" top="2398" bottom="2499" left="1225" right="1254" shear="0" text="o"/>
             <Character no="6" top="2398" bottom="2499" left="1254" right="1284" shear="0" text="g"/>
             <Character no="7" top="2398" bottom="2499" left="1284" right="1308" shear="0" text="o"/>
-            <Character no="8" top="2398" bottom="2499" left="1308" right="1329" shear="0" text="s"/>
+            <Character no="8" top="2398" bottom="2499" left="1308" right="1329" shear="0" text="f"/>
             <Character no="9" top="2398" bottom="2499" left="1329" right="1351" shear="0" text="t"/>
         </Word>
         <Word no="6" top="2394" bottom="2461" left="615" right="654" shear="0" text="G">
