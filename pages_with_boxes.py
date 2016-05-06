@@ -7,7 +7,7 @@ import os
 import shutil
 import dirs
 
-pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
 pages_with_boxes_dir_path = dirs.BASE_DIR_PATH + "/pages_with_word_boxes/"
 
 if os.path.exists(pages_with_boxes_dir_path):
@@ -15,7 +15,7 @@ if os.path.exists(pages_with_boxes_dir_path):
 os.makedirs(pages_with_boxes_dir_path)
 
 for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jpg")]:
-    print page_image_name
+    print(page_image_name)
     page_image_file_path = os.path.join(pages_dir_path,page_image_name)
     words_file_path = os.path.join(dirs.LABELS_DIR_PATH, page_image_name.replace(".jpg", ".words"))
 

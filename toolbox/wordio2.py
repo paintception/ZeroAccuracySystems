@@ -43,7 +43,7 @@ class WordLayoutReader(xml.sax.handler.ContentHandler):
 			word.bottom = int(attrs['bottom'])
 			word.left = int(attrs['left'])
 			word.right = int(attrs['right'])
-			word.text = unicode(attrs['text'])
+			word.text = attrs['text']
 			word.shear = int(attrs['shear'])
 			self.cur_line.words.append(word)
 
@@ -59,7 +59,7 @@ class WordLayoutReader(xml.sax.handler.ContentHandler):
 				char.bottom = self.cur_line[-1].bottom
 			char.left = int(attrs['left'])
 			char.right = int(attrs['right'])
-			char.text = unicode(attrs['text'])
+			char.text = attrs['text']
 			if 'shear' in attrs:
 				char.shear = int(attrs['shear'])
 			else:

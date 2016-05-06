@@ -25,8 +25,8 @@
     </TextLine>
     <TextLine no="5" top="1941" bottom="2071" left="524" right="1678" shear="0">
         <Word no="1" top="1941" bottom="2071" left="524" right="605" shear="0" text="@the_thorn_e">
-            <Character no="1" top="1941" bottom="2071" left="524" right="569" shear="0" text="p"/>
-            <Character no="2" top="1941" bottom="2071" left="569" right="606" shear="0" text="e"/>
+            <Character no="1" top="1941" bottom="2071" left="524" right="571" shear="0" text="p"/>
+            <Character no="2" top="1941" bottom="2071" left="571" right="606" shear="0" text="e"/>
         </Word>
         <Word no="2" top="1956" bottom="2035" left="1637" right="1678" shear="0" text="d">
             <Character no="1" top="1956" bottom="2035" left="1637" right="1679" shear="0" text="d"/>
@@ -51,8 +51,8 @@
     </TextLine>
     <TextLine no="8" top="2466" bottom="2556" left="970" right="1555" shear="0">
         <Word no="1" top="2474" bottom="2556" left="1443" right="1555" shear="0" text="On">
-            <Character no="1" top="2474" bottom="2556" left="1443" right="1505" shear="0" text="O"/>
-            <Character no="2" top="2474" bottom="2556" left="1505" right="1556" shear="0" text="n"/>
+            <Character no="1" top="2474" bottom="2556" left="1443" right="1503" shear="0" text="O"/>
+            <Character no="2" top="2474" bottom="2556" left="1503" right="1556" shear="0" text="n"/>
         </Word>
         <Word no="2" top="2466" bottom="2552" left="970" right="1019" shear="0" text="h">
             <Character no="1" top="2466" bottom="2552" left="970" right="1020" shear="0" text="h"/>

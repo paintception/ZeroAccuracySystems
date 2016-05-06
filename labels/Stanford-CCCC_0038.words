@@ -22,11 +22,11 @@
     </TextLine>
     <TextLine no="2" top="442" bottom="570" left="182" right="1352" shear="0">
         <Word no="1" top="442" bottom="570" left="182" right="391" shear="0" text="thonne">
-            <Character no="1" top="442" bottom="570" left="182" right="225" shear="0" text="p"/>
-            <Character no="2" top="442" bottom="570" left="225" right="255" shear="0" text="o"/>
-            <Character no="3" top="442" bottom="570" left="255" right="299" shear="0" text="n"/>
-            <Character no="4" top="442" bottom="570" left="299" right="351" shear="0" text="n"/>
-            <Character no="5" top="442" bottom="570" left="351" right="392" shear="0" text="e"/>
+            <Character no="1" top="442" bottom="570" left="182" right="222" shear="0" text="p"/>
+            <Character no="2" top="442" bottom="570" left="222" right="254" shear="0" text="o"/>
+            <Character no="3" top="442" bottom="570" left="254" right="300" shear="0" text="n"/>
+            <Character no="4" top="442" bottom="570" left="300" right="350" shear="0" text="n"/>
+            <Character no="5" top="442" bottom="570" left="350" right="392" shear="0" text="e"/>
         </Word>
         <Word no="2" top="489" bottom="541" left="1318" right="1352" shear="0" text="o">
             <Character no="1" top="489" bottom="541" left="1318" right="1353" shear="0" text="o"/>
@@ -34,9 +34,9 @@
     </TextLine>
     <TextLine no="3" top="534" bottom="677" left="260" right="478" shear="0">
         <Word no="1" top="534" bottom="677" left="260" right="478" shear="0" text="thonne">
-            <Character no="1" top="534" bottom="677" left="260" right="309" shear="0" text="p"/>
-            <Character no="2" top="534" bottom="677" left="309" right="343" shear="0" text="o"/>
-            <Character no="3" top="534" bottom="677" left="343" right="390" shear="0" text="n"/>
+            <Character no="1" top="534" bottom="677" left="260" right="308" shear="0" text="p"/>
+            <Character no="2" top="534" bottom="677" left="308" right="340" shear="0" text="o"/>
+            <Character no="3" top="534" bottom="677" left="340" right="390" shear="0" text="n"/>
             <Character no="4" top="534" bottom="677" left="390" right="439" shear="0" text="n"/>
             <Character no="5" top="534" bottom="677" left="439" right="479" shear="0" text="e"/>
         </Word>

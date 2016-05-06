@@ -7,14 +7,14 @@
     </TextLine>
     <TextLine no="2" top="407" bottom="488" left="244" right="723" shear="0">
         <Word no="1" top="412" bottom="488" left="244" right="420" shear="0" text="lome">
-            <Character no="1" top="412" bottom="488" left="244" right="277" shear="0" text="l"/>
-            <Character no="2" top="412" bottom="488" left="277" right="310" shear="0" text="o"/>
-            <Character no="3" top="412" bottom="488" left="310" right="380" shear="0" text="m"/>
+            <Character no="1" top="412" bottom="488" left="244" right="278" shear="0" text="l"/>
+            <Character no="2" top="412" bottom="488" left="278" right="311" shear="0" text="o"/>
+            <Character no="3" top="412" bottom="488" left="311" right="380" shear="0" text="m"/>
             <Character no="4" top="412" bottom="488" left="380" right="421" shear="0" text="e"/>
         </Word>
         <Word no="2" top="412" bottom="488" left="244" right="416" shear="0" text="lome">
-            <Character no="1" top="412" bottom="488" left="244" right="276" shear="0" text="l"/>
-            <Character no="2" top="412" bottom="488" left="276" right="311" shear="0" text="o"/>
+            <Character no="1" top="412" bottom="488" left="244" right="280" shear="0" text="l"/>
+            <Character no="2" top="412" bottom="488" left="280" right="311" shear="0" text="o"/>
             <Character no="3" top="412" bottom="488" left="311" right="380" shear="0" text="m"/>
             <Character no="4" top="412" bottom="488" left="380" right="417" shear="0" text="e"/>
         </Word>
@@ -50,18 +50,18 @@
     </TextLine>
     <TextLine no="7" top="2291" bottom="2402" left="119" right="265" shear="0">
         <Word no="1" top="2291" bottom="2402" left="119" right="265" shear="0" text="@sona_fona">
-            <Character no="1" top="2291" bottom="2402" left="119" right="142" shear="0" text="f"/>
-            <Character no="2" top="2291" bottom="2402" left="142" right="181" shear="0" text="o"/>
-            <Character no="3" top="2291" bottom="2402" left="181" right="223" shear="0" text="n"/>
-            <Character no="4" top="2291" bottom="2402" left="223" right="266" shear="0" text="a"/>
+            <Character no="1" top="2291" bottom="2402" left="119" right="143" shear="0" text="f"/>
+            <Character no="2" top="2291" bottom="2402" left="143" right="175" shear="0" text="o"/>
+            <Character no="3" top="2291" bottom="2402" left="175" right="222" shear="0" text="n"/>
+            <Character no="4" top="2291" bottom="2402" left="222" right="266" shear="0" text="a"/>
         </Word>
     </TextLine>
     <TextLine no="8" top="2392" bottom="2499" left="226" right="370" shear="0">
         <Word no="1" top="2392" bottom="2499" left="226" right="370" shear="0" text="@sona_fona">
-            <Character no="1" top="2392" bottom="2499" left="226" right="248" shear="0" text="f"/>
-            <Character no="2" top="2392" bottom="2499" left="248" right="280" shear="0" text="o"/>
-            <Character no="3" top="2392" bottom="2499" left="280" right="328" shear="0" text="n"/>
-            <Character no="4" top="2392" bottom="2499" left="328" right="371" shear="0" text="a"/>
+            <Character no="1" top="2392" bottom="2499" left="226" right="250" shear="0" text="f"/>
+            <Character no="2" top="2392" bottom="2499" left="250" right="279" shear="0" text="o"/>
+            <Character no="3" top="2392" bottom="2499" left="279" right="326" shear="0" text="n"/>
+            <Character no="4" top="2392" bottom="2499" left="326" right="371" shear="0" text="a"/>
         </Word>
     </TextLine>
     <TextLine no="9" top="2729" bottom="2815" left="1759" right="1817" shear="0">
