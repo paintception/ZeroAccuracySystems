@@ -9,6 +9,7 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 
 # Import MINST data
 import mnist_input_data
+import datetime
 
 mnist = mnist_input_data.read_data_sets("/Users/rmencis/Temp", one_hot=True)
 
@@ -25,7 +26,7 @@ Because MNIST image shape is 28*28px, we will then handle 28 sequences of 28 ste
 learning_rate = 0.001
 training_iters = 100000
 batch_size = 128
-display_step = 10
+display_time = 5
 
 # Network Parameters
 n_input = 28 # MNIST data input (img shape: 28*28)
@@ -91,6 +92,8 @@ init = tf.initialize_all_variables()
 with tf.Session() as sess:
     sess.run(init)
     step = 1
+    prev_output_time = datetime.datetime.now()
+
     # Keep training until reach max iterations
     while step * batch_size < training_iters:
         batch_xs, batch_ys = mnist.train.next_batch(batch_size)
@@ -99,7 +102,9 @@ with tf.Session() as sess:
         # Fit training using batch data
         sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys,
                                        istate: np.zeros((batch_size, 2*n_hidden))})
-        if step % display_step == 0:
+
+        from_prev_output_time = datetime.datetime.now() - prev_output_time
+        if from_prev_output_time.seconds > display_time:
             # Calculate batch accuracy
             acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys,
                                                 istate: np.zeros((batch_size, 2*n_hidden))})
@@ -108,6 +113,7 @@ with tf.Session() as sess:
                                              istate: np.zeros((batch_size, 2*n_hidden))})
             print ("Iter " + str(step*batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + \
                   ", Training Accuracy= " + "{:.5f}".format(acc))
+            prev_output_time = datetime.datetime.now()
         step += 1
     print("Optimization Finished!")
     # Calculate accuracy for 256 mnist test images
