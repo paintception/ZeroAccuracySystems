@@ -1,4 +1,5 @@
-# Cuts out all word boxes and saves as separate files
+# Author - Roberts
+# Cuts out all character/word boxes and saves as separate files in directories named as labels
 
 from toolbox import wordio
 from PIL import Image
