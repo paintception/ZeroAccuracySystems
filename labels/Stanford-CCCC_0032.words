@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding = "UTF-8"?>
 <Image name="Stanford-CCCC_0032">
-    <TextLine no="1" top="209" bottom="389" left="1767" right="1958" shear="0">
-        <Word no="1" top="209" bottom="389" left="1767" right="1958" shear="0" text="deathe">
-            <Character no="1" top="209" bottom="389" left="1767" right="1807" shear="0" text="d"/>
-            <Character no="2" top="209" bottom="389" left="1807" right="1829" shear="0" text="e"/>
-            <Character no="3" top="209" bottom="389" left="1829" right="1871" shear="0" text="a"/>
-            <Character no="4" top="209" bottom="389" left="1871" right="1908" shear="0" text="#"/>
-            <Character no="5" top="209" bottom="389" left="1908" right="1959" shear="0" text="e"/>
+    <TextLine no="1" top="309" bottom="389" left="1767" right="1958" shear="0">
+        <Word no="1" top="309" bottom="389" left="1767" right="1958" shear="0" text="deade">
+            <Character no="1" top="309" bottom="389" left="1767" right="1807" shear="0" text="d"/>
+            <Character no="2" top="309" bottom="389" left="1807" right="1829" shear="0" text="e"/>
+            <Character no="3" top="309" bottom="389" left="1829" right="1871" shear="0" text="a"/>
+            <Character no="4" top="309" bottom="389" left="1871" right="1908" shear="0" text="d"/>
+            <Character no="5" top="309" bottom="389" left="1908" right="1959" shear="0" text="e"/>
         </Word>
     </TextLine>
     <TextLine no="2" top="508" bottom="606" left="1786" right="1850" shear="0">
@@ -15,7 +15,7 @@
         </Word>
     </TextLine>
     <TextLine no="3" top="609" bottom="730" left="945" right="995" shear="0">
-        <Word no="1" top="609" bottom="730" left="945" right="995" shear="0" text="@thorn">
+        <Word no="1" top="609" bottom="730" left="945" right="995" shear="0" text="#">
             <Character no="1" top="609" bottom="730" left="945" right="996" shear="0" text="#"/>
         </Word>
     </TextLine>
@@ -27,12 +27,6 @@
     <TextLine no="5" top="1249" bottom="1339" left="723" right="778" shear="0">
         <Word no="1" top="1249" bottom="1339" left="728" right="778" shear="0" text="S">
             <Character no="1" top="1249" bottom="1339" left="728" right="779" shear="0" text="S"/>
-        </Word>
-        <Word no="2" top="1249" bottom="1339" left="723" right="778" shear="0" text="S">
-            <Character no="1" top="1249" bottom="1339" left="723" right="779" shear="0" text="S"/>
-        </Word>
-        <Word no="3" top="1249" bottom="1339" left="728" right="767" shear="0" text="S">
-            <Character no="1" top="1249" bottom="1339" left="728" right="768" shear="0" text="S"/>
         </Word>
     </TextLine>
     <TextLine no="6" top="1487" bottom="1544" left="1262" right="1297" shear="0">
