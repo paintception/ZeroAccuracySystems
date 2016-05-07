@@ -8,8 +8,7 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="279" bottom="344" left="920" right="1248" shear="0">
-        <Word no="2" top="279" bottom="342" left="920" right="959" shear="0" text="h">
-            <Character no="1" top="279" bottom="342" left="920" right="925" shear="0" text=";"/>
+        <Word no="2" top="279" bottom="342" left="925" right="959" shear="0" text="h">
             <Character no="2" top="279" bottom="342" left="925" right="960" shear="0" text="h"/>
         </Word>
     </TextLine>
@@ -314,10 +313,9 @@
             <Character no="3" top="2028" bottom="2072" left="978" right="1013" shear="0" text="x"/>
         </Word>
     </TextLine>
-    <TextLine no="23" top="2088" bottom="2159" left="1467" right="1538" shear="0">
-        <Word no="1" top="2088" bottom="2159" left="1467" right="1538" shear="0" text="W">
+    <TextLine no="23" top="2088" bottom="2159" left="1467" right="1536" shear="0">
+        <Word no="1" top="2088" bottom="2159" left="1467" right="1536" shear="0" text="W">
             <Character no="1" top="2088" bottom="2159" left="1467" right="1536" shear="0" text="W"/>
-            <Character no="2" top="2088" bottom="2159" left="1536" right="1539" shear="0" text=";"/>
         </Word>
     </TextLine>
     <TextLine no="24" top="2180" bottom="2246" left="1291" right="1469" shear="0">

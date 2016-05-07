@@ -26,9 +26,9 @@ def write_box(page_image, box_dir_path, box, label_text):
         print("Unexpected error:", sys.exc_info()[0])
 
 # Parameters
-pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
-word_image_dir_path = dirs.BASE_DIR_PATH + "/knmp_word_boxes/"
-char_image_dir_path = dirs.BASE_DIR_PATH + "/knmp_char_boxes/"
+pages_dir_path = os.path.join(dirs.BASE_DIR_PATH,"relabeled_pages")
+word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+char_image_dir_path = dirs.KNMP_CHAR_BOXES_DIR_PATH
 
 # Delete and create directories
 if os.path.exists(word_image_dir_path):

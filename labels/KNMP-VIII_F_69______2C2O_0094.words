@@ -167,12 +167,12 @@
             <Character no="1" top="692" bottom="763" left="1328" right="1352" shear="0" text="c"/>
             <Character no="2" top="692" bottom="763" left="1352" right="1389" shear="0" text="u"/>
         </Word>
-        <Word no="2" top="711" bottom="768" left="419" right="468" shear="0" text="@amp;">
+        <Word no="2" top="711" bottom="768" left="419" right="468" shear="0" text="&amp;">
             <Character no="1" top="711" bottom="768" left="423" right="464" shear="0" text="&amp;"/>
         </Word>
     </TextLine>
     <TextLine no="15" top="717" bottom="768" left="680" right="1492" shear="0">
-        <Word no="1" top="724" bottom="768" left="680" right="823" shear="0" text="@omnia_omia">
+        <Word no="1" top="724" bottom="768" left="680" right="823" shear="0" text="omia">
             <Character no="1" top="724" bottom="768" left="683" right="710" shear="0" text="o"/>
             <Character no="2" top="724" bottom="768" left="710" right="765" shear="0" text="m"/>
             <Character no="3" top="724" bottom="768" left="765" right="785" shear="0" text="i"/>
