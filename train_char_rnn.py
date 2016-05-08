@@ -32,7 +32,7 @@ n_input = dataset.get_feature_count() # Features = image height
 print("Features:",n_input)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_hidden = 24 # hidden layer num of features
+n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
@@ -123,13 +123,13 @@ with tf.Session() as sess:
             # Calculate training batch accuracy
             batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys,
                                                 istate: np.zeros((batch_size, 2*n_hidden)),
-                                                    dropout_input_keep_prob: dropout_input_keep_prob_value,
-                                                        dropout_output_keep_prob: dropout_output_keep_prob_value})
+                                                    dropout_input_keep_prob: 1.0,
+                                                        dropout_output_keep_prob: 1.0})
             # Calculate training batch loss
             batch_loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys,
                                              istate: np.zeros((batch_size, 2*n_hidden)),
-                                                dropout_input_keep_prob: dropout_input_keep_prob_value,
-                                                    dropout_output_keep_prob: dropout_output_keep_prob_value})
+                                                dropout_input_keep_prob: 1.0,
+                                                    dropout_output_keep_prob: 1.0})
             batch_losses.append(batch_loss)
             avg_count = 10
             last_batch_losses = batch_losses[-min(avg_count, len(batch_losses)):]
@@ -143,8 +143,9 @@ with tf.Session() as sess:
                                                       istate: np.zeros((len(test_xs), 2 * n_hidden)),
                                        dropout_input_keep_prob: 1.0,
                                         dropout_output_keep_prob: 1.0})
-            print ("Iteration " + str(step*batch_size) + ", Minibatch Loss = " + "{:.4f}".format(batch_loss) + \
-                  " [{:.4f}]".format(average_batch_loss) + \
+
+            print ("Iteration " + str(step*batch_size) + ", Minibatch Loss = " + "{:.5f}".format(batch_loss) + \
+                  " [{:.5f}]".format(average_batch_loss) + \
                   ", Training Accuracy = " + "{:.4f}".format(batch_acc) + \
                    ", Test Accuracy = " + "{:.4f}".format(test_acc),
                     "*" if test_acc > best_test_acc else "")
