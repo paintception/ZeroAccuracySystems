@@ -30,3 +30,8 @@ def get_image_time_steps_with_features(image_file_path):
 def get_classes(label_dir_path):
     class_names = sorted([f for f in os.listdir(label_dir_path) if os.path.isdir(os.path.join(label_dir_path, f)) and not f.startswith(".")])
     return class_names
+
+def get_one_hot(index,length):
+    one_hot = [0] * length
+    one_hot[index] = 1
+    return one_hot

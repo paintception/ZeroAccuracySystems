@@ -8,6 +8,9 @@ from dataset import DataSet
 
 dataset = DataSet(dirs.KNMP_CHAR_BOXES_DIR_PATH)
 
-print(dataset.get_all_item_count())
-print(dataset.get_train_item_count())
-print(dataset.get_test_item_count())
+#print(dataset.get_all_item_count())
+#print(dataset.get_train_item_count())
+#print(dataset.get_test_item_count())
+dataset.prepare_next_batch(10)
+
+print(dataset.get_batch_one_hot_labels())

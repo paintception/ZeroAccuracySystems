@@ -1,28 +1,34 @@
 import prepare_features
 import datetime
-
-mnist = mnist_input_data.read_data_sets("/Users/rmencis/Temp", one_hot=True)
-
 import tensorflow as tf
 from tensorflow.models.rnn import rnn, rnn_cell
 import numpy as np
+from dataset import DataSet
+import dirs
 
-'''
-To classify images using a reccurent neural network, we consider every image row as a sequence of pixels.
-Because MNIST image shape is 28*28px, we will then handle 28 sequences of 28 steps for every sample.
-'''
+dataset = DataSet(dirs.KNMP_PROCESSED_CHAR_BOXES_DIR_PATH)
+
+print("Total items:",dataset.get_total_item_count())
+print("Training items:",dataset.get_train_item_count())
+print("Test items:",dataset.get_test_item_count())
 
 # Parameters
 learning_rate = 0.001
+print("Learning rate:",learning_rate)
 training_iters = 100000
-batch_size = 100
+batch_size = 256
+print("Batch size:",batch_size)
 display_time = 5
 
 # Network Parameters
-n_input = 28 # MNIST data input (img shape: 28*28)
-n_steps = 28 # timesteps
+n_input = dataset.get_feature_count() # MNIST data input (img shape: 28*28)
+print("Features:",n_input)
+n_steps = dataset.get_time_step_count() # timesteps
+print("Time steps:",n_steps)
 n_hidden = 128 # hidden layer num of features
-n_classes = 10 # MNIST total classes (0-9 digits)
+print("Hidden units:",n_hidden)
+n_classes = dataset.get_class_count() # MNIST total classes (0-9 digits)
+print("Classes:",n_classes)
 
 # tf Graph input
 x = tf.placeholder("float", [None, n_steps, n_input])
@@ -44,14 +50,14 @@ def RNN(_X, _istate, _weights, _biases):
     # input shape: (batch_size, n_steps, n_input)
     _X = tf.transpose(_X, [1, 0, 2])  # permute n_steps and batch_size => (n_steps,batch_size,n_input)
     # Reshape to prepare input to hidden activation
-    _X = tf.reshape(_X, [-1, n_input]) # (n_steps*batch_size, n_input) (2D list with 28*128 vectors with 28 features each)
+    _X = tf.reshape(_X, [-1, n_input]) # (n_steps*batch_size, n_input) (2D list with 28*50 vectors with 28 features each)
     # Linear activation
-    _X = tf.matmul(_X, _weights['hidden']) + _biases['hidden'] # (n_steps*batch_size=128x28,n_hidden=128)
+    _X = tf.matmul(_X, _weights['hidden']) + _biases['hidden'] # (n_steps*batch_size=28*50,n_hidden=128)
 
     # Define a lstm cell with tensorflow
     lstm_cell = rnn_cell.BasicLSTMCell(n_hidden, forget_bias=1.0)
 
-    #lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell)
+    lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell)
 
     #multi_cell = tf.nn.rnn_cell.MultiRNNCell([lstm_cell] * 2)
 
@@ -60,7 +66,7 @@ def RNN(_X, _istate, _weights, _biases):
     # It means that RNN receives list with element (batch_size,n_hidden) for each time step
 
     # Get lstm cell output
-    outputs, states = rnn.rnn(lstm_cell, _X, initial_state=_istate)
+    outputs, states = rnn.rnn(lstm_cell_drop, _X, initial_state=_istate)
     # Output is list with element (batch_size,n_hidden) for each time step?
     #for output in outputs:
     #    print(output)
@@ -91,29 +97,37 @@ with tf.Session() as sess:
 
     # Keep training until reach max iterations
     while step * batch_size < training_iters:
-        batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        #batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        dataset.prepare_next_batch(batch_size)
+        batch_xs = dataset.get_batch_data()
+        batch_ys = dataset.get_batch_one_hot_labels()
+
         # Reshape data to get 28 seq of 28 elements
-        batch_xs = batch_xs.reshape((batch_size, n_steps, n_input))
+        #batch_xs = batch_xs.reshape((batch_size, n_steps, n_input))
         # Fit training using batch data
         sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys,
                                        istate: np.zeros((batch_size, 2*n_hidden))})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
-        if from_prev_output_time.seconds > display_time:
-            # Calculate batch accuracy
-            acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys,
+        if step == 1 or from_prev_output_time.seconds > display_time:
+            # Calculate training batch accuracy
+            batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys,
                                                 istate: np.zeros((batch_size, 2*n_hidden))})
-            # Calculate batch loss
-            loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys,
+            # Calculate training batch loss
+            batch_loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys,
                                              istate: np.zeros((batch_size, 2*n_hidden))})
-            print ("Iter " + str(step*batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + \
-                  ", Training Accuracy= " + "{:.5f}".format(acc))
+
+            # Calculate test accuracy
+            test_xs = dataset.get_test_data()
+            test_ys = dataset.get_test_one_hot_labels()
+
+            test_acc = sess.run(accuracy, feed_dict={x: test_xs, y: test_ys,
+                                                      istate: np.zeros((len(test_xs), 2 * n_hidden))})
+
+            print ("Iteration " + str(step*batch_size) + ", Minibatch Loss = " + "{:.4f}".format(batch_loss) + \
+                  ", Training Accuracy = " + "{:.4f}".format(batch_acc) + \
+                   ", Test Accuracy = " + "{:.4f}".format(test_acc))
+
             prev_output_time = datetime.datetime.now()
         step += 1
     print("Optimization Finished!")
-    # Calculate accuracy for 256 mnist test images
-    test_len = 256
-    test_data = mnist.test.images[:test_len].reshape((-1, n_steps, n_input))
-    test_label = mnist.test.labels[:test_len]
-    print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_data, y: test_label,
-                                                             istate: np.zeros((test_len, 2*n_hidden))}))

@@ -46,8 +46,8 @@ for source_label_dir_name in [f for f in os.listdir(source_dir_path) if os.path.
         # Char height: average 60.0, std 11.4
 
         resize_ratio = 0.5
-        new_width = 60#int(image.width*resize_ratio)
-        new_height = 30
+        new_width = 28#int(image.width*resize_ratio)
+        new_height = 28
         image = image.resize((new_width,new_height))
 
         image.save(target_file_path)
