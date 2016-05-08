@@ -1,14 +1,4 @@
-'''
-A Reccurent Neural Network (LSTM) implementation example using TensorFlow library.
-This example is using the MNIST database of handwritten digits (http://yann.lecun.com/exdb/mnist/)
-Long Short Term Memory paper: http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf
-
-Author: Aymeric Damien
-Project: https://github.com/aymericdamien/TensorFlow-Examples/
-'''
-
-# Import MINST data
-import mnist_input_data
+import prepare_features
 import datetime
 
 mnist = mnist_input_data.read_data_sets("/Users/rmencis/Temp", one_hot=True)

@@ -11,8 +11,10 @@ from PIL import Image
 
 #    return binary_image
 
-source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+source_dir_path = dirs.KNMP_CHAR_BOXES_DIR_PATH
+target_dir_path = dirs.KNMP_PROCESSED_CHAR_BOXES_DIR_PATH
+#source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+#target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
 # Delete target directory
 if os.path.exists(target_dir_path):
@@ -30,18 +32,23 @@ for source_label_dir_name in [f for f in os.listdir(source_dir_path) if os.path.
         source_file_path = os.path.join(source_label_dir_path, source_file_name)
         target_file_path = os.path.join(target_label_dir_path, source_file_name)
 
-        print(source_file_path)
+        print(target_file_path)
 
         image = Image.open(source_file_path)
         image = image.convert("LA") # Greyscale
 
-        resize_ratio = 0.5
-        fixed_height = 28
-        # Width: average 91.4, std 65.6
-        # Height: average 56.7, std 11.9
-        image = image.resize((int(image.width*resize_ratio),fixed_height))
+        #print("%d\t%d" % (image.width, image.height))
 
-        #print("%d\t%d" % (image.width,image.height))
+        # Word width: average 91.4, std 65.6
+        # Word height: average 56.7, std 11.9
+
+        # Char width: average 29.9, std 8.8
+        # Char height: average 60.0, std 11.4
+
+        resize_ratio = 0.5
+        new_width = 60#int(image.width*resize_ratio)
+        new_height = 30
+        image = image.resize((new_width,new_height))
 
         image.save(target_file_path)
 

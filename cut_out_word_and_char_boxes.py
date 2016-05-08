@@ -19,6 +19,9 @@ def write_box(page_image, box_dir_path, box, label_text):
             label_dir_name = "_."
         if len(label_dir_name) == 0:
             label_dir_name = "_"
+        if label_dir_name[0].isupper():
+            label_dir_name = label_dir_name + "_"
+        #label_dir_name = label_dir_name.lower()
         label_dir_path = os.path.join(box_dir_path,label_dir_name)
         if not os.path.exists(label_dir_path):
             os.makedirs(label_dir_path)
@@ -28,6 +31,7 @@ def write_box(page_image, box_dir_path, box, label_text):
 
 # Parameters
 pages_dir_path = os.path.join(dirs.BASE_DIR_PATH,"relabeled_pages")
+#pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
 word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 char_image_dir_path = dirs.KNMP_CHAR_BOXES_DIR_PATH
 
