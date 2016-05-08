@@ -13,21 +13,28 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.001
+learning_rate = 0.0005
 print("Learning rate:",learning_rate)
-training_iters = 100000
 batch_size = 256
 print("Batch size:",batch_size)
 display_time = 5
 
+dropout_input_keep_prob = tf.placeholder("float")
+dropout_input_keep_prob_value = 0.5
+print('Dropout input keep probability:',dropout_input_keep_prob_value)
+
+dropout_output_keep_prob = tf.placeholder("float")
+dropout_output_keep_prob_value = 0.5
+print('Dropout output keep probability:',dropout_output_keep_prob_value)
+
 # Network Parameters
-n_input = dataset.get_feature_count() # MNIST data input (img shape: 28*28)
+n_input = dataset.get_feature_count() # Features = image height
 print("Features:",n_input)
-n_steps = dataset.get_time_step_count() # timesteps
+n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_hidden = 128 # hidden layer num of features
+n_hidden = 24 # hidden layer num of features
 print("Hidden units:",n_hidden)
-n_classes = dataset.get_class_count() # MNIST total classes (0-9 digits)
+n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
 
 # tf Graph input
@@ -57,7 +64,7 @@ def RNN(_X, _istate, _weights, _biases):
     # Define a lstm cell with tensorflow
     lstm_cell = rnn_cell.BasicLSTMCell(n_hidden, forget_bias=1.0)
 
-    lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell)
+    lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
 
     #multi_cell = tf.nn.rnn_cell.MultiRNNCell([lstm_cell] * 2)
 
@@ -94,40 +101,56 @@ with tf.Session() as sess:
     sess.run(init)
     step = 1
     prev_output_time = datetime.datetime.now()
+    best_test_acc = 0
+    batch_losses = []
 
-    # Keep training until reach max iterations
-    while step * batch_size < training_iters:
+    while True:
         #batch_xs, batch_ys = mnist.train.next_batch(batch_size)
         dataset.prepare_next_batch(batch_size)
-        batch_xs = dataset.get_batch_data()
-        batch_ys = dataset.get_batch_one_hot_labels()
+        batch_xs = dataset.get_batch_data() # (batch_size,n_steps,n_input)
+        batch_ys = dataset.get_batch_one_hot_labels() # (batch_size,n_classes)
 
         # Reshape data to get 28 seq of 28 elements
         #batch_xs = batch_xs.reshape((batch_size, n_steps, n_input))
         # Fit training using batch data
         sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys,
-                                       istate: np.zeros((batch_size, 2*n_hidden))})
+                                       istate: np.zeros((batch_size, 2*n_hidden)),
+                                            dropout_input_keep_prob: dropout_input_keep_prob_value,
+                                                dropout_output_keep_prob: dropout_output_keep_prob_value})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
         if step == 1 or from_prev_output_time.seconds > display_time:
             # Calculate training batch accuracy
             batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys,
-                                                istate: np.zeros((batch_size, 2*n_hidden))})
+                                                istate: np.zeros((batch_size, 2*n_hidden)),
+                                                    dropout_input_keep_prob: dropout_input_keep_prob_value,
+                                                        dropout_output_keep_prob: dropout_output_keep_prob_value})
             # Calculate training batch loss
             batch_loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys,
-                                             istate: np.zeros((batch_size, 2*n_hidden))})
+                                             istate: np.zeros((batch_size, 2*n_hidden)),
+                                                dropout_input_keep_prob: dropout_input_keep_prob_value,
+                                                    dropout_output_keep_prob: dropout_output_keep_prob_value})
+            batch_losses.append(batch_loss)
+            avg_count = 10
+            last_batch_losses = batch_losses[-min(avg_count, len(batch_losses)):]
+            average_batch_loss = sum(last_batch_losses) / len(last_batch_losses)
 
             # Calculate test accuracy
             test_xs = dataset.get_test_data()
             test_ys = dataset.get_test_one_hot_labels()
 
             test_acc = sess.run(accuracy, feed_dict={x: test_xs, y: test_ys,
-                                                      istate: np.zeros((len(test_xs), 2 * n_hidden))})
-
+                                                      istate: np.zeros((len(test_xs), 2 * n_hidden)),
+                                       dropout_input_keep_prob: 1.0,
+                                        dropout_output_keep_prob: 1.0})
             print ("Iteration " + str(step*batch_size) + ", Minibatch Loss = " + "{:.4f}".format(batch_loss) + \
+                  " [{:.4f}]".format(average_batch_loss) + \
                   ", Training Accuracy = " + "{:.4f}".format(batch_acc) + \
-                   ", Test Accuracy = " + "{:.4f}".format(test_acc))
+                   ", Test Accuracy = " + "{:.4f}".format(test_acc),
+                    "*" if test_acc > best_test_acc else "")
+
+            if (test_acc > best_test_acc):
+                best_test_acc = test_acc
 
             prev_output_time = datetime.datetime.now()
         step += 1
-    print("Optimization Finished!")
