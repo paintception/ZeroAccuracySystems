@@ -7,7 +7,7 @@
         <Word no="2" top="277" bottom="327" left="775" right="810" shear="0" text="o">
             <Character no="1" top="277" bottom="327" left="775" right="811" shear="0" text="o"/>
         </Word>
-        <Word no="3" top="270" bottom="322" left="706" right="757" shear="0" text="@a_double_stroked">
+        <Word no="3" top="270" bottom="322" left="706" right="757" shear="0" text="a">
             <Character no="1" top="270" bottom="322" left="706" right="758" shear="0" text="a"/>
         </Word>
         <Word no="4" top="284" bottom="358" left="1847" right="1890" shear="0" text="b">
@@ -21,8 +21,8 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="442" bottom="570" left="182" right="1352" shear="0">
-        <Word no="1" top="442" bottom="570" left="182" right="391" shear="0" text="thonne">
-            <Character no="1" top="442" bottom="570" left="182" right="222" shear="0" text="p"/>
+        <Word no="1" top="442" bottom="570" left="182" right="391" shear="0" text="#onne">
+            <Character no="1" top="442" bottom="570" left="182" right="222" shear="0" text="#"/>
             <Character no="2" top="442" bottom="570" left="222" right="254" shear="0" text="o"/>
             <Character no="3" top="442" bottom="570" left="254" right="300" shear="0" text="n"/>
             <Character no="4" top="442" bottom="570" left="300" right="350" shear="0" text="n"/>
@@ -33,8 +33,8 @@
         </Word>
     </TextLine>
     <TextLine no="3" top="534" bottom="677" left="260" right="478" shear="0">
-        <Word no="1" top="534" bottom="677" left="260" right="478" shear="0" text="thonne">
-            <Character no="1" top="534" bottom="677" left="260" right="308" shear="0" text="p"/>
+        <Word no="1" top="534" bottom="677" left="260" right="478" shear="0" text="#onne">
+            <Character no="1" top="534" bottom="677" left="260" right="308" shear="0" text="#"/>
             <Character no="2" top="534" bottom="677" left="308" right="340" shear="0" text="o"/>
             <Character no="3" top="534" bottom="677" left="340" right="390" shear="0" text="n"/>
             <Character no="4" top="534" bottom="677" left="390" right="439" shear="0" text="n"/>
