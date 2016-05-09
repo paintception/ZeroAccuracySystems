@@ -16,7 +16,7 @@
         <Word no="1" top="575" bottom="618" left="1198" right="1232" shear="0" text="o"/>
     </TextLine>
     <TextLine no="5" top="640" bottom="692" left="1339" right="1424" shear="0">
-        <Word no="1" top="640" bottom="692" left="1339" right="1424" shear="0" text="@e_longtailed"/>
+        <Word no="1" top="640" bottom="692" left="1339" right="1424" shear="0" text="e"/>
     </TextLine>
     <TextLine no="6" top="726" bottom="769" left="1389" right="1422" shear="0">
         <Word no="1" top="726" bottom="769" left="1389" right="1422" shear="0" text="c"/>
@@ -34,16 +34,15 @@
         <Word no="1" top="1003" bottom="1068" left="767" right="925" shear="0" text="donat"/>
     </TextLine>
     <TextLine no="11" top="1066" bottom="1148" left="309" right="1296" shear="0">
-        <Word no="1" top="1087" bottom="1148" left="1226" right="1296" shear="0" text="@est_eft"/>
-        <Word no="2" top="1066" bottom="1139" left="309" right="429" shear="0" text="@laud_lau^~d"/>
+        <Word no="1" top="1087" bottom="1148" left="1226" right="1296" shear="0" text="eft"/>
+        <Word no="2" top="1066" bottom="1139" left="309" right="429" shear="0" text="laud"/>
     </TextLine>
     <TextLine no="12" top="1162" bottom="1221" left="1366" right="1447" shear="0">
-        <Word no="1" top="1168" bottom="1221" left="1366" right="1439" shear="0" text="@e_longtailed"/>
-        <Word no="2" top="1162" bottom="1221" left="1366" right="1447" shear="0" text="@e_longtailed"/>
+        <Word no="1" top="1168" bottom="1221" left="1366" right="1439" shear="0" text="e"/>
     </TextLine>
     <TextLine no="13" top="1238" bottom="1293" left="257" right="1190" shear="0">
         <Word no="1" top="1249" bottom="1293" left="1153" right="1190" shear="0" text="n"/>
-        <Word no="2" top="1238" bottom="1287" left="257" right="291" shear="0" text="@Et_Tiro"/>
+        <Word no="2" top="1238" bottom="1287" left="257" right="291" shear="0" text="*"/>
     </TextLine>
     <TextLine no="14" top="1309" bottom="1369" left="1413" right="1449" shear="0">
         <Word no="1" top="1309" bottom="1369" left="1413" right="1449" shear="0" text="d"/>
@@ -51,22 +50,18 @@
     <TextLine no="15" top="1444" bottom="1520" left="274" right="1419" shear="0">
         <Word no="1" top="1444" bottom="1520" left="591" right="705" shear="0" text="godd"/>
         <Word no="2" top="1458" bottom="1516" left="441" right="489" shear="0" text="g"/>
-        <Word no="3" top="1454" bottom="1515" left="1302" right="1419" shear="0" text="beoth"/>
+        <Word no="3" top="1454" bottom="1515" left="1302" right="1419" shear="0" text="beo#"/>
         <Word no="4" top="1455" bottom="1512" left="274" right="322" shear="0" text="g"/>
         <Word no="5" top="1444" bottom="1505" left="644" right="705" shear="0" text="dd"/>
         <Word no="6" top="1458" bottom="1516" left="441" right="488" shear="0" text="g"/>
         <Word no="7" top="1469" bottom="1510" left="1123" right="1172" shear="0" text="to"/>
     </TextLine>
-    <TextLine no="16" top="1606" bottom="1655" left="561" right="799" shear="0">
-        <Word no="1" top="1606" bottom="1654" left="748" right="799" shear="0" text="to"/>
-        <Word no="2" top="1609" bottom="1655" left="561" right="611" shear="0" text="to"/>
-    </TextLine>
     <TextLine no="17" top="1744" bottom="1805" left="1062" right="1129" shear="0">
         <Word no="1" top="1744" bottom="1805" left="1062" right="1129" shear="0" text="for"/>
     </TextLine>
     <TextLine no="18" top="1805" bottom="1895" left="753" right="1434" shear="0">
-        <Word no="1" top="1805" bottom="1881" left="753" right="867" shear="0" text="@laverd_lau^~d"/>
-        <Word no="2" top="1847" bottom="1895" left="1370" right="1434" shear="0" text="@s_horizontal"/>
+        <Word no="1" top="1805" bottom="1881" left="753" right="867" shear="0" text="laud"/>
+        <Word no="2" top="1847" bottom="1895" left="1370" right="1434" shear="0" text="$"/>
     </TextLine>
     <TextLine no="19" top="2064" bottom="2109" left="1165" right="1218" shear="0">
         <Word no="1" top="2064" bottom="2109" left="1165" right="1218" shear="0" text="to"/>
