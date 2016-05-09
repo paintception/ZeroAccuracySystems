@@ -6,7 +6,7 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="538" bottom="585" left="1332" right="1435" shear="0">
-        <Word no="1" top="538" bottom="585" left="1332" right="1435" shear="0" text="@s_horizontal">
+        <Word no="1" top="538" bottom="585" left="1332" right="1435" shear="0" text="$">
             <Character no="1" top="538" bottom="585" left="1332" right="1436" shear="0" text="$"/>
         </Word>
     </TextLine>
@@ -16,7 +16,7 @@
         </Word>
     </TextLine>
     <TextLine no="4" top="811" bottom="872" left="329" right="1449" shear="0">
-        <Word no="1" top="826" bottom="872" left="1374" right="1449" shear="0" text="@e_longtailed">
+        <Word no="1" top="826" bottom="872" left="1374" right="1449" shear="0" text="e">
             <Character no="1" top="826" bottom="872" left="1374" right="1450" shear="0" text="e"/>
         </Word>
         <Word no="2" top="811" bottom="853" left="329" right="360" shear="0" text="o">
@@ -67,10 +67,11 @@
             <Character no="3" top="2072" bottom="2131" left="608" right="627" shear="0" text="c"/>
             <Character no="4" top="2072" bottom="2131" left="627" right="662" shear="0" text="h"/>
         </Word>
-        <Word no="3" top="2080" bottom="2134" left="1187" right="1290" shear="0" text="aut">
+        <Word no="3" top="2080" bottom="2134" left="1187" right="1290" shear="0" text="ant">
             <Character no="1" top="2080" bottom="2134" left="1187" right="1222" shear="0" text="a"/>
-            <Character no="2" top="2080" bottom="2134" left="1222" right="1253" shear="0" text="u"/>
+            <Character no="2" top="2080" bottom="2134" left="1222" right="1253" shear="0" text="n"/>
             <Character no="3" top="2080" bottom="2134" left="1253" right="1291" shear="0" text="t"/>
         </Word>
     </TextLine>
 </Image>
+
