@@ -32,7 +32,7 @@ n_input = dataset.get_feature_count() # Features = image height
 print("Features:",n_input)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_hidden = 128 # hidden layer num of features
+n_hidden = 96 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
