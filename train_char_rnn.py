@@ -5,8 +5,11 @@ from tensorflow.models.rnn import rnn, rnn_cell
 import numpy as np
 from dataset import DataSet
 import dirs
+import random
 
-dataset = DataSet(dirs.KNMP_PROCESSED_CHAR_BOXES_DIR_PATH)
+random.seed(0) # Always the same train/test set
+dataset = DataSet("/Users/rmencis/RUG/Handwriting_Recognition/char_boxes_processed_tmp/KNMP")
+random.seed()
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
@@ -32,7 +35,7 @@ n_input = dataset.get_feature_count() # Features = image height
 print("Features:",n_input)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_hidden = 96 # hidden layer num of features
+n_hidden = 30 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
@@ -53,27 +56,26 @@ biases = {
 }
 
 def RNN(_X, _istate, _weights, _biases):
-
     # input shape: (batch_size, n_steps, n_input)
     _X = tf.transpose(_X, [1, 0, 2])  # permute n_steps and batch_size => (n_steps,batch_size,n_input)
     # Reshape to prepare input to hidden activation
-    _X = tf.reshape(_X, [-1, n_input]) # (n_steps*batch_size, n_input) (2D list with 28*50 vectors with 28 features each)
+    _X = tf.reshape(_X, [-1, n_input]) # (n_steps*batch_size, n_input) (2D list with 28*256 vectors with 28 features each)
     # Linear activation
-    _X = tf.matmul(_X, _weights['hidden']) + _biases['hidden'] # (n_steps*batch_size=28*50,n_hidden=128)
+    _X = tf.matmul(_X, _weights['hidden']) + _biases['hidden'] # (n_steps*batch_size=28*256,n_hidden=128)
+    # Split data because rnn cell needs a list of inputs for the RNN inner loop
+    _X = tf.split(0, n_steps, _X)  # n_steps * (batch_size, n_hidden) => step1 (batch_size=256,n_hidden=128)..step28 (batch_size=256,n_hidden=128)
+    # It means that RNN receives list with element (batch_size,n_hidden) for each time step
 
     # Define a lstm cell with tensorflow
-    lstm_cell = rnn_cell.BasicLSTMCell(n_hidden, forget_bias=1.0)
+    lstm_cell = rnn_cell.BasicLSTMCell(n_hidden, forget_bias=0.0)
+    #multi_lstm = rnn_cell.MultiRNNCell([lstm_cell]*2)
 
-    lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+    #lstm_cell_drop = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
 
     #multi_cell = tf.nn.rnn_cell.MultiRNNCell([lstm_cell] * 2)
 
-    # Split data because rnn cell needs a list of inputs for the RNN inner loop
-    _X = tf.split(0, n_steps, _X) # n_steps * (batch_size, n_hidden) => step1 (batch_size=128,n_hidden=128)..step28 (batch_size=128,n_hidden=128)
-    # It means that RNN receives list with element (batch_size,n_hidden) for each time step
-
     # Get lstm cell output
-    outputs, states = rnn.rnn(lstm_cell_drop, _X, initial_state=_istate)
+    outputs, states = rnn.rnn(lstm_cell, _X, initial_state=_istate)
     # Output is list with element (batch_size,n_hidden) for each time step?
     #for output in outputs:
     #    print(output)
