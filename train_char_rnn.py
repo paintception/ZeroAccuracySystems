@@ -63,7 +63,7 @@ def RNN(_X, _istate, _weights, _biases):
     # Linear activation
     _X = tf.matmul(_X, _weights['hidden']) + _biases['hidden'] # (n_steps*batch_size=28*256,n_hidden=128)
     # Split data because rnn cell needs a list of inputs for the RNN inner loop
-    _X = tf.split(0, n_steps, _X)  # n_steps * (batch_size, n_hidden) => step1 (batch_size=256,n_hidden=128)..step28 (batch_size=256,n_hidden=128)
+    _X = tf.split(0, n_steps, _X)  # n_steps * (batch_size, n_hidden) => step1 (batch_size=256,n_hidden=128)..step28 (batch_size=128,n_hidden=128)
     # It means that RNN receives list with element (batch_size,n_hidden) for each time step
 
     # Define a lstm cell with tensorflow

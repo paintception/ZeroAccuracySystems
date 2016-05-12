@@ -18,7 +18,7 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.0005
+learning_rate = 0.001
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
@@ -30,7 +30,9 @@ n_features = dataset.get_feature_count() # Features = image height
 print("Features:",n_features)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_hidden = 16 # hidden layer num of features
+n_cell = 2 # Number of cells/layers
+print("Layers:",n_cell)
+n_hidden = 32 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
@@ -53,17 +55,17 @@ b_out = tf.Variable(tf.random_normal([n_classes]))
 # Transform input data for RNN (mystical part)
 x1 = tf.transpose(x, [1, 0, 2]) # (n_steps,n_batch_size,n_features)
 x2 = tf.reshape(x1, [-1, n_features]) # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
-x3 = tf.matmul(x2, w_hidden) + b_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
-x4 = tf.split(0, n_steps, x3)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
-inputs = x4
+x_hidden = tf.matmul(x2, w_hidden) + b_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
+rnn_inputs = tf.split(0, n_steps, x_hidden)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
 
 # RNN
 lstm_cell = rnn_cell.LSTMCell(n_hidden)
-multi_lstm = rnn_cell.MultiRNNCell([lstm_cell]*2)
+lstm_cell_dropout = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+multi_lstm = rnn_cell.MultiRNNCell([lstm_cell_dropout]*n_cell)
 initial_state = multi_lstm.zero_state(batch_size, tf.float32)
-outputs, states = rnn.rnn(multi_lstm, inputs, initial_state=initial_state)
-output = outputs[-1]
-y_pred = tf.matmul(output, w_out) + b_out
+rnn_outputs, rnn_states = rnn.rnn(multi_lstm, rnn_inputs, initial_state=initial_state)
+rnn_output = rnn_outputs[-1]
+y_pred = tf.matmul(rnn_output, w_out) + b_out
 
 # Optimization
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y)) # Softmax loss
