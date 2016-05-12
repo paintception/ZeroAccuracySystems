@@ -19,7 +19,7 @@ display_time = 5
 
 # Input Data Parameters
 batch_size = 128  # (i, o) Divide input into batches of max input size of i timesteps and max output label size o. If < i or < o should be padded accordingly
-n_input = 8  # Number of input features for each sliding window of 1px
+n_input = 28  # Number of input features for each sliding window of 1px
 max_input_timesteps = 28
 
 # Network weights. Does not depend on batch size
@@ -33,8 +33,8 @@ output_biases = tf.Variable(tf.random_normal([n_output_classes]))
 x = tf.placeholder("float", [batch_size, max_input_timesteps, n_input])
 x_length = tf.placeholder("int32", [batch_size])
 
-y_index = tf.placeholder("int32", [batch_size, max_input_timesteps])
-y_labels = tf.placeholder("int32", [batch_size*max_input_timesteps])
+y_index = tf.placeholder("int64", [None, 2])
+y_labels = tf.placeholder("int32", [None])
 
 istate_fw = tf.placeholder("float", [None, 2 * n_hidden_layer])
 istate_bw = tf.placeholder("float", [None, 2 * n_hidden_layer])
@@ -74,7 +74,7 @@ def blstm_layer(_X, _istate_fw, _istate_bw, _x_length):
 
 prediction = blstm_layer(x, istate_fw, istate_bw, x_length)
 
-cost = ctc.ctc_loss(prediction, tf.SparseTensor(indices=y_index, values=y_labels), x_length)
+cost = ctc.ctc_loss(prediction, tf.SparseTensor(indices=y_index, values=y_labels, shape=[batch_size, max_input_timesteps]), x_length)
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 
@@ -98,11 +98,11 @@ with tf.Session() as sess:
         if step == 1 or from_prev_output_time.seconds > display_time:
            pass
         step += 1
-    print("Optimization Finished!")
-    # Calculate accuracy for 128 mnist test images
-    test_len = 128
-    test_data = mnist.test.images[:test_len].reshape((-1, max_input_timesteps, n_input))
-    test_label = mnist.test.labels[:test_len]
-    print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_data, y: test_label,
-                                                             istate_fw: np.zeros((test_len, 2 * n_hidden_layer)),
-                                                             istate_bw: np.zeros((test_len, 2 * n_hidden_layer))}))
+    # print("Optimization Finished!")
+    # # Calculate accuracy for 128 mnist test images
+    # test_len = 128
+    # test_data = mnist.test.images[:test_len].reshape((-1, max_input_timesteps, n_input))
+    # test_label = mnist.test.labels[:test_len]
+    # print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_data, y: test_label,
+    #                                                          istate_fw: np.zeros((test_len, 2 * n_hidden_layer)),
+    #                                                          istate_bw: np.zeros((test_len, 2 * n_hidden_layer))}))
