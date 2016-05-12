@@ -18,7 +18,7 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.001 
+learning_rate = 0.0005
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
@@ -32,7 +32,7 @@ n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
 n_cell = 2 # Number of cells/layers
 print("Layers:",n_cell)
-n_hidden = 32 # hidden layer num of features
+n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
