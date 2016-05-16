@@ -18,7 +18,7 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.0005
+learning_rate = 0.001
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
@@ -30,8 +30,8 @@ n_features = dataset.get_feature_count() # Features = image height
 print("Features:",n_features)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_cell = 2 # Number of cells/layers
-print("Layers:",n_cell)
+n_cells = 2 # Number of cells/layers
+print("Cells:", n_cells)
 n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = dataset.get_class_count() # Classes (A,a,B,b,c,...)
@@ -61,7 +61,7 @@ rnn_inputs = tf.split(0, n_steps, x_hidden)  # [(n_batch_size, n_features),(n_ba
 # RNN
 lstm_cell = rnn_cell.LSTMCell(n_hidden)
 lstm_cell_dropout = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
-multi_lstm = rnn_cell.MultiRNNCell([lstm_cell_dropout]*n_cell)
+multi_lstm = rnn_cell.MultiRNNCell([lstm_cell_dropout] * n_cells)
 initial_state = multi_lstm.zero_state(batch_size, tf.float32)
 rnn_outputs, rnn_states = rnn.rnn(multi_lstm, rnn_inputs, initial_state=initial_state)
 rnn_output = rnn_outputs[-1]
@@ -88,13 +88,14 @@ with tf.Session() as sess:
     batch_losses = []
 
     while True:
+        # Training
         dataset.prepare_next_batch(n_batch_size)
-        batch_xs = dataset.get_batch_data() # (batch_size,n_steps,n_input)
-        batch_ys = dataset.get_batch_one_hot_labels() # (batch_size,n_classes)
+        batch_xs = dataset.get_batch_data()  # (batch_size,n_steps,n_input)
+        batch_ys = dataset.get_batch_one_hot_labels()  # (batch_size,n_classes)
 
         sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys,
-                                            dropout_input_keep_prob: dropout_input_keep_prob_value,
-                                                dropout_output_keep_prob: dropout_output_keep_prob_value})
+                                       dropout_input_keep_prob: dropout_input_keep_prob_value,
+                                       dropout_output_keep_prob: dropout_output_keep_prob_value})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
         if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
@@ -123,4 +124,5 @@ with tf.Session() as sess:
                 best_test_acc = test_acc
 
             prev_output_time = datetime.datetime.now()
+
         step += 1

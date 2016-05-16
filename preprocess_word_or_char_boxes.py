@@ -21,6 +21,7 @@ if os.path.exists(target_dir_path):
     shutil.rmtree(target_dir_path)
 os.makedirs(target_dir_path)
 
+max_width = 0
 for source_label_dir_name in [f for f in os.listdir(source_dir_path) if os.path.isdir(os.path.join(source_dir_path, f))]:
     source_label_dir_path = os.path.join(source_dir_path, source_label_dir_name)
     target_label_dir_path = os.path.join(target_dir_path, source_label_dir_name)
@@ -46,10 +47,13 @@ for source_label_dir_name in [f for f in os.listdir(source_dir_path) if os.path.
         # Char height: average 60.0, std 11.4
 
         resize_ratio = 0.5
-        new_width = 28#int(image.width*resize_ratio)
+        new_width = int(image.width*resize_ratio)
+        if (new_width > max_width):
+            max_width = new_width
         new_height = 28
         image = image.resize((new_width,new_height))
 
         image.save(target_file_path)
 
         #shutil.copyfile(source_file_path,target_file_path)
+print("Max width:",max_width)

@@ -2,9 +2,11 @@ import os
 
 # Top dir
 BASE_DIR_PATH = "/Users/rmencis/RUG/Handwriting_Recognition"
+DROPBOX_DIR_PATH = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share"
+GIT_DIR_PATH = "/Users/rmencis/RUG/Handwriting_Recognition/code/ZeroAccuracySystems"
 
 # Labels (.words files)
-LABELS_DIR_PATH = os.path.join(BASE_DIR_PATH,"code/ZeroAccuracySystems/labels")
+LABELS_DIR_PATH = os.path.join(GIT_DIR_PATH,"labels")
 
 # Original page images (jpg)
 PAGES_DIR_PATH = os.path.join(BASE_DIR_PATH,"pages")
@@ -22,7 +24,7 @@ STANFORD_WORD_BOXES_DIR_PATH = os.path.join(WORD_BOXES_DIR_PATH,"Stanford")
 KNMP_WORD_BOXES_DIR_PATH = os.path.join(WORD_BOXES_DIR_PATH,"KNMP")
 
 # Word boxes manually cut out from pages (with labels)
-ADDITIONAL_WORD_BOXES_DIR_PATH = os.path.join(BASE_DIR_PATH,"additional_word_boxes")
+ADDITIONAL_WORD_BOXES_DIR_PATH = os.path.join(DROPBOX_DIR_PATH,"additional_word_labels")
 STANFORD_ADDITIONAL_WORD_BOXES_DIR_PATH = os.path.join(ADDITIONAL_WORD_BOXES_DIR_PATH,"Stanford")
 KNMP_ADDITIONAL_WORD_BOXES_DIR_PATH = os.path.join(ADDITIONAL_WORD_BOXES_DIR_PATH,"KNMP")
 
