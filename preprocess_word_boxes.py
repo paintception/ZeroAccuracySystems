@@ -19,11 +19,12 @@ if os.path.exists(target_dir_path):
 os.makedirs(train_dir_path)
 os.makedirs(test_dir_path)
 
-max_width = 0
 source_file_names = [f for f in os.listdir(source_dir_path) if f.endswith(".png")]
 random.shuffle(source_file_names)
 
 file_counter = 0
+max_width = 0
+total_width = 0
 train_file_count = int(len(source_file_names) * train_ratio)
 for source_file_name in source_file_names:
     file_counter += 1
@@ -50,8 +51,10 @@ for source_file_name in source_file_names:
     new_width = int(image.width*resize_ratio)
     if (new_width > max_width):
         max_width = new_width
+    total_width = total_width + new_width
     new_height = 28
     image = image.resize((new_width,new_height))
 
     image.save(target_file_path)
+print("Average width:",int(total_width / len(source_file_names)))
 print("Max width:",max_width)

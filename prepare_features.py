@@ -4,7 +4,7 @@ import os
 import random
 
 # Return 2D list (time_steps,features). Time steps = image width, Features = pixel values of 1px slices
-def get_image_time_steps_with_features(image_file_path,min_time_steps=0):
+def get_feature_data(image_file_path, min_time_steps=0):
     image = Image.open(image_file_path)
 
     # Get pixel values

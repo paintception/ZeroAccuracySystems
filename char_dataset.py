@@ -34,7 +34,7 @@ class CharDataSet(object):
             for image_file_name in image_file_names:
                 image_file_path = os.path.join(class_dir_path,image_file_name)
 
-                time_steps_with_features = pf.get_image_time_steps_with_features(image_file_path,37)
+                time_steps_with_features = pf.get_feature_data(image_file_path, 37)
                 self.data.append(time_steps_with_features)
                 self.file_paths.append(image_file_path)
                 self.label_names.append(class_name)

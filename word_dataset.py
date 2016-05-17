@@ -1,113 +1,104 @@
 import prepare_features as pf
 import os
 import random
+import copy
+
+class WordDataItem(object):
+    def __init__(self,file_path):
+        self.file_path = file_path
+        self.label = pf.get_word_label_from_filename(self.file_path)
+        self.load_data()
+
+    def load_data(self):
+        self.data = pf.get_feature_data(self.file_path)
+
+    def get_label(self):
+        return self.label
+
+    def get_width(self):
+        return len(self.data)
+
+    def get_height(self):
+        return len(self.data[0])
+
+    def get_time_step_count(self):
+        return self.get_width()
+
+    def get_feature_count(self):
+        return self.get_height()
+
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
 class WordDataSet(object):
-    def __init__(self, dir_path, train_ratio=0.9):
+    def __init__(self, dir_path):
         self.dir_path = dir_path
-        self.train_ratio = train_ratio
 
-        self.load_classes()
         self.load_data()
-        self.prepare_training_and_test_data()
-
-        self.train_indexes_for_batch = []
-        self.next_batch_indexes = []
-
-    def load_classes(self):
-        self.class_names = pf.get_classes(self.dir_path)
+        self.init_train_batch()
 
     def load_data(self):
-        self.data = []
-        self.file_paths = []
-        self.label_names = []
-        self.label_indexes = []
-        self.one_hot_labels = []
-        for class_name in self.class_names:
-            class_dir_path = os.path.join(self.dir_path,class_name)
-            class_index = self.class_names.index(class_name)
-            class_one_hot = pf.get_one_hot(class_index,len(self.class_names)) # [0,0,0,1,0,0,0,0,0,0] (class 3 from 10 classes)
+        self.train_items = self.load_data_items("train")
+        self.test_items = self.load_data_items("test")
+        self.all_items = self.train_items + self.test_items
 
-            image_file_names = [f for f in os.listdir(class_dir_path) if f.endswith(".png")]
+    def load_data_items(self,train_vs_test):
+        items = []
+        file_dir_path = os.path.join(self.dir_path,train_vs_test)
+        file_names = [f for f in os.listdir(file_dir_path) if f.endswith(".png")]
 
-            for image_file_name in image_file_names:
-                image_file_path = os.path.join(class_dir_path,image_file_name)
+        for file_name in file_names:
+            file_path = os.path.join(file_dir_path,file_name)
 
-                time_steps_with_features = pf.get_image_time_steps_with_features(image_file_path,37)
-                self.data.append(time_steps_with_features)
-                self.file_paths.append(image_file_path)
-                self.label_names.append(class_name)
-                self.label_indexes.append(class_index)
-                self.one_hot_labels.append(class_one_hot)
+            word_data_item = WordDataItem(file_path)
+            items.append(word_data_item)
 
-                if len(self.data) % 100 == 0:
-                    print("Loaded %d images" % len(self.data));
-        print("Loaded all %d images" % len(self.data));
-
-    def prepare_training_and_test_data(self):
-        all_indexes = list(range(len(self.data)))
-        random.shuffle(all_indexes)
-        training_count = int(len(self.data) * self.train_ratio)
-
-        self.train_indexes = []
-        for i in range(training_count):
-            self.train_indexes.append(all_indexes.pop())
-
-        self.test_indexes = all_indexes
-
-        # Cache test data
-        self.test_data = []
-        self.test_one_hot_labels = []
-        for index in self.test_indexes:
-            self.test_data.append(self.data[index])
-            self.test_one_hot_labels.append(self.one_hot_labels[index])
-
-    def prepare_next_batch(self, batch_size):
-        self.next_batch_indexes = []
-        for b in range(batch_size):
-            if len(self.train_indexes_for_batch) == 0:
-                self.train_indexes_for_batch = list(self.train_indexes)
-                random.shuffle(self.train_indexes_for_batch)
-            train_index = self.train_indexes_for_batch.pop()
-            self.next_batch_indexes.append(train_index)
-
-    def get_batch_data(self):
-        batch_data = []
-
-        for index in self.next_batch_indexes:
-            data = self.data[index]
-            batch_data.append(data)
-        return batch_data
-
-    def get_batch_one_hot_labels(self):
-        batch_one_hot_labels = []
-
-        for index in self.next_batch_indexes:
-            one_hot_label = self.one_hot_labels[index]
-            batch_one_hot_labels.append(one_hot_label)
-        return batch_one_hot_labels
-
-    def get_test_data(self):
-        return self.test_data
-
-    def get_test_one_hot_labels(self):
-        return self.test_one_hot_labels
+            if len(items) % 100 == 0:
+                print("Loaded %d %s images" % (len(items),train_vs_test))
+        print("Loaded all %d %s images" % (len(items),train_vs_test))
+        return items
 
     def get_total_item_count(self):
-        return len(self.data)
+        return len(self.train_items) + len(self.test_items)
 
     def get_train_item_count(self):
-        return len(self.train_indexes)
+        return len(self.train_items)
 
     def get_test_item_count(self):
-        return len(self.test_indexes)
+        return len(self.test_items)
 
-    def get_time_step_count(self):
-        return len(self.data[0])
+    def init_train_batch(self):
+        self.train_items_for_batch = []
+        self.next_batch_items = []
 
-    def get_feature_count(self):
-        return len(self.data[0][0])
+    def prepare_next_train_batch(self, batch_size):
+        self.next_train_batch_indexes = []
+        for b in range(batch_size):
+            if len(self.train_items_for_batch) == 0:
+                self.train_items_for_batch = copy.copy(self.train_items) # Copy only references
+                random.shuffle(self.train_items_for_batch)
+            train_item = self.train_items_for_batch.pop()
+            self.next_batch_items.append(train_item)
 
-    def get_class_count(self):
-        return len(self.class_names)
+    def get_train_batch_data(self):
+        batch_data = []
+
+        for item in self.next_batch_items:
+            batch_data.append(item.get_data())
+        return batch_data
+
+    def get_train_batch_label_lengths(self):
+        batch_label_lengths = []
+
+        for item in self.next_batch_items:
+            batch_label_lengths.append(len(item.label))
+
+        return batch_label_lengths
+
+    def get_unique_chars(self):
+        chars = []
+        for item in self.all_items:
+            label = item.label
+            for char in label:
+                if not char in chars:
+                    chars.append(char)
+        return sorted(chars)
