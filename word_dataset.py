@@ -12,6 +12,19 @@ class WordDataItem(object):
     def load_data(self):
         self.data = pf.get_feature_data(self.file_path)
 
+    def get_data(self):
+        return self.data
+
+    def get_data_with_fixed_time_step_count(self,time_step_count):
+        tmp_data = copy.copy(self.data) # Weak copy timesteps
+        if (len(tmp_data) > time_step_count):
+            tmp_data = tmp_data[:time_step_count] # Cut off some timesteps
+        else:
+            # Add timesteps
+            for i in range(self.get_time_step_count(), time_step_count):
+                tmp_data.append([0] * self.get_feature_count())
+        return tmp_data
+
     def get_label(self):
         return self.label
 
@@ -30,8 +43,9 @@ class WordDataItem(object):
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
 class WordDataSet(object):
-    def __init__(self, dir_path):
+    def __init__(self, dir_path,max_image_width=1000):
         self.dir_path = dir_path
+        self.max_image_width = max_image_width
 
         self.load_data()
         self.init_train_batch()
@@ -50,7 +64,8 @@ class WordDataSet(object):
             file_path = os.path.join(file_dir_path,file_name)
 
             word_data_item = WordDataItem(file_path)
-            items.append(word_data_item)
+            if (word_data_item.get_width() <= self.max_image_width):
+                items.append(word_data_item)
 
             if len(items) % 100 == 0:
                 print("Loaded %d %s images" % (len(items),train_vs_test))
@@ -79,11 +94,14 @@ class WordDataSet(object):
             train_item = self.train_items_for_batch.pop()
             self.next_batch_items.append(train_item)
 
-    def get_train_batch_data(self):
+    def get_train_batch_data(self,time_step_count=0):
         batch_data = []
 
         for item in self.next_batch_items:
-            batch_data.append(item.get_data())
+            if time_step_count == 0:
+                batch_data.append(item.get_data())
+            else:
+                batch_data.append(item.get_data_with_fixed_time_step_count(time_step_count))
         return batch_data
 
     def get_train_batch_label_lengths(self):
