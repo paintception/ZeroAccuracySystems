@@ -30,9 +30,6 @@ for source_label_dir_name in [f for f in os.listdir(source_dir_path) if os.path.
 
         #print("%d\t%d" % (image.width, image.height))
 
-        # Word width: average 91.4, std 65.6
-        # Word height: average 56.7, std 11.9
-
         # Char width: average 29.9, std 8.8
         # Char height: average 60.0, std 11.4
 
