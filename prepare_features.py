@@ -14,7 +14,9 @@ def get_feature_data(image_file_path, min_time_steps=0):
         time_step_features = [] # Pixel values of 1px slice (from top to down)
         for y in range(image.height):
             pixel = image.getpixel((x,y))
-            pixel_value = pixel[0] / pixel[1] # Pixel value in range 0..1
+            pixel_value = 0
+            if (pixel[1] != 0):
+                pixel_value = pixel[0] / pixel[1] # Pixel value in range 0..1
             pixel_value_sum = pixel_value_sum + pixel_value
             time_step_features.append(pixel_value)
         time_steps_with_features.append(time_step_features)

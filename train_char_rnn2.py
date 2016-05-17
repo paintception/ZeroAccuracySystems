@@ -30,7 +30,7 @@ n_features = dataset.get_feature_count() # Features = image height
 print("Features:",n_features)
 n_steps = dataset.get_time_step_count() # Timesteps = image width
 print("Time steps:",n_steps)
-n_cells = 2 # Number of cells/layers
+n_cells = 1 # Number of cells/layers
 print("Cells:", n_cells)
 n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
@@ -89,9 +89,12 @@ with tf.Session() as sess:
 
     while True:
         # Training
+        #t1 = datetime.datetime.now()
         dataset.prepare_next_batch(n_batch_size)
         batch_xs = dataset.get_batch_data()  # (batch_size,n_steps,n_input)
         batch_ys = dataset.get_batch_one_hot_labels()  # (batch_size,n_classes)
+        #t_int = datetime.datetime.now() - t1
+        #print("Training batch prep - ",t_int.seconds)
 
         sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys,
                                        dropout_input_keep_prob: dropout_input_keep_prob_value,
