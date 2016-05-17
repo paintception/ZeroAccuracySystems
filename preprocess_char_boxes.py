@@ -2,19 +2,9 @@ import dirs
 import os
 import shutil
 from PIL import Image
-#import cv2
-
-#def preprocess_image(image):
-    # Otsu's thresholding after Gaussian filtering
-    #blured_image = cv2.GaussianBlur(image,(5,5),0)
-    #histogram,binary_image = cv2.threshold(blured_image,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-
-#    return binary_image
 
 source_dir_path = dirs.KNMP_CHAR_BOXES_DIR_PATH
 target_dir_path = dirs.KNMP_PROCESSED_CHAR_BOXES_DIR_PATH
-#source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-#target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
 # Delete target directory
 if os.path.exists(target_dir_path):
