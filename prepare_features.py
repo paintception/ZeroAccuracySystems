@@ -46,3 +46,9 @@ def get_one_hot(index,length):
     one_hot = [0] * length
     one_hot[index] = 1
     return one_hot
+
+def get_word_label_from_filename(file_name):
+    label = file_name.replace(".png","")
+    last_sep = label.rfind("_")
+    label = label[last_sep+1:]
+    return label

@@ -45,18 +45,7 @@ for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jp
                 box_image_name = page_image_name.replace(".jpg", "_") + str(box[0]) + "_" + str(box[1]) + "_" + str(
                     box[2]) + "_" + str(box[3]) + "_" + word.text + ".png"
 
-                label_dir_name = word.text
-                if label_dir_name == ".":
-                    label_dir_name = "_."
-                if len(label_dir_name) == 0:
-                    label_dir_name = "_"
-                if label_dir_name[0].isupper():
-                    label_dir_name = label_dir_name + "_"
-                # label_dir_name = label_dir_name.lower()
-                label_dir_path = os.path.join(word_image_dir_path, label_dir_name)
-                if not os.path.exists(label_dir_path):
-                    os.makedirs(label_dir_path)
-                box_image.save(os.path.join(label_dir_path, box_image_name))
+                box_image.save(os.path.join(word_image_dir_path, box_image_name))
                 word_counter += 1
                 char_counter = char_counter + len(word.text)
             except:
