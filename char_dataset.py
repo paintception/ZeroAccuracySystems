@@ -3,7 +3,7 @@ import os
 import random
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
-class DataSet(object):
+class CharDataSet(object):
     def __init__(self, dir_path, train_ratio=0.9):
         self.dir_path = dir_path
         self.train_ratio = train_ratio

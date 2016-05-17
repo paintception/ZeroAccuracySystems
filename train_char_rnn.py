@@ -3,12 +3,12 @@ import datetime
 import tensorflow as tf
 from tensorflow.models.rnn import rnn, rnn_cell
 import numpy as np
-from dataset import DataSet
+from char_dataset import CharDataSet
 import dirs
 import random
 
 random.seed(0) # Always the same train/test set
-dataset = DataSet("/Users/rmencis/RUG/Handwriting_Recognition/char_boxes_processed_tmp/KNMP")
+dataset = CharDataSet("/Users/rmencis/RUG/Handwriting_Recognition/char_boxes_processed_tmp/KNMP")
 random.seed()
 
 print("Total items:",dataset.get_total_item_count())
