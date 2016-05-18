@@ -8,7 +8,7 @@ import random
 
 # Read data set
 
-fixed_timestep_count = 52
+fixed_timestep_count = 100
 dataset = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
 
 print("Total items:",dataset.get_total_item_count())
@@ -28,7 +28,7 @@ n_features = dataset.get_feature_count() # Features = image height
 print("Features:",n_features)
 n_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:",n_steps)
-n_cells = 1 # Number of cells/layers
+n_cells = 2 # Number of cells/layers
 print("Cells:", n_cells)
 n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
@@ -59,7 +59,9 @@ rnn_inputs = tf.split(0, n_steps, x_hidden)  # [(n_batch_size, n_features),(n_ba
 # RNN
 lstm_cell = rnn_cell.LSTMCell(n_hidden)
 lstm_cell_dropout = rnn_cell.DropoutWrapper(lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
-multi_lstm = rnn_cell.MultiRNNCell([lstm_cell_dropout] * n_cells)
+multi_lstm = lstm_cell_dropout
+if n_cells > 1:
+    multi_lstm = rnn_cell.MultiRNNCell([lstm_cell_dropout] * n_cells)
 initial_state = multi_lstm.zero_state(batch_size, tf.float32)
 rnn_outputs, rnn_states = rnn.rnn(multi_lstm, rnn_inputs, initial_state=initial_state)
 rnn_output = rnn_outputs[-1]

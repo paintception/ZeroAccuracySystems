@@ -5,6 +5,8 @@ from PIL import Image
 import random
 
 def sheer_image(image,sheer_factor=0):
+    if sheer_factor == 0:
+        return image
     width, height = image.size
     m = sheer_factor
     xshift = abs(m) * width
@@ -58,10 +60,9 @@ for source_file_name in source_file_names:
     image = image.convert("LA") # Greyscale
 
     if train:
-        for sheer_ratio in range(-2,3,1):
+        for sheer_ratio in range(-2,3):
             train_image = image
-            if (sheer_ratio != 0):
-                train_image = sheer_image(train_image,sheer_ratio*0.1)
+            train_image = sheer_image(train_image,(sheer_ratio*0.05))
             train_image = resize_image(train_image)
             train_file_counter += 1
             target_file_name = str(train_file_counter).rjust(6, "0") + "_" + source_file_name

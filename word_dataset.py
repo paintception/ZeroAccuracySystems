@@ -97,9 +97,11 @@ class WordDataSet(object):
             train_item = self.train_items_for_batch.pop()
             self.next_batch_items.append(train_item)
 
+    # (n_batch_size,n_time_steps,n_features)
     def get_train_batch_data(self,time_step_count=0):
         return self._get_data(self.next_batch_items,time_step_count)
 
+    # (n_batch_size,n_time_steps,n_features)
     def get_test_data(self, time_step_count=0):
         return self._get_data(self.test_items,time_step_count)
 
@@ -113,9 +115,11 @@ class WordDataSet(object):
                 data.append(item.get_data_with_fixed_time_step_count(time_step_count))
         return data
 
+    # (n_batch_size,n_unique_chars)
     def get_train_batch_first_char_one_hot_labels(self):
         return self._get_first_char_one_hot_labels(self.next_batch_items)
 
+    # (n_batch_size,n_unique_chars)
     def get_test_first_char_one_hot_labels(self):
         return self._get_first_char_one_hot_labels(self.test_items)
 
