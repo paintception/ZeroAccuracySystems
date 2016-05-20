@@ -129,7 +129,7 @@
         </Word>
     </TextLine>
     <TextLine no="15" top="1974" bottom="2045" left="1319" right="1456" shear="0">
-        <Word no="2" top="1974" bottom="2045" left="1319" right="1445" shear="0" text="@laverd_lau^~d">
+        <Word no="2" top="1974" bottom="2045" left="1319" right="1445" shear="0" text="laud">
             <Character no="1" top="1974" bottom="2045" left="1319" right="1340" shear="0" text="l"/>
             <Character no="2" top="1974" bottom="2045" left="1340" right="1374" shear="0" text="a"/>
             <Character no="3" top="1974" bottom="2045" left="1374" right="1410" shear="0" text="u"/>
