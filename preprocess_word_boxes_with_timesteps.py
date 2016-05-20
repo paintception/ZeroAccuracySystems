@@ -17,8 +17,7 @@ def sheer_image(image, sheer_factor=0):
                            (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC)
 
 
-def resize_image(image):
-    resize_ratio = 0.5
+def resize_image(image, resize_ratio=0.5):
     new_width = int(image.width * resize_ratio)
     new_height = 28
     return image.resize((new_width, new_height))
@@ -32,6 +31,8 @@ if __name__ == "__main__":
     test_dir_path = os.path.join(target_dir_path, "test")
 
     train_ratio = 0.9
+
+    resize_ratio = 0.5
 
     # Delete and create target directories
     if os.path.exists(target_dir_path):
@@ -73,7 +74,8 @@ if __name__ == "__main__":
             for sheer_ratio in range(-2, 3):
                 train_image = image
                 train_image = sheer_image(train_image, (sheer_ratio * 0.05))
-                train_image = resize_image(train_image)
+                train_image = resize_image(train_image, resize_ratio=resize_ratio)
+                word['char_positions'] = [int(x * resize_ratio) for x in word['char_positions']]
                 train_file_counter += 1
                 target_file_name = str(train_file_counter).rjust(6, "0") + "_" + word["box_image_name"]
                 target_file_path = os.path.join(train_dir_path, target_file_name)
@@ -97,5 +99,5 @@ if __name__ == "__main__":
     with open(os.path.join(test_dir_path, 'word_info'), 'wb') as word_info_file:
         pickle.dump(test_word_info, word_info_file)
 
-    # print("Average width:",int(total_width / len(word_info)))
-    # print("Max width:",max_width)
+        # print("Average width:",int(total_width / len(word_info)))
+        # print("Max width:",max_width)
