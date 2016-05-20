@@ -68,8 +68,8 @@
     <TextLine no="8" top="1648" bottom="1715" left="964" right="1076" shear="0">
         <Word no="1" top="1648" bottom="1715" left="964" right="1076" shear="0" text="other">
             <Character no="1" top="1648" bottom="1715" left="964" right="996" shear="0" text="o"/>
-            <Character no="2" top="1648" bottom="1715" left="996" right="1026" shear="0" text="#"/>
-            <Character no="3" top="1648" bottom="1715" left="1026" right="1042" shear="0" text="e"/>
+            <Character no="2" top="1648" bottom="1715" left="996" right="1023" shear="0" text="#"/>
+            <Character no="3" top="1648" bottom="1715" left="1023" right="1042" shear="0" text="e"/>
             <Character no="4" top="1648" bottom="1715" left="1042" right="1077" shear="0" text="r"/>
         </Word>
     </TextLine>

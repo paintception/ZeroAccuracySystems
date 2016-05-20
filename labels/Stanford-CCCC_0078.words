@@ -10,13 +10,14 @@
     </TextLine>
     <TextLine no="2" top="313" bottom="398" left="587" right="991" shear="0">
         <Word no="1" top="313" bottom="398" left="811" right="991" shear="0" text="galilee">
-            <Character no="1" top="313" bottom="398" left="811" right="860" shear="0" text="g"/>
-            <Character no="2" top="313" bottom="398" left="860" right="887" shear="0" text="a"/>
-            <Character no="3" top="313" bottom="398" left="887" right="906" shear="0" text="l"/>
-            <Character no="4" top="313" bottom="398" left="906" right="924" shear="0" text="i"/>
-            <Character no="5" top="313" bottom="398" left="924" right="939" shear="0" text="l"/>
-            <Character no="6" top="313" bottom="398" left="939" right="960" shear="0" text="e"/>
-            <Character no="7" top="313" bottom="398" left="960" right="992" shear="0" text="e"/>
+            <Character no="1" top="313" bottom="398" left="811" right="821" shear="0" text="!"/>
+            <Character no="2" top="313" bottom="398" left="821" right="860" shear="0" text="g"/>
+            <Character no="3" top="313" bottom="398" left="860" right="887" shear="0" text="a"/>
+            <Character no="4" top="313" bottom="398" left="887" right="906" shear="0" text="l"/>
+            <Character no="5" top="313" bottom="398" left="906" right="924" shear="0" text="i"/>
+            <Character no="6" top="313" bottom="398" left="924" right="939" shear="0" text="l"/>
+            <Character no="7" top="313" bottom="398" left="939" right="960" shear="0" text="e"/>
+            <Character no="8" top="313" bottom="398" left="960" right="992" shear="0" text="e"/>
         </Word>
         <Word no="2" top="336" bottom="382" left="587" right="622" shear="0" text="o">
             <Character no="1" top="336" bottom="382" left="587" right="623" shear="0" text="o"/>

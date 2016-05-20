@@ -163,7 +163,8 @@
         </Word>
         <Word no="2" top="1582" bottom="1628" left="128" right="188" shear="0" text="to">
             <Character no="1" top="1582" bottom="1628" left="128" right="148" shear="0" text="t"/>
-            <Character no="2" top="1582" bottom="1628" left="148" right="189" shear="0" text="o"/>
+            <Character no="2" top="1582" bottom="1628" left="148" right="178" shear="0" text="o"/>
+            <Character no="3" top="1582" bottom="1628" left="178" right="189" shear="0" text="!"/>
         </Word>
         <Word no="3" top="1570" bottom="1629" left="301" right="350" shear="0" text="@se_fe">
             <Character no="1" top="1570" bottom="1629" left="301" right="323" shear="0" text="f"/>

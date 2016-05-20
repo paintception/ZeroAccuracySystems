@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_084">
+<Image name="Stanford84">
     <TextLine no="1" top="190" bottom="252" left="976" right="1221" shear="0">
         <Word no="1" top="211" bottom="250" left="976" right="1007" shear="0" text="o">
             <Character no="1" top="211" bottom="250" left="976" right="1008" shear="0" text="o"/>
@@ -23,18 +23,19 @@
     </TextLine>
     <TextLine no="4" top="920" bottom="1009" left="1076" right="1200" shear="0">
         <Word no="1" top="920" bottom="1009" left="1076" right="1200" shear="0" text="dude">
-            <Character no="1" top="920" bottom="1009" left="1076" right="1109" shear="0" text="d"/>
-            <Character no="2" top="920" bottom="1009" left="1109" right="1147" shear="0" text="u"/>
-            <Character no="3" top="920" bottom="1009" left="1147" right="1172" shear="0" text="d"/>
-            <Character no="4" top="920" bottom="1009" left="1172" right="1201" shear="0" text="e"/>
+            <Character no="1" top="920" bottom="1009" left="1076" right="1083" shear="0" text="!"/>
+            <Character no="2" top="920" bottom="1009" left="1083" right="1112" shear="0" text="d"/>
+            <Character no="3" top="920" bottom="1009" left="1112" right="1147" shear="0" text="u"/>
+            <Character no="4" top="920" bottom="1009" left="1147" right="1173" shear="0" text="d"/>
+            <Character no="5" top="920" bottom="1009" left="1173" right="1201" shear="0" text="e"/>
         </Word>
     </TextLine>
     <TextLine no="5" top="1147" bottom="1233" left="960" right="1068" shear="0">
         <Word no="1" top="1147" bottom="1233" left="960" right="1068" shear="0" text="othre">
-            <Character no="1" top="1147" bottom="1233" left="960" right="989" shear="0" text="o"/>
-            <Character no="2" top="1147" bottom="1233" left="989" right="1019" shear="0" text="#"/>
-            <Character no="3" top="1147" bottom="1233" left="1019" right="1039" shear="0" text="r"/>
-            <Character no="4" top="1147" bottom="1233" left="1039" right="1069" shear="0" text="e"/>
+            <Character no="1" top="1147" bottom="1233" left="960" right="990" shear="0" text="o"/>
+            <Character no="2" top="1147" bottom="1233" left="990" right="1021" shear="0" text="#"/>
+            <Character no="3" top="1147" bottom="1233" left="1021" right="1042" shear="0" text="r"/>
+            <Character no="4" top="1147" bottom="1233" left="1042" right="1069" shear="0" text="e"/>
         </Word>
     </TextLine>
     <TextLine no="6" top="1292" bottom="1351" left="387" right="428" shear="0">
@@ -45,11 +46,11 @@
     <TextLine no="7" top="1361" bottom="1446" left="855" right="1050" shear="0">
         <Word no="1" top="1361" bottom="1446" left="855" right="1050" shear="0" text="strengthe">
             <Character no="1" top="1361" bottom="1446" left="855" right="879" shear="0" text="f"/>
-            <Character no="2" top="1361" bottom="1446" left="879" right="898" shear="0" text="t"/>
-            <Character no="3" top="1361" bottom="1446" left="898" right="918" shear="0" text="r"/>
-            <Character no="4" top="1361" bottom="1446" left="918" right="939" shear="0" text="e"/>
-            <Character no="5" top="1361" bottom="1446" left="939" right="972" shear="0" text="n"/>
-            <Character no="6" top="1361" bottom="1446" left="972" right="1000" shear="0" text="g"/>
+            <Character no="2" top="1361" bottom="1446" left="879" right="899" shear="0" text="t"/>
+            <Character no="3" top="1361" bottom="1446" left="899" right="917" shear="0" text="r"/>
+            <Character no="4" top="1361" bottom="1446" left="917" right="941" shear="0" text="e"/>
+            <Character no="5" top="1361" bottom="1446" left="941" right="971" shear="0" text="n"/>
+            <Character no="6" top="1361" bottom="1446" left="971" right="1000" shear="0" text="g"/>
             <Character no="7" top="1361" bottom="1446" left="1000" right="1026" shear="0" text="#"/>
             <Character no="8" top="1361" bottom="1446" left="1026" right="1051" shear="0" text="e"/>
         </Word>
@@ -64,10 +65,10 @@
             <Character no="1" top="1740" bottom="1796" left="461" right="500" shear="0" text="d"/>
         </Word>
         <Word no="2" top="1740" bottom="1800" left="461" right="579" shear="0" text="dude">
-            <Character no="1" top="1740" bottom="1800" left="461" right="498" shear="0" text="d"/>
-            <Character no="2" top="1740" bottom="1800" left="498" right="531" shear="0" text="u"/>
-            <Character no="3" top="1740" bottom="1800" left="531" right="559" shear="0" text="d"/>
-            <Character no="4" top="1740" bottom="1800" left="559" right="580" shear="0" text="e"/>
+            <Character no="1" top="1740" bottom="1800" left="461" right="497" shear="0" text="d"/>
+            <Character no="2" top="1740" bottom="1800" left="497" right="530" shear="0" text="u"/>
+            <Character no="3" top="1740" bottom="1800" left="530" right="557" shear="0" text="d"/>
+            <Character no="4" top="1740" bottom="1800" left="557" right="580" shear="0" text="e"/>
         </Word>
     </TextLine>
     <TextLine no="10" top="1907" bottom="1950" left="437" right="471" shear="0">
@@ -81,7 +82,11 @@
         </Word>
     </TextLine>
     <TextLine no="12" top="2804" bottom="2820" left="1128" right="1205" shear="0">
-        <Word no="1" top="2804" bottom="2820" left="1128" right="1205" shear="0" text="@TEXTILE_BACKGROUND"/>
-        <Word no="2" top="2804" bottom="2820" left="1128" right="1201" shear="0" text="@TEXTILE_BACKGROUND"/>
+        <Word no="1" top="2804" bottom="2820" left="1128" right="1205" shear="0" text="@TEXTILE_BACKGROUND">
+            <Character no="1" top="2804" bottom="2820" left="1128" right="1206" shear="0" text="!"/>
+        </Word>
+        <Word no="2" top="2804" bottom="2820" left="1128" right="1201" shear="0" text="@TEXTILE_BACKGROUND">
+            <Character no="1" top="2804" bottom="2820" left="1128" right="1202" shear="0" text="!"/>
+        </Word>
     </TextLine>
 </Image>

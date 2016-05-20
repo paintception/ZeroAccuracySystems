@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford-CCCC_0026">
+<Image name="Stanford-CCC_0026">
     <TextLine no="1" top="502" bottom="586" left="1972" right="2033" shear="0">
         <Word no="1" top="502" bottom="586" left="1972" right="2033" shear="0" text="@u^~">
             <Character no="1" top="502" bottom="586" left="1972" right="2034" shear="0" text="u"/>
@@ -25,20 +25,20 @@
     </TextLine>
     <TextLine no="5" top="1334" bottom="1429" left="1254" right="1458" shear="0">
         <Word no="1" top="1334" bottom="1429" left="1254" right="1458" shear="0" text="thonne">
-            <Character no="1" top="1334" bottom="1429" left="1254" right="1299" shear="0" text="#"/>
-            <Character no="2" top="1334" bottom="1429" left="1299" right="1334" shear="0" text="o"/>
-            <Character no="3" top="1334" bottom="1429" left="1334" right="1376" shear="0" text="n"/>
-            <Character no="4" top="1334" bottom="1429" left="1376" right="1420" shear="0" text="n"/>
-            <Character no="5" top="1334" bottom="1429" left="1420" right="1459" shear="0" text="e"/>
+            <Character no="1" top="1334" bottom="1429" left="1254" right="1301" shear="0" text="#"/>
+            <Character no="2" top="1334" bottom="1429" left="1301" right="1333" shear="0" text="o"/>
+            <Character no="3" top="1334" bottom="1429" left="1333" right="1373" shear="0" text="n"/>
+            <Character no="4" top="1334" bottom="1429" left="1373" right="1419" shear="0" text="n"/>
+            <Character no="5" top="1334" bottom="1429" left="1419" right="1459" shear="0" text="e"/>
         </Word>
     </TextLine>
     <TextLine no="6" top="1830" bottom="1914" left="185" right="391" shear="0">
         <Word no="1" top="1830" bottom="1914" left="185" right="391" shear="0" text="butan">
             <Character no="1" top="1830" bottom="1914" left="185" right="225" shear="0" text="b"/>
-            <Character no="2" top="1830" bottom="1914" left="225" right="271" shear="0" text="u"/>
-            <Character no="3" top="1830" bottom="1914" left="271" right="301" shear="0" text="t"/>
-            <Character no="4" top="1830" bottom="1914" left="301" right="340" shear="0" text="a"/>
-            <Character no="5" top="1830" bottom="1914" left="340" right="392" shear="0" text="n"/>
+            <Character no="2" top="1830" bottom="1914" left="225" right="268" shear="0" text="u"/>
+            <Character no="3" top="1830" bottom="1914" left="268" right="301" shear="0" text="t"/>
+            <Character no="4" top="1830" bottom="1914" left="301" right="344" shear="0" text="a"/>
+            <Character no="5" top="1830" bottom="1914" left="344" right="392" shear="0" text="n"/>
         </Word>
     </TextLine>
     <TextLine no="7" top="2450" bottom="2544" left="1121" right="1179" shear="0">

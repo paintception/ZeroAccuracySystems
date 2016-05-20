@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_5">
+<Image name="Stanford-CCC_0012">
     <TextLine no="1" top="322" bottom="383" left="1000" right="1039" shear="0">
         <Word no="1" top="322" bottom="383" left="1000" right="1039" shear="0" text="s">
             <Character no="1" top="322" bottom="383" left="1000" right="1040" shear="0" text="s"/>
@@ -12,11 +12,11 @@
     </TextLine>
     <TextLine no="3" top="729" bottom="822" left="257" right="1830" shear="0">
         <Word no="1" top="738" bottom="822" left="1645" right="1830" shear="0" text="butan">
-            <Character no="1" top="738" bottom="822" left="1645" right="1683" shear="0" text="b"/>
-            <Character no="2" top="738" bottom="822" left="1683" right="1724" shear="0" text="u"/>
-            <Character no="3" top="738" bottom="822" left="1724" right="1752" shear="0" text="t"/>
-            <Character no="4" top="738" bottom="822" left="1752" right="1787" shear="0" text="a"/>
-            <Character no="5" top="738" bottom="822" left="1787" right="1831" shear="0" text="n"/>
+            <Character no="1" top="738" bottom="822" left="1645" right="1682" shear="0" text="b"/>
+            <Character no="2" top="738" bottom="822" left="1682" right="1725" shear="0" text="u"/>
+            <Character no="3" top="738" bottom="822" left="1725" right="1751" shear="0" text="t"/>
+            <Character no="4" top="738" bottom="822" left="1751" right="1786" shear="0" text="a"/>
+            <Character no="5" top="738" bottom="822" left="1786" right="1831" shear="0" text="n"/>
         </Word>
         <Word no="2" top="729" bottom="784" left="257" right="296" shear="0" text="s">
             <Character no="1" top="729" bottom="784" left="257" right="297" shear="0" text="s"/>
@@ -24,10 +24,10 @@
     </TextLine>
     <TextLine no="4" top="956" bottom="1029" left="1647" right="1876" shear="0">
         <Word no="1" top="956" bottom="1029" left="1647" right="1876" shear="0" text="middan">
-            <Character no="1" top="956" bottom="1029" left="1647" right="1713" shear="0" text="m"/>
-            <Character no="2" top="956" bottom="1029" left="1713" right="1733" shear="0" text="i"/>
-            <Character no="3" top="956" bottom="1029" left="1733" right="1765" shear="0" text="d"/>
-            <Character no="4" top="956" bottom="1029" left="1765" right="1799" shear="0" text="d"/>
+            <Character no="1" top="956" bottom="1029" left="1647" right="1714" shear="0" text="m"/>
+            <Character no="2" top="956" bottom="1029" left="1714" right="1733" shear="0" text="i"/>
+            <Character no="3" top="956" bottom="1029" left="1733" right="1766" shear="0" text="d"/>
+            <Character no="4" top="956" bottom="1029" left="1766" right="1799" shear="0" text="d"/>
             <Character no="5" top="956" bottom="1029" left="1799" right="1836" shear="0" text="a"/>
             <Character no="6" top="956" bottom="1029" left="1836" right="1877" shear="0" text="n"/>
         </Word>
