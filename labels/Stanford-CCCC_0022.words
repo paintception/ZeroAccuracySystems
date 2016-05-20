@@ -28,7 +28,7 @@
         <Word no="2" top="1125" bottom="1191" left="616" right="668" shear="0" text="u">
             <Character no="1" top="1125" bottom="1191" left="616" right="669" shear="0" text="u"/>
         </Word>
-        <Word no="3" top="1118" bottom="1225" left="470" right="559" shear="0" text="@est_eft">
+        <Word no="3" top="1118" bottom="1225" left="470" right="559" shear="0" text="eft">
             <Character no="1" top="1118" bottom="1225" left="470" right="502" shear="0" text="e"/>
             <Character no="2" top="1118" bottom="1225" left="502" right="521" shear="0" text="f"/>
             <Character no="3" top="1118" bottom="1225" left="521" right="560" shear="0" text="t"/>
@@ -48,7 +48,7 @@
         </Word>
     </TextLine>
     <TextLine no="7" top="1297" bottom="1380" left="1518" right="1674" shear="0">
-        <Word no="1" top="1297" bottom="1380" left="1518" right="1674" shear="0" text="cuthe">
+        <Word no="1" top="1297" bottom="1380" left="1518" right="1674" shear="0" text="cu#e">
             <Character no="1" top="1297" bottom="1380" left="1518" right="1551" shear="0" text="c"/>
             <Character no="2" top="1297" bottom="1380" left="1551" right="1596" shear="0" text="u"/>
             <Character no="3" top="1297" bottom="1380" left="1596" right="1633" shear="0" text="#"/>
