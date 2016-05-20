@@ -28,7 +28,7 @@
             <Character no="4" top="619" bottom="697" left="963" right="1001" shear="0" text="d"/>
         </Word>
     </TextLine>
-    <TextLine no="6" top="833" bottom="913" left="860" right="980" shear="0">
+    <TextLine no="6" top="833" bottom="913" left="860" right="969" shear="0">
         <Word no="1" top="833" bottom="913" left="860" right="969" shear="0" text="o#er">
             <Character no="1" top="833" bottom="913" left="860" right="891" shear="0" text="o"/>
             <Character no="2" top="833" bottom="913" left="891" right="922" shear="0" text="#"/>

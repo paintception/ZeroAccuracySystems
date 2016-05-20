@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_076">
+<Image name="Stanford-CCCC_0076">
     <TextLine no="1" top="227" bottom="322" left="292" right="1018" shear="0">
         <Word no="1" top="234" bottom="285" left="975" right="1018" shear="0" text="*">
             <Character no="1" top="234" bottom="285" left="975" right="1019" shear="0" text="*"/>
         </Word>
-        <Word no="2" top="227" bottom="322" left="292" right="368" shear="0" text="@the_thorn_e">
+        <Word no="2" top="227" bottom="322" left="292" right="368" shear="0" text="#e">
             <Character no="1" top="227" bottom="322" left="292" right="341" shear="0" text="#"/>
             <Character no="2" top="227" bottom="322" left="341" right="369" shear="0" text="e"/>
         </Word>
@@ -87,7 +87,7 @@
         <Word no="2" top="1264" bottom="1335" left="191" right="242" shear="0" text="B">
             <Character no="1" top="1264" bottom="1335" left="191" right="243" shear="0" text="B"/>
         </Word>
-        <Word no="3" top="1273" bottom="1347" left="756" right="929" shear="0" text="schulen">
+        <Word no="3" top="1273" bottom="1347" left="756" right="929" shear="0" text="chulen">
             <Character no="1" top="1273" bottom="1347" left="756" right="783" shear="0" text="c"/>
             <Character no="2" top="1273" bottom="1347" left="783" right="816" shear="0" text="h"/>
             <Character no="3" top="1273" bottom="1347" left="816" right="849" shear="0" text="u"/>
@@ -124,7 +124,7 @@
             <Character no="2" top="1492" bottom="1553" left="483" right="506" shear="0" text="o"/>
             <Character no="3" top="1492" bottom="1553" left="506" right="547" shear="0" text="#"/>
         </Word>
-        <Word no="4" top="1486" bottom="1567" left="1114" right="1266" shear="0" text="leapeth">
+        <Word no="4" top="1486" bottom="1567" left="1114" right="1266" shear="0" text="leape#">
             <Character no="1" top="1486" bottom="1567" left="1114" right="1135" shear="0" text="l"/>
             <Character no="2" top="1486" bottom="1567" left="1135" right="1159" shear="0" text="e"/>
             <Character no="3" top="1486" bottom="1567" left="1159" right="1186" shear="0" text="a"/>

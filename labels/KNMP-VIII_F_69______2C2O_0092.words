@@ -9,11 +9,11 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="203" bottom="279" left="1386" right="1465" shear="0">
-        <Word no="1" top="203" bottom="279" left="1386" right="1465" shear="0" text="@Nam_Na^~">
+        <Word no="1" top="203" bottom="279" left="1386" right="1465" shear="0" text="Na">
             <Character no="1" top="203" bottom="279" left="1389" right="1427" shear="0" text="N"/>
             <Character no="2" top="203" bottom="279" left="1427" right="1462" shear="0" text="a"/>
         </Word>
-        <Word no="2" top="203" bottom="279" left="1386" right="1462" shear="0" text="@Nam_Na^~">
+        <Word no="2" top="203" bottom="279" left="1386" right="1462" shear="0" text="Na">
             <Character no="1" top="203" bottom="279" left="1392" right="1428" shear="0" text="N"/>
             <Character no="2" top="203" bottom="279" left="1428" right="1462" shear="0" text="a"/>
         </Word>
@@ -174,7 +174,7 @@
             <Character no="5" top="555" bottom="613" left="1155" right="1175" shear="0" text="t"/>
             <Character no="6" top="555" bottom="613" left="1175" right="1194" shear="0" text="i"/>
         </Word>
-        <Word no="4" top="545" bottom="608" left="638" right="697" shear="0" text="@cum_cu~">
+        <Word no="4" top="545" bottom="608" left="638" right="697" shear="0" text="cu">
             <Character no="1" top="545" bottom="608" left="642" right="664" shear="0" text="c"/>
             <Character no="2" top="545" bottom="608" left="664" right="696" shear="0" text="u"/>
         </Word>
@@ -330,7 +330,7 @@
         <Word no="4" top="1047" bottom="1087" left="1565" right="1601" shear="0" text="a">
             <Character no="1" top="1047" bottom="1087" left="1570" right="1598" shear="0" text="a"/>
         </Word>
-        <Word no="5" top="1019" bottom="1099" left="1307" right="1561" shear="0" text="@Rudolfus_Ru^odolfus">
+        <Word no="5" top="1019" bottom="1099" left="1307" right="1561" shear="0" text="Rudolfus">
             <Character no="1" top="1019" bottom="1099" left="1314" right="1364" shear="0" text="R"/>
             <Character no="2" top="1019" bottom="1099" left="1364" right="1400" shear="0" text="u"/>
             <Character no="3" top="1019" bottom="1099" left="1400" right="1434" shear="0" text="d"/>
@@ -587,7 +587,7 @@
         </Word>
     </TextLine>
     <TextLine no="23" top="1448" bottom="1519" left="539" right="1322" shear="0">
-        <Word no="1" top="1448" bottom="1519" left="789" right="1041" shear="0" text="@audienciam_audiencia^~">
+        <Word no="1" top="1448" bottom="1519" left="789" right="1041" shear="0" text="audiencia">
             <Character no="1" top="1448" bottom="1519" left="792" right="823" shear="0" text="a"/>
             <Character no="2" top="1448" bottom="1519" left="823" right="862" shear="0" text="u"/>
             <Character no="3" top="1448" bottom="1519" left="862" right="896" shear="0" text="d"/>
@@ -601,7 +601,7 @@
         <Word no="2" top="1477" bottom="1516" left="654" right="686" shear="0" text="a">
             <Character no="1" top="1477" bottom="1516" left="659" right="684" shear="0" text="a"/>
         </Word>
-        <Word no="3" top="1448" bottom="1519" left="789" right="1043" shear="0" text="@audienciam_audiencia^~">
+        <Word no="3" top="1448" bottom="1519" left="789" right="1043" shear="0" text="audiencia">
             <Character no="1" top="1448" bottom="1519" left="793" right="823" shear="0" text="a"/>
             <Character no="2" top="1448" bottom="1519" left="823" right="862" shear="0" text="u"/>
             <Character no="3" top="1448" bottom="1519" left="862" right="896" shear="0" text="d"/>
@@ -643,7 +643,7 @@
             <Character no="1" top="1625" bottom="1680" left="607" right="634" shear="0" text="b"/>
         </Word>
     </TextLine>
-    <TextLine no="25" top="1686" bottom="1760" left="419" right="866" shear="0">
+    <TextLine no="25" top="1686" bottom="1760" left="428" right="866" shear="0">
         <Word no="1" top="1709" bottom="1760" left="565" right="866" shear="0" text="auctoritate">
             <Character no="1" top="1709" bottom="1760" left="570" right="601" shear="0" text="a"/>
             <Character no="2" top="1709" bottom="1760" left="601" right="634" shear="0" text="u"/>
@@ -686,21 +686,21 @@
         </Word>
     </TextLine>
     <TextLine no="28" top="1939" bottom="2014" left="1057" right="1190" shear="0">
-        <Word no="1" top="1939" bottom="2014" left="1057" right="1177" shear="0" text="@sacram_sacra^~">
+        <Word no="1" top="1939" bottom="2014" left="1057" right="1177" shear="0" text="sacra">
             <Character no="1" top="1939" bottom="2014" left="1060" right="1078" shear="0" text="s"/>
             <Character no="2" top="1939" bottom="2014" left="1078" right="1104" shear="0" text="a"/>
             <Character no="3" top="1939" bottom="2014" left="1104" right="1130" shear="0" text="c"/>
             <Character no="4" top="1939" bottom="2014" left="1130" right="1144" shear="0" text="r"/>
             <Character no="5" top="1939" bottom="2014" left="1144" right="1174" shear="0" text="a"/>
         </Word>
-        <Word no="2" top="1939" bottom="2014" left="1057" right="1178" shear="0" text="@sacram_sacra^~">
+        <Word no="2" top="1939" bottom="2014" left="1057" right="1178" shear="0" text="sacra">
             <Character no="1" top="1939" bottom="2014" left="1060" right="1076" shear="0" text="s"/>
             <Character no="2" top="1939" bottom="2014" left="1076" right="1105" shear="0" text="a"/>
             <Character no="3" top="1939" bottom="2014" left="1105" right="1129" shear="0" text="c"/>
             <Character no="4" top="1939" bottom="2014" left="1129" right="1144" shear="0" text="r"/>
             <Character no="5" top="1939" bottom="2014" left="1144" right="1175" shear="0" text="a"/>
         </Word>
-        <Word no="3" top="1939" bottom="2014" left="1057" right="1190" shear="0" text="@sacram_sacra^~">
+        <Word no="3" top="1939" bottom="2014" left="1057" right="1190" shear="0" text="sacra">
             <Character no="1" top="1939" bottom="2014" left="1061" right="1077" shear="0" text="s"/>
             <Character no="2" top="1939" bottom="2014" left="1077" right="1105" shear="0" text="a"/>
             <Character no="3" top="1939" bottom="2014" left="1105" right="1130" shear="0" text="c"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford86">
+<Image name="Stanford-CCCC_0086">
     <TextLine no="1" top="672" bottom="716" left="123" right="156" shear="0">
         <Word no="1" top="672" bottom="716" left="123" right="156" shear="0" text="o">
             <Character no="1" top="672" bottom="716" left="123" right="157" shear="0" text="o"/>
@@ -44,7 +44,7 @@
         </Word>
     </TextLine>
     <TextLine no="7" top="1455" bottom="1515" left="1104" right="1153" shear="0">
-        <Word no="1" top="1455" bottom="1515" left="1104" right="1153" shear="0" text="@se_fe">
+        <Word no="1" top="1455" bottom="1515" left="1104" right="1153" shear="0" text="fe">
             <Character no="1" top="1455" bottom="1515" left="1104" right="1125" shear="0" text="f"/>
             <Character no="2" top="1455" bottom="1515" left="1125" right="1154" shear="0" text="e"/>
         </Word>

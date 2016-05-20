@@ -18,7 +18,7 @@
         <Word no="2" top="175" bottom="218" left="586" right="623" shear="0" text="n">
             <Character no="1" top="175" bottom="218" left="586" right="624" shear="0" text="n"/>
         </Word>
-        <Word no="3" top="164" bottom="228" left="1320" right="1367" shear="0" text="@ampersand">
+        <Word no="3" top="164" bottom="228" left="1320" right="1367" shear="0" text="&amp;">
             <Character no="1" top="164" bottom="228" left="1320" right="1368" shear="0" text="&amp;"/>
         </Word>
     </TextLine>
@@ -63,7 +63,7 @@
         </Word>
     </TextLine>
     <TextLine no="10" top="973" bottom="1038" left="1086" right="1279" shear="0">
-        <Word no="1" top="973" bottom="1038" left="1086" right="1279" shear="0" text="frustra">
+        <Word no="1" top="973" bottom="1038" left="1086" right="1279" shear="0" text="fruftra">
             <Character no="1" top="973" bottom="1038" left="1086" right="1112" shear="0" text="f"/>
             <Character no="2" top="973" bottom="1038" left="1112" right="1143" shear="0" text="r"/>
             <Character no="3" top="973" bottom="1038" left="1143" right="1174" shear="0" text="u"/>
@@ -82,7 +82,7 @@
         </Word>
     </TextLine>
     <TextLine no="12" top="1039" bottom="1120" left="1044" right="1273" shear="0">
-        <Word no="1" top="1039" bottom="1120" left="1044" right="1273" shear="0" text="homines">
+        <Word no="1" top="1039" bottom="1120" left="1044" right="1273" shear="0" text="hominef">
             <Character no="1" top="1039" bottom="1120" left="1044" right="1080" shear="0" text="h"/>
             <Character no="2" top="1039" bottom="1120" left="1080" right="1109" shear="0" text="o"/>
             <Character no="3" top="1039" bottom="1120" left="1109" right="1166" shear="0" text="m"/>
@@ -103,7 +103,7 @@
             <Character no="4" top="1158" bottom="1207" left="585" right="609" shear="0" text="t"/>
             <Character no="5" top="1158" bottom="1207" left="609" right="642" shear="0" text="a"/>
         </Word>
-        <Word no="3" top="1134" bottom="1200" left="1064" right="1124" shear="0" text="@cum_cu~">
+        <Word no="3" top="1134" bottom="1200" left="1064" right="1124" shear="0" text=";u">
             <Character no="1" top="1134" bottom="1200" left="1064" right="1092" shear="0" text=";"/>
             <Character no="2" top="1134" bottom="1200" left="1092" right="1125" shear="0" text="u"/>
         </Word>
@@ -158,7 +158,7 @@
             <Character no="2" top="1402" bottom="1447" left="1377" right="1401" shear="0" text="o"/>
             <Character no="3" top="1402" bottom="1447" left="1401" right="1434" shear="0" text="s"/>
         </Word>
-        <Word no="2" top="1403" bottom="1467" left="736" right="890" shear="0" text="moxq">
+        <Word no="2" top="1403" bottom="1467" left="736" right="890" shear="0" text="moxq!">
             <Character no="1" top="1403" bottom="1467" left="736" right="789" shear="0" text="m"/>
             <Character no="2" top="1403" bottom="1467" left="789" right="816" shear="0" text="o"/>
             <Character no="3" top="1403" bottom="1467" left="816" right="848" shear="0" text="x"/>
@@ -196,7 +196,7 @@
             <Character no="6" top="1543" bottom="1609" left="632" right="667" shear="0" text="n"/>
             <Character no="7" top="1543" bottom="1609" left="667" right="709" shear="0" text="e"/>
         </Word>
-        <Word no="4" top="1542" bottom="1609" left="1057" right="1281" shear="0" text="fortuna">
+        <Word no="4" top="1542" bottom="1609" left="1057" right="1281" shear="0" text="fortuna!">
             <Character no="1" top="1542" bottom="1609" left="1057" right="1080" shear="0" text="f"/>
             <Character no="2" top="1542" bottom="1609" left="1080" right="1107" shear="0" text="o"/>
             <Character no="3" top="1542" bottom="1609" left="1107" right="1139" shear="0" text="r"/>
@@ -282,7 +282,7 @@
         </Word>
     </TextLine>
     <TextLine no="30" top="2042" bottom="2101" left="513" right="680" shear="0">
-        <Word no="1" top="2042" bottom="2101" left="513" right="680" shear="0" text="pudet">
+        <Word no="1" top="2042" bottom="2101" left="513" right="680" shear="0" text="pudet!">
             <Character no="1" top="2042" bottom="2101" left="513" right="549" shear="0" text="p"/>
             <Character no="2" top="2042" bottom="2101" left="549" right="587" shear="0" text="u"/>
             <Character no="3" top="2042" bottom="2101" left="587" right="624" shear="0" text="d"/>

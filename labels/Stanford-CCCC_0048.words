@@ -6,7 +6,7 @@
             <Character no="2" top="233" bottom="274" left="852" right="884" shear="0" text="o"/>
         </Word>
     </TextLine>
-    <TextLine no="2" top="305" bottom="351" left="672" right="937" shear="0">
+    <TextLine no="2" top="305" bottom="348" left="672" right="701" shear="0">
         <Word no="1" top="305" bottom="348" left="672" right="701" shear="0" text="e">
             <Character no="1" top="305" bottom="348" left="672" right="702" shear="0" text="e"/>
         </Word>
@@ -22,7 +22,7 @@
             <Character no="1" top="383" bottom="423" left="601" right="630" shear="0" text="e"/>
         </Word>
     </TextLine>
-    <TextLine no="4" top="456" bottom="501" left="770" right="1160" shear="0">
+    <TextLine no="4" top="461" bottom="501" left="1129" right="1160" shear="0">
         <Word no="1" top="461" bottom="501" left="1129" right="1160" shear="0" text="o">
             <Character no="1" top="461" bottom="501" left="1129" right="1161" shear="0" text="o"/>
         </Word>
@@ -149,7 +149,7 @@
             <Character no="3" top="2140" bottom="2204" left="299" right="336" shear="0" text="n"/>
             <Character no="4" top="2140" bottom="2204" left="336" right="374" shear="0" text="t"/>
         </Word>
-        <Word no="3" top="2153" bottom="2214" left="916" right="1140" shear="0" text="deadlich">
+        <Word no="2" top="2153" bottom="2214" left="916" right="1140" shear="0" text="deadlich">
             <Character no="1" top="2153" bottom="2214" left="916" right="953" shear="0" text="d"/>
             <Character no="2" top="2153" bottom="2214" left="953" right="976" shear="0" text="e"/>
             <Character no="3" top="2153" bottom="2214" left="976" right="1006" shear="0" text="a"/>

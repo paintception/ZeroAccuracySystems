@@ -5,14 +5,14 @@
             <Character no="1" top="341" bottom="418" left="1774" right="1827" shear="0" text="h"/>
         </Word>
     </TextLine>
-    <TextLine no="2" top="407" bottom="488" left="244" right="723" shear="0">
+    <TextLine no="2" top="407" bottom="488" left="244" right="720" shear="0">
         <Word no="1" top="412" bottom="488" left="244" right="420" shear="0" text="lome">
             <Character no="1" top="412" bottom="488" left="244" right="278" shear="0" text="l"/>
             <Character no="2" top="412" bottom="488" left="278" right="311" shear="0" text="o"/>
             <Character no="3" top="412" bottom="488" left="311" right="380" shear="0" text="m"/>
             <Character no="4" top="412" bottom="488" left="380" right="421" shear="0" text="e"/>
         </Word>
-        <Word no="3" top="407" bottom="486" left="665" right="720" shear="0" text="h">
+        <Word no="2" top="407" bottom="486" left="665" right="720" shear="0" text="h">
             <Character no="1" top="407" bottom="486" left="665" right="721" shear="0" text="h"/>
         </Word>
     </TextLine>

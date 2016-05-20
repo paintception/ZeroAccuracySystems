@@ -59,8 +59,8 @@
             <Character no="3" top="1727" bottom="1813" left="1274" right="1300" shear="0" text="c"/>
         </Word>
     </TextLine>
-    <TextLine no="8" top="2024" bottom="2090" left="490" right="1465" shear="0">
-        <Word no="3" top="2024" bottom="2090" left="490" right="851" shear="0" text="tempestate">
+    <TextLine no="8" top="2024" bottom="2090" left="490" right="1156" shear="0">
+        <Word no="1" top="2024" bottom="2090" left="490" right="851" shear="0" text="tempeftate">
             <Character no="1" top="2024" bottom="2090" left="495" right="527" shear="0" text="t"/>
             <Character no="2" top="2024" bottom="2090" left="527" right="557" shear="0" text="e"/>
             <Character no="3" top="2024" bottom="2090" left="557" right="604" shear="0" text="m"/>
@@ -72,7 +72,7 @@
             <Character no="9" top="2024" bottom="2090" left="762" right="787" shear="0" text="t"/>
             <Character no="10" top="2024" bottom="2090" left="787" right="832" shear="0" text="e"/>
         </Word>
-        <Word no="4" top="2024" bottom="2075" left="847" right="1156" shear="0" text="Kazimir">
+        <Word no="2" top="2024" bottom="2075" left="847" right="1156" shear="0" text="KahimiR">
             <Character no="1" top="2024" bottom="2075" left="851" right="906" shear="0" text="K"/>
             <Character no="2" top="2024" bottom="2075" left="906" right="949" shear="0" text="a"/>
             <Character no="3" top="2024" bottom="2075" left="949" right="990" shear="0" text="h"/>
@@ -87,7 +87,7 @@
             <Character no="1" top="2087" bottom="2152" left="1562" right="1600" shear="0" text="B"/>
         </Word>
     </TextLine>
-    <TextLine no="11" top="2336" bottom="2398" left="702" right="826" shear="0">
+    <TextLine no="10" top="2336" bottom="2398" left="702" right="826" shear="0">
         <Word no="1" top="2336" bottom="2398" left="702" right="826" shear="0" text="loca">
             <Character no="1" top="2336" bottom="2398" left="705" right="728" shear="0" text="l"/>
             <Character no="2" top="2336" bottom="2398" left="728" right="759" shear="0" text="o"/>

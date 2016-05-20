@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_080">
+<Image name="Stanford-CCCC_0080">
     <TextLine no="1" top="325" bottom="408" left="746" right="1376" shear="0">
         <Word no="1" top="326" bottom="408" left="746" right="847" shear="0" text="god">
             <Character no="1" top="326" bottom="408" left="746" right="787" shear="0" text="g"/>

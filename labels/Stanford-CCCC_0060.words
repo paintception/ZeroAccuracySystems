@@ -96,7 +96,7 @@
             <Character no="4" top="1066" bottom="1139" left="398" right="430" shear="0" text="d"/>
         </Word>
     </TextLine>
-    <TextLine no="12" top="1162" bottom="1221" left="1366" right="1447" shear="0">
+    <TextLine no="12" top="1168" bottom="1221" left="1366" right="1439" shear="0">
         <Word no="1" top="1168" bottom="1221" left="1366" right="1439" shear="0" text="e">
             <Character no="1" top="1168" bottom="1221" left="1366" right="1440" shear="0" text="e"/>
         </Word>
@@ -145,7 +145,7 @@
             <Character no="2" top="1469" bottom="1510" left="1147" right="1173" shear="0" text="o"/>
         </Word>
     </TextLine>
-    <TextLine no="16" top="1606" bottom="1655" left="561" right="799" shear="0">
+    <TextLine no="16" top="1606" bottom="1654" left="748" right="799" shear="0">
         <Word no="1" top="1606" bottom="1654" left="748" right="799" shear="0" text="to">
             <Character no="1" top="1606" bottom="1654" left="748" right="774" shear="0" text="t"/>
             <Character no="2" top="1606" bottom="1654" left="774" right="800" shear="0" text="o"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="KNMP_16">
+<Image name="KNMP-VIII_F_69______2C2O_0016">
     <TextLine no="1" top="167" bottom="244" left="835" right="1159" shear="0">
         <Word no="1" top="167" bottom="242" left="835" right="916" shear="0" text="Nec">
             <Character no="1" top="167" bottom="242" left="835" right="873" shear="0" text="N"/>
@@ -84,7 +84,7 @@
         <Word no="1" top="838" bottom="894" left="347" right="380" shear="0" text="b">
             <Character no="1" top="838" bottom="894" left="347" right="381" shear="0" text="b"/>
         </Word>
-        <Word no="2" top="792" bottom="866" left="1241" right="1365" shear="0" text="Anno">
+        <Word no="2" top="792" bottom="866" left="1241" right="1365" shear="0" text="Arno">
             <Character no="1" top="792" bottom="866" left="1241" right="1274" shear="0" text="A"/>
             <Character no="2" top="792" bottom="866" left="1274" right="1303" shear="0" text="r"/>
             <Character no="3" top="792" bottom="866" left="1303" right="1334" shear="0" text="n"/>
@@ -92,7 +92,7 @@
         </Word>
     </TextLine>
     <TextLine no="10" top="916" bottom="968" left="348" right="386" shear="0">
-        <Word no="1" top="916" bottom="968" left="348" right="386" shear="0" text="@ampersand">
+        <Word no="1" top="916" bottom="968" left="348" right="386" shear="0" text="&amp;">
             <Character no="1" top="916" bottom="968" left="348" right="387" shear="0" text="&amp;"/>
         </Word>
     </TextLine>
@@ -146,7 +146,7 @@
         <Word no="1" top="1467" bottom="1526" left="1156" right="1191" shear="0" text="p">
             <Character no="1" top="1467" bottom="1526" left="1156" right="1192" shear="0" text="p"/>
         </Word>
-        <Word no="2" top="1429" bottom="1512" left="1348" right="1399" shear="0" text="B">
+        <Word no="2" top="1429" bottom="1512" left="1348" right="1399" shear="0" text="Pi">
             <Character no="1" top="1429" bottom="1512" left="1348" right="1384" shear="0" text="P"/>
             <Character no="2" top="1429" bottom="1512" left="1384" right="1400" shear="0" text="i"/>
         </Word>

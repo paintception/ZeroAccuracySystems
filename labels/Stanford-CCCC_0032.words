@@ -24,7 +24,7 @@
             <Character no="1" top="980" bottom="1025" left="1754" right="1801" shear="0" text="a"/>
         </Word>
     </TextLine>
-    <TextLine no="5" top="1249" bottom="1339" left="723" right="778" shear="0">
+    <TextLine no="5" top="1249" bottom="1339" left="728" right="778" shear="0">
         <Word no="1" top="1249" bottom="1339" left="728" right="778" shear="0" text="S">
             <Character no="1" top="1249" bottom="1339" left="728" right="779" shear="0" text="S"/>
         </Word>

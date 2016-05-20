@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_068">
+<Image name="Stanford-CCCC_0068">
     <TextLine no="1" top="237" bottom="278" left="367" right="418" shear="0">
         <Word no="1" top="237" bottom="278" left="367" right="418" shear="0" text="to">
             <Character no="1" top="237" bottom="278" left="367" right="389" shear="0" text="t"/>
@@ -7,7 +7,7 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="369" bottom="428" left="564" right="910" shear="0">
-        <Word no="1" top="369" bottom="428" left="693" right="910" shear="0" text="custodiam">
+        <Word no="1" top="369" bottom="428" left="693" right="910" shear="0" text="cuftodiam">
             <Character no="1" top="369" bottom="428" left="693" right="714" shear="0" text="c"/>
             <Character no="2" top="369" bottom="428" left="714" right="744" shear="0" text="u"/>
             <Character no="3" top="369" bottom="428" left="744" right="760" shear="0" text="f"/>
@@ -119,7 +119,7 @@
             <Character no="2" top="1500" bottom="1542" left="371" right="400" shear="0" text="o"/>
         </Word>
     </TextLine>
-    <TextLine no="13" top="1696" bottom="1770" left="461" right="753" shear="0">
+    <TextLine no="13" top="1696" bottom="1781" left="470" right="753" shear="0">
         <Word no="1" top="1722" bottom="1770" left="721" right="753" shear="0" text="o">
             <Character no="1" top="1722" bottom="1770" left="721" right="754" shear="0" text="o"/>
         </Word>

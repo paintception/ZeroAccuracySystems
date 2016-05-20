@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<Image name="Stanford_066">
+<Image name="Stanford-CCCC_0066">
     <TextLine no="1" top="209" bottom="299" left="298" right="422" shear="0">
         <Word no="1" top="209" bottom="299" left="298" right="422" shear="0" text="o#re">
             <Character no="1" top="209" bottom="299" left="298" right="336" shear="0" text="o"/>
@@ -71,7 +71,7 @@
         </Word>
     </TextLine>
     <TextLine no="10" top="1529" bottom="1602" left="1206" right="1324" shear="0">
-        <Word no="2" top="1529" bottom="1602" left="1206" right="1324" shear="0" text="o#er">
+        <Word no="1" top="1529" bottom="1602" left="1206" right="1324" shear="0" text="o#er">
             <Character no="1" top="1529" bottom="1602" left="1206" right="1238" shear="0" text="o"/>
             <Character no="2" top="1529" bottom="1602" left="1238" right="1268" shear="0" text="#"/>
             <Character no="3" top="1529" bottom="1602" left="1268" right="1289" shear="0" text="e"/>
@@ -128,8 +128,8 @@
             <Character no="4" top="1835" bottom="1918" left="1260" right="1294" shear="0" text="d"/>
         </Word>
     </TextLine>
-    <TextLine no="15" top="1974" bottom="2045" left="1319" right="1456" shear="0">
-        <Word no="2" top="1974" bottom="2045" left="1319" right="1445" shear="0" text="laud">
+    <TextLine no="15" top="1974" bottom="2045" left="1319" right="1445" shear="0">
+        <Word no="1" top="1974" bottom="2045" left="1319" right="1445" shear="0" text="laud">
             <Character no="1" top="1974" bottom="2045" left="1319" right="1340" shear="0" text="l"/>
             <Character no="2" top="1974" bottom="2045" left="1340" right="1374" shear="0" text="a"/>
             <Character no="3" top="1974" bottom="2045" left="1374" right="1410" shear="0" text="u"/>
