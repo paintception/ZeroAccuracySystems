@@ -6,7 +6,7 @@
         </Word>
     </TextLine>
     <TextLine no="2" top="589" bottom="689" left="368" right="419" shear="0">
-        <Word no="1" top="589" bottom="689" left="368" right="419" shear="0" text="@thorn">
+        <Word no="1" top="589" bottom="689" left="368" right="419" shear="0" text="#">
             <Character no="1" top="589" bottom="689" left="368" right="420" shear="0" text="#"/>
         </Word>
     </TextLine>
@@ -43,7 +43,7 @@
         <Word no="1" top="1720" bottom="1789" left="1453" right="1495" shear="0" text="d">
             <Character no="1" top="1720" bottom="1789" left="1453" right="1496" shear="0" text="d"/>
         </Word>
-        <Word no="2" top="1725" bottom="1832" left="1061" right="1109" shear="0" text="@thorn">
+        <Word no="2" top="1725" bottom="1832" left="1061" right="1109" shear="0" text="#">
             <Character no="1" top="1725" bottom="1832" left="1061" right="1110" shear="0" text="#"/>
         </Word>
         <Word no="3" top="1720" bottom="1789" left="1453" right="1492" shear="0" text="d">
@@ -51,12 +51,12 @@
         </Word>
     </TextLine>
     <TextLine no="7" top="1813" bottom="1934" left="1704" right="1752" shear="0">
-        <Word no="1" top="1813" bottom="1934" left="1704" right="1752" shear="0" text="@thorn">
+        <Word no="1" top="1813" bottom="1934" left="1704" right="1752" shear="0" text="#">
             <Character no="1" top="1813" bottom="1934" left="1704" right="1753" shear="0" text="#"/>
         </Word>
     </TextLine>
     <TextLine no="8" top="1925" bottom="2036" left="968" right="1013" shear="0">
-        <Word no="1" top="1925" bottom="2036" left="968" right="1013" shear="0" text="@thorn">
+        <Word no="1" top="1925" bottom="2036" left="968" right="1013" shear="0" text="#">
             <Character no="1" top="1925" bottom="2036" left="968" right="1014" shear="0" text="#"/>
         </Word>
     </TextLine>
@@ -76,7 +76,7 @@
         </Word>
     </TextLine>
     <TextLine no="11" top="2222" bottom="2333" left="1731" right="1774" shear="0">
-        <Word no="1" top="2222" bottom="2333" left="1731" right="1774" shear="0" text="@thorn">
+        <Word no="1" top="2222" bottom="2333" left="1731" right="1774" shear="0" text="#">
             <Character no="1" top="2222" bottom="2333" left="1731" right="1775" shear="0" text="#"/>
         </Word>
     </TextLine>

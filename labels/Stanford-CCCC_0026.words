@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding = "UTF-8"?>
 <Image name="Stanford-CCC_0026">
     <TextLine no="1" top="502" bottom="586" left="1972" right="2033" shear="0">
-        <Word no="1" top="502" bottom="586" left="1972" right="2033" shear="0" text="@u^~">
+        <Word no="1" top="502" bottom="586" left="1972" right="2033" shear="0" text="u">
             <Character no="1" top="502" bottom="586" left="1972" right="2034" shear="0" text="u"/>
         </Word>
     </TextLine>
     <TextLine no="2" top="623" bottom="672" left="201" right="245" shear="0">
-        <Word no="1" top="623" bottom="672" left="201" right="245" shear="0" text="@a_double_stroked">
+        <Word no="1" top="623" bottom="672" left="201" right="245" shear="0" text="a">
             <Character no="1" top="623" bottom="672" left="201" right="246" shear="0" text="a"/>
         </Word>
     </TextLine>
@@ -24,7 +24,7 @@
         </Word>
     </TextLine>
     <TextLine no="5" top="1334" bottom="1429" left="1254" right="1458" shear="0">
-        <Word no="1" top="1334" bottom="1429" left="1254" right="1458" shear="0" text="thonne">
+        <Word no="1" top="1334" bottom="1429" left="1254" right="1458" shear="0" text="#onne">
             <Character no="1" top="1334" bottom="1429" left="1254" right="1301" shear="0" text="#"/>
             <Character no="2" top="1334" bottom="1429" left="1301" right="1333" shear="0" text="o"/>
             <Character no="3" top="1334" bottom="1429" left="1333" right="1373" shear="0" text="n"/>
@@ -47,7 +47,7 @@
         </Word>
     </TextLine>
     <TextLine no="8" top="3121" bottom="3170" left="1906" right="1957" shear="0">
-        <Word no="1" top="3121" bottom="3170" left="1906" right="1957" shear="0" text="@a_double_stroked">
+        <Word no="1" top="3121" bottom="3170" left="1906" right="1957" shear="0" text="a">
             <Character no="1" top="3121" bottom="3170" left="1906" right="1958" shear="0" text="a"/>
         </Word>
     </TextLine>

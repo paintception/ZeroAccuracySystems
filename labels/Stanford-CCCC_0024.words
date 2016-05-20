@@ -30,7 +30,7 @@
         </Word>
     </TextLine>
     <TextLine no="6" top="2369" bottom="2497" left="566" right="778" shear="0">
-        <Word no="1" top="2369" bottom="2497" left="566" right="778" shear="0" text="thonne">
+        <Word no="1" top="2369" bottom="2497" left="566" right="778" shear="0" text="#onne">
             <Character no="1" top="2369" bottom="2497" left="566" right="610" shear="0" text="#"/>
             <Character no="2" top="2369" bottom="2497" left="610" right="639" shear="0" text="o"/>
             <Character no="3" top="2369" bottom="2497" left="639" right="689" shear="0" text="n"/>

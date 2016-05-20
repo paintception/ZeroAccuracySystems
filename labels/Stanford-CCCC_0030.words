@@ -63,7 +63,7 @@
         <Word no="4" top="1186" bottom="1239" left="1303" right="1338" shear="0" text="c">
             <Character no="1" top="1186" bottom="1239" left="1303" right="1339" shear="0" text="c"/>
         </Word>
-        <Word no="5" top="1170" bottom="1277" left="1097" right="1298" shear="0" text="thonne">
+        <Word no="5" top="1170" bottom="1277" left="1097" right="1298" shear="0" text="#onne">
             <Character no="1" top="1170" bottom="1277" left="1097" right="1142" shear="0" text="#"/>
             <Character no="2" top="1170" bottom="1277" left="1142" right="1173" shear="0" text="o"/>
             <Character no="3" top="1170" bottom="1277" left="1173" right="1219" shear="0" text="n"/>
