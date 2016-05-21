@@ -10,7 +10,7 @@ import sys
 
 # Parameters
 #pages_dir_path = os.path.join(dirs.BASE_DIR_PATH,"relabeled_pages")
-pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
 word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 
 # Delete and create directories

@@ -27,7 +27,7 @@ target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 train_dir_path = os.path.join(target_dir_path,"train")
 test_dir_path = os.path.join(target_dir_path,"test")
 
-train_ratio = 0.9
+train_ratio = 0.95
 
 # Delete and create target directories
 if os.path.exists(target_dir_path):
@@ -60,7 +60,8 @@ for source_file_name in source_file_names:
     image = image.convert("LA") # Greyscale
 
     if train:
-        for sheer_ratio in range(-2,3):
+#        for sheer_ratio in range(-2,3):
+        for sheer_ratio in [0]:
             train_image = image
             train_image = sheer_image(train_image,(sheer_ratio*0.05))
             train_image = resize_image(train_image)

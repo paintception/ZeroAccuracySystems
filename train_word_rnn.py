@@ -34,7 +34,7 @@ n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
-display_time_interval_sec = 5
+display_time_interval_sec = 60
 
 # Placeholders
 default_dropout_prob = tf.constant(1,"float")
