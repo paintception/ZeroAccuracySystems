@@ -16,7 +16,7 @@ def sheer_image(image,sheer_factor=0):
 
 def resize_image(image):
     resize_ratio = 0.5
-    new_width = int(image.width * resize_ratio)
+    new_width = int(image.width * resize_ratio * 0.5)
     new_height = 28
     return image.resize((new_width, new_height))
 

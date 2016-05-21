@@ -5,10 +5,10 @@ import numpy as np
 from word_dataset import WordDataSet,WordDataItem
 import dirs
 import random
+import os
 
 # Read data set
-
-fixed_timestep_count = 100
+fixed_timestep_count = 50
 dataset = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
 
 print("Total items:",dataset.get_total_item_count())
@@ -16,7 +16,7 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.001
+learning_rate = 0.0001
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
@@ -34,7 +34,14 @@ n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
-display_time_interval_sec = 60
+display_time_interval_sec = 30
+
+# Saved models
+model_dir_path = dirs.KNMP_MODEL_DIR_PATH
+last_model_file_path = os.path.join(model_dir_path,"last.model")
+max_acc_model_file_path = os.path.join(model_dir_path,"max_acc.model")
+if not os.path.exists(model_dir_path):
+    os.makedirs(model_dir_path)
 
 # Placeholders
 default_dropout_prob = tf.constant(1,"float")
@@ -82,6 +89,11 @@ init = tf.initialize_all_variables()
 # Launch the graph
 with tf.Session() as sess:
     sess.run(init)
+
+    # Restore model, if necessary
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, max_acc_model_file_path)
+
     step = 1
     prev_output_time = datetime.datetime.now()
     best_test_acc = 0
@@ -120,8 +132,12 @@ with tf.Session() as sess:
                    ", Test Accuracy = " + "{:.4f}".format(test_acc),
                     "*" if test_acc > best_test_acc else "")
 
+            saver = tf.train.Saver()
+            saver.save(sess, last_model_file_path)
+
             if (test_acc > best_test_acc):
                 best_test_acc = test_acc
+            saver.save(sess, max_acc_model_file_path)
 
             prev_output_time = datetime.datetime.now()
 
