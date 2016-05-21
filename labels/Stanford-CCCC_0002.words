@@ -54,14 +54,14 @@
         </Word>
     </TextLine>
     <TextLine no="7" top="1039" bottom="1140" left="1146" right="1446" shear="0">
-        <Word no="1" top="1039" bottom="1140" left="1146" right="1444" shear="0" text="healda#">
+        <Word no="1" top="1039" bottom="1140" left="1146" right="1444" shear="0" text="healdad">
             <Character no="1" top="1039" bottom="1140" left="1146" right="1211" shear="0" text="h"/>
             <Character no="2" top="1039" bottom="1140" left="1211" right="1237" shear="0" text="e"/>
             <Character no="3" top="1039" bottom="1140" left="1237" right="1275" shear="0" text="a"/>
             <Character no="4" top="1039" bottom="1140" left="1275" right="1299" shear="0" text="l"/>
             <Character no="5" top="1039" bottom="1140" left="1299" right="1337" shear="0" text="d"/>
             <Character no="6" top="1039" bottom="1140" left="1337" right="1380" shear="0" text="a"/>
-            <Character no="7" top="1039" bottom="1140" left="1380" right="1445" shear="0" text="#"/>
+            <Character no="7" top="1039" bottom="1140" left="1380" right="1445" shear="0" text="d"/>
         </Word>
         <Word no="2" top="1039" bottom="1140" left="1146" right="1446" shear="0" text="healdath">
             <Character no="1" top="1039" bottom="1140" left="1146" right="1210" shear="0" text="h"/>

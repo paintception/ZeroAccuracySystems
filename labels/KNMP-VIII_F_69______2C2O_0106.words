@@ -7,9 +7,10 @@
             <Character no="3" top="208" bottom="257" left="1439" right="1478" shear="0" text="a"/>
         </Word>
     </TextLine>
-    <TextLine no="2" top="279" bottom="342" left="925" right="959" shear="0">
-        <Word no="1" top="279" bottom="342" left="925" right="959" shear="0" text="h">
-            <Character no="1" top="279" bottom="342" left="925" right="960" shear="0" text="h"/>
+    <TextLine no="2" top="279" bottom="342" left="920" right="959" shear="0">
+        <Word no="1" top="279" bottom="342" left="920" right="959" shear="0" text="!h">
+            <Character no="1" top="279" bottom="342" left="920" right="925" shear="0" text="!"/>
+            <Character no="2" top="279" bottom="342" left="925" right="960" shear="0" text="h"/>
         </Word>
     </TextLine>
     <TextLine no="3" top="295" bottom="354" left="540" right="1248" shear="0">

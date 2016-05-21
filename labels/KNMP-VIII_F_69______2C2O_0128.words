@@ -20,9 +20,9 @@
         </Word>
     </TextLine>
     <TextLine no="3" top="801" bottom="864" left="1275" right="1344" shear="0">
-        <Word no="1" top="801" bottom="864" left="1275" right="1344" shear="0" text="!sit">
+        <Word no="1" top="801" bottom="864" left="1275" right="1344" shear="0" text="!fit">
             <Character no="1" top="801" bottom="864" left="1275" right="1280" shear="0" text="!"/>
-            <Character no="2" top="801" bottom="864" left="1280" right="1299" shear="0" text="s"/>
+            <Character no="2" top="801" bottom="864" left="1280" right="1299" shear="0" text="f"/>
             <Character no="3" top="801" bottom="864" left="1299" right="1311" shear="0" text="i"/>
             <Character no="4" top="801" bottom="864" left="1311" right="1345" shear="0" text="t"/>
         </Word>
@@ -98,8 +98,8 @@
         </Word>
     </TextLine>
     <TextLine no="14" top="2043" bottom="2107" left="1087" right="1171" shear="0">
-        <Word no="1" top="2043" bottom="2107" left="1087" right="1171" shear="0" text="sua">
-            <Character no="1" top="2043" bottom="2107" left="1087" right="1110" shear="0" text="s"/>
+        <Word no="1" top="2043" bottom="2107" left="1087" right="1171" shear="0" text="fua">
+            <Character no="1" top="2043" bottom="2107" left="1087" right="1110" shear="0" text="f"/>
             <Character no="2" top="2043" bottom="2107" left="1110" right="1137" shear="0" text="u"/>
             <Character no="3" top="2043" bottom="2107" left="1137" right="1172" shear="0" text="a"/>
         </Word>

@@ -63,15 +63,15 @@
         </Word>
     </TextLine>
     <TextLine no="5" top="494" bottom="560" left="1417" right="1612" shear="0">
-        <Word no="1" top="494" bottom="560" left="1543" right="1612" shear="0" text=";u">
-            <Character no="1" top="494" bottom="560" left="1543" right="1570" shear="0" text=";"/>
+        <Word no="1" top="494" bottom="560" left="1543" right="1612" shear="0" text="eu">
+            <Character no="1" top="494" bottom="560" left="1543" right="1570" shear="0" text="e"/>
             <Character no="2" top="494" bottom="560" left="1570" right="1613" shear="0" text="u"/>
         </Word>
         <Word no="2" top="514" bottom="557" left="1417" right="1450" shear="0" text="o">
             <Character no="1" top="514" bottom="557" left="1417" right="1451" shear="0" text="o"/>
         </Word>
-        <Word no="3" top="494" bottom="560" left="1543" right="1606" shear="0" text=";u">
-            <Character no="1" top="494" bottom="560" left="1543" right="1571" shear="0" text=";"/>
+        <Word no="3" top="494" bottom="560" left="1543" right="1606" shear="0" text="eu">
+            <Character no="1" top="494" bottom="560" left="1543" right="1571" shear="0" text="e"/>
             <Character no="2" top="494" bottom="560" left="1571" right="1607" shear="0" text="u"/>
         </Word>
     </TextLine>
@@ -205,8 +205,8 @@
         </Word>
     </TextLine>
     <TextLine no="16" top="1292" bottom="1357" left="758" right="1404" shear="0">
-        <Word no="1" top="1292" bottom="1357" left="1339" right="1404" shear="0" text=";u">
-            <Character no="1" top="1292" bottom="1357" left="1339" right="1364" shear="0" text=";"/>
+        <Word no="1" top="1292" bottom="1357" left="1339" right="1404" shear="0" text="eu">
+            <Character no="1" top="1292" bottom="1357" left="1339" right="1364" shear="0" text="e"/>
             <Character no="2" top="1292" bottom="1357" left="1364" right="1405" shear="0" text="u"/>
         </Word>
         <Word no="2" top="1296" bottom="1355" left="758" right="959" shear="0" text="extenfio">

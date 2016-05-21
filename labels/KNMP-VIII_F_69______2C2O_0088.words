@@ -90,7 +90,7 @@
             <Character no="1" top="403" bottom="444" left="1285" right="1315" shear="0" text="c"/>
         </Word>
     </TextLine>
-    <TextLine no="8" top="460" bottom="523" left="569" right="1298" shear="0">
+    <TextLine no="8" top="460" bottom="523" left="569" right="1296" shear="0">
         <Word no="1" top="473" bottom="522" left="569" right="602" shear="0" text="b">
             <Character no="1" top="473" bottom="522" left="569" right="603" shear="0" text="b"/>
         </Word>
@@ -98,13 +98,9 @@
             <Character no="1" top="464" bottom="522" left="916" right="953" shear="0" text="d"/>
             <Character no="2" top="464" bottom="522" left="953" right="986" shear="0" text="a"/>
         </Word>
-        <Word no="3" top="460" bottom="523" left="1239" right="1296" shear="0" text=";u">
-            <Character no="1" top="460" bottom="523" left="1239" right="1264" shear="0" text=";"/>
+        <Word no="3" top="460" bottom="523" left="1239" right="1296" shear="0" text="eu">
+            <Character no="1" top="460" bottom="523" left="1239" right="1264" shear="0" text="e"/>
             <Character no="2" top="460" bottom="523" left="1264" right="1297" shear="0" text="u"/>
-        </Word>
-        <Word no="4" top="460" bottom="523" left="1239" right="1298" shear="0" text=";u">
-            <Character no="1" top="460" bottom="523" left="1239" right="1263" shear="0" text=";"/>
-            <Character no="2" top="460" bottom="523" left="1263" right="1299" shear="0" text="u"/>
         </Word>
     </TextLine>
     <TextLine no="9" top="531" bottom="606" left="405" right="445" shear="0">

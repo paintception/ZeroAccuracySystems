@@ -103,8 +103,8 @@
             <Character no="4" top="1158" bottom="1207" left="585" right="609" shear="0" text="t"/>
             <Character no="5" top="1158" bottom="1207" left="609" right="642" shear="0" text="a"/>
         </Word>
-        <Word no="3" top="1134" bottom="1200" left="1064" right="1124" shear="0" text=";u">
-            <Character no="1" top="1134" bottom="1200" left="1064" right="1092" shear="0" text=";"/>
+        <Word no="3" top="1134" bottom="1200" left="1064" right="1124" shear="0" text="cu">
+            <Character no="1" top="1134" bottom="1200" left="1064" right="1092" shear="0" text="c"/>
             <Character no="2" top="1134" bottom="1200" left="1092" right="1125" shear="0" text="u"/>
         </Word>
     </TextLine>

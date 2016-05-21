@@ -278,12 +278,12 @@
         </Word>
     </TextLine>
     <TextLine no="20" top="2077" bottom="2144" left="624" right="1106" shear="0">
-        <Word no="1" top="2078" bottom="2144" left="624" right="686" shear="0" text=";u">
-            <Character no="1" top="2078" bottom="2144" left="624" right="650" shear="0" text=";"/>
+        <Word no="1" top="2078" bottom="2144" left="624" right="686" shear="0" text="cu">
+            <Character no="1" top="2078" bottom="2144" left="624" right="650" shear="0" text="c"/>
             <Character no="2" top="2078" bottom="2144" left="650" right="687" shear="0" text="u"/>
         </Word>
-        <Word no="2" top="2078" bottom="2144" left="624" right="693" shear="0" text=";u">
-            <Character no="1" top="2078" bottom="2144" left="624" right="651" shear="0" text=";"/>
+        <Word no="2" top="2078" bottom="2144" left="624" right="693" shear="0" text="cu">
+            <Character no="1" top="2078" bottom="2144" left="624" right="651" shear="0" text="c"/>
             <Character no="2" top="2078" bottom="2144" left="651" right="694" shear="0" text="u"/>
         </Word>
         <Word no="3" top="2077" bottom="2143" left="899" right="1106" shear="0" text="adduce">

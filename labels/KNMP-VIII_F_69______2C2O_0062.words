@@ -264,8 +264,8 @@
         </Word>
     </TextLine>
     <TextLine no="23" top="1721" bottom="1796" left="734" right="1556" shear="0">
-        <Word no="1" top="1730" bottom="1796" left="734" right="797" shear="0" text=";u">
-            <Character no="1" top="1730" bottom="1796" left="734" right="762" shear="0" text=";"/>
+        <Word no="1" top="1730" bottom="1796" left="734" right="797" shear="0" text="cu">
+            <Character no="1" top="1730" bottom="1796" left="734" right="762" shear="0" text="c"/>
             <Character no="2" top="1730" bottom="1796" left="762" right="798" shear="0" text="u"/>
         </Word>
         <Word no="2" top="1721" bottom="1794" left="1511" right="1556" shear="0" text="S">

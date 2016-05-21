@@ -40,13 +40,13 @@
         <Word no="2" top="442" bottom="482" left="1271" right="1305" shear="0" text="o">
             <Character no="1" top="442" bottom="482" left="1271" right="1306" shear="0" text="o"/>
         </Word>
-        <Word no="3" top="419" bottom="482" left="1136" right="1336" shear="0" text="boemos">
+        <Word no="3" top="419" bottom="482" left="1136" right="1336" shear="0" text="boemof">
             <Character no="1" top="419" bottom="482" left="1136" right="1173" shear="0" text="b"/>
             <Character no="2" top="419" bottom="482" left="1173" right="1199" shear="0" text="o"/>
             <Character no="3" top="419" bottom="482" left="1199" right="1225" shear="0" text="e"/>
             <Character no="4" top="419" bottom="482" left="1225" right="1274" shear="0" text="m"/>
             <Character no="5" top="419" bottom="482" left="1274" right="1305" shear="0" text="o"/>
-            <Character no="6" top="419" bottom="482" left="1305" right="1337" shear="0" text="s"/>
+            <Character no="6" top="419" bottom="482" left="1305" right="1337" shear="0" text="f"/>
         </Word>
     </TextLine>
     <TextLine no="5" top="525" bottom="566" left="1291" right="1322" shear="0">
@@ -288,14 +288,14 @@
         </Word>
     </TextLine>
     <TextLine no="26" top="1807" bottom="1882" left="355" right="1592" shear="0">
-        <Word no="1" top="1818" bottom="1882" left="1395" right="1592" shear="0" text="successo">
-            <Character no="1" top="1818" bottom="1882" left="1395" right="1416" shear="0" text="s"/>
+        <Word no="1" top="1818" bottom="1882" left="1395" right="1592" shear="0" text="fucceffo">
+            <Character no="1" top="1818" bottom="1882" left="1395" right="1416" shear="0" text="f"/>
             <Character no="2" top="1818" bottom="1882" left="1416" right="1450" shear="0" text="u"/>
             <Character no="3" top="1818" bottom="1882" left="1450" right="1472" shear="0" text="c"/>
             <Character no="4" top="1818" bottom="1882" left="1472" right="1493" shear="0" text="c"/>
             <Character no="5" top="1818" bottom="1882" left="1493" right="1520" shear="0" text="e"/>
-            <Character no="6" top="1818" bottom="1882" left="1520" right="1547" shear="0" text="s"/>
-            <Character no="7" top="1818" bottom="1882" left="1547" right="1566" shear="0" text="s"/>
+            <Character no="6" top="1818" bottom="1882" left="1520" right="1547" shear="0" text="f"/>
+            <Character no="7" top="1818" bottom="1882" left="1547" right="1566" shear="0" text="f"/>
             <Character no="8" top="1818" bottom="1882" left="1566" right="1593" shear="0" text="o"/>
         </Word>
         <Word no="2" top="1807" bottom="1882" left="355" right="397" shear="0" text="N">

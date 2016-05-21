@@ -274,15 +274,15 @@
         </Word>
     </TextLine>
     <TextLine no="28" top="2120" bottom="2195" left="1198" right="1441" shear="0">
-        <Word no="1" top="2120" bottom="2192" left="1198" right="1275" shear="0" text="]u">
-            <Character no="1" top="2120" bottom="2192" left="1198" right="1229" shear="0" text="]"/>
+        <Word no="1" top="2120" bottom="2192" left="1198" right="1275" shear="0" text="eu">
+            <Character no="1" top="2120" bottom="2192" left="1198" right="1229" shear="0" text="e"/>
             <Character no="2" top="2120" bottom="2192" left="1229" right="1276" shear="0" text="u"/>
         </Word>
         <Word no="2" top="2142" bottom="2195" left="1403" right="1441" shear="0" text="p">
             <Character no="1" top="2142" bottom="2195" left="1403" right="1442" shear="0" text="p"/>
         </Word>
-        <Word no="3" top="2120" bottom="2192" left="1198" right="1268" shear="0" text="]u">
-            <Character no="1" top="2120" bottom="2192" left="1198" right="1229" shear="0" text="]"/>
+        <Word no="3" top="2120" bottom="2192" left="1198" right="1268" shear="0" text="eu">
+            <Character no="1" top="2120" bottom="2192" left="1198" right="1229" shear="0" text="e"/>
             <Character no="2" top="2120" bottom="2192" left="1229" right="1269" shear="0" text="u"/>
         </Word>
     </TextLine>
@@ -292,8 +292,8 @@
         </Word>
     </TextLine>
     <TextLine no="30" top="2205" bottom="2274" left="818" right="1890" shear="0">
-        <Word no="1" top="2210" bottom="2271" left="818" right="887" shear="0" text="]u">
-            <Character no="1" top="2210" bottom="2271" left="818" right="847" shear="0" text="]"/>
+        <Word no="1" top="2210" bottom="2271" left="818" right="887" shear="0" text="eu">
+            <Character no="1" top="2210" bottom="2271" left="818" right="847" shear="0" text="e"/>
             <Character no="2" top="2210" bottom="2271" left="847" right="888" shear="0" text="u"/>
         </Word>
         <Word no="2" top="2206" bottom="2272" left="1353" right="1507" shear="0" text="ducif!">
@@ -322,14 +322,14 @@
             <Character no="5" top="2206" bottom="2272" left="1475" right="1493" shear="0" text="f"/>
             <Character no="6" top="2206" bottom="2272" left="1493" right="1508" shear="0" text="!"/>
         </Word>
-        <Word no="5" top="2210" bottom="2271" left="818" right="881" shear="0" text="]u">
-            <Character no="1" top="2210" bottom="2271" left="818" right="842" shear="0" text="]"/>
+        <Word no="5" top="2210" bottom="2271" left="818" right="881" shear="0" text="eu">
+            <Character no="1" top="2210" bottom="2271" left="818" right="842" shear="0" text="e"/>
             <Character no="2" top="2210" bottom="2271" left="842" right="882" shear="0" text="u"/>
         </Word>
     </TextLine>
     <TextLine no="31" top="2285" bottom="2354" left="1117" right="1191" shear="0">
-        <Word no="1" top="2285" bottom="2354" left="1117" right="1191" shear="0" text="]u">
-            <Character no="1" top="2285" bottom="2354" left="1117" right="1150" shear="0" text="]"/>
+        <Word no="1" top="2285" bottom="2354" left="1117" right="1191" shear="0" text="eu">
+            <Character no="1" top="2285" bottom="2354" left="1117" right="1150" shear="0" text="e"/>
             <Character no="2" top="2285" bottom="2354" left="1150" right="1192" shear="0" text="u"/>
         </Word>
     </TextLine>
