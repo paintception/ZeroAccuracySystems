@@ -147,14 +147,6 @@ class WordDataSet(object):
             labels.append(item.get_label())
         return labels
 
-    # def get_train_batch_label_lengths(self):
-    #     batch_label_lengths = []
-    #
-    #     for item in self.next_batch_items:
-    #         batch_label_lengths.append(len(item.label))
-    #
-    #     return batch_label_lengths
-
     def get_unique_chars(self):
         chars = []
         for item in self.all_items:

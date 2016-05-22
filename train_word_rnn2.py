@@ -30,7 +30,7 @@ n_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:",n_steps)
 n_cells = 2 # Number of cells/layers
 print("Cells:", n_cells)
-n_hidden = 192 # hidden layer num of features
+n_hidden = 128 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
@@ -66,16 +66,23 @@ rnn_inputs = tf.split(0, n_steps, x_hidden)  # [(n_batch_size, n_features),(n_ba
 # RNN
 lstm_fw_cell = rnn_cell.LSTMCell(n_hidden)
 lstm_fw_cell_dropout = rnn_cell.DropoutWrapper(lstm_fw_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+multi_lstm_fw_cell = lstm_fw_cell_dropout
+if n_cells > 1:
+    multi_lstm_fw_cell = rnn_cell.MultiRNNCell([lstm_fw_cell_dropout] * n_cells)
 
 lstm_bw_cell = rnn_cell.LSTMCell(n_hidden)
 lstm_bw_cell_dropout = rnn_cell.DropoutWrapper(lstm_bw_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+multi_lstm_bw_cell = lstm_bw_cell_dropout
+if n_cells > 1:
+    multi_lstm_bw_cell = rnn_cell.MultiRNNCell([lstm_bw_cell_dropout] * n_cells)
 
-initial_state_fw = lstm_fw_cell.zero_state(batch_size, tf.float32)
-initial_state_bw = lstm_bw_cell.zero_state(batch_size, tf.float32)
+initial_state_fw = multi_lstm_fw_cell.zero_state(batch_size, tf.float32)
+initial_state_bw = multi_lstm_bw_cell.zero_state(batch_size, tf.float32)
 
-rnn_outputs = rnn.bidirectional_rnn(lstm_fw_cell_dropout, lstm_bw_cell_dropout, rnn_inputs,
+rnn_outputs, rnn_output_state_fw, rnn_output_state_bw = rnn.bidirectional_rnn(multi_lstm_fw_cell, multi_lstm_bw_cell, rnn_inputs,
                                 initial_state_fw=initial_state_fw,
                                 initial_state_bw=initial_state_bw)
+
 rnn_output = rnn_outputs[-1]
 y_pred = tf.matmul(rnn_output, w_out) + b_out
 
