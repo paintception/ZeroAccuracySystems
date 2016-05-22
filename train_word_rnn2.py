@@ -14,6 +14,7 @@ dataset = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
+print("Max label length:",dataset.get_max_label_length())
 
 # Parameters
 learning_rate = 0.0005

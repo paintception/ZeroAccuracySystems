@@ -42,24 +42,29 @@ class WordDataItem(object):
     def get_feature_count(self):
         return self.get_height()
 
+    def get_fixed_length_label(self,fixed_length,start_char="",end_char=""):
+        tmp_label = start_char + self.get_label() + end_char
+        if (len(tmp_label) > fixed_length):
+            tmp_label = tmp_label[:fixed_length]
+        return tmp_label.ljust(fixed_length)
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
 class WordDataSet(object):
     def __init__(self, dir_path,max_image_width=1000):
-        self.dir_path = dir_path
-        self.max_image_width = max_image_width
+        self._dir_path = dir_path
+        self._max_image_width = max_image_width
 
         self.load_data()
         self.init_train_batch()
 
     def load_data(self):
-        self.train_items = self.load_data_items("train")
-        self.test_items = self.load_data_items("test")
-        self.all_items = self.train_items + self.test_items
+        self._train_items = self.load_data_items("train")
+        self._test_items = self.load_data_items("test")
+        self._all_items = self._train_items + self._test_items
 
     def load_data_items(self,train_vs_test):
         items = []
-        file_dir_path = os.path.join(self.dir_path,train_vs_test)
+        file_dir_path = os.path.join(self._dir_path, train_vs_test)
         file_names = [f for f in os.listdir(file_dir_path) if f.endswith(".png")]
 
         for file_name in file_names:
@@ -75,37 +80,37 @@ class WordDataSet(object):
         return items
 
     def get_total_item_count(self):
-        return len(self.train_items) + len(self.test_items)
+        return len(self._train_items) + len(self._test_items)
 
     def get_train_item_count(self):
-        return len(self.train_items)
+        return len(self._train_items)
 
     def get_test_item_count(self):
-        return len(self.test_items)
+        return len(self._test_items)
 
     def get_feature_count(self):
-        return self.train_items[0].get_feature_count()
+        return self._train_items[0].get_feature_count()
 
     def init_train_batch(self):
-        self.train_items_for_batch = []
-        self.next_batch_items = []
+        self._train_items_for_batch = []
+        self._next_batch_items = []
 
     def prepare_next_train_batch(self, batch_size):
-        self.next_batch_items = []
+        self._next_batch_items = []
         for b in range(batch_size):
-            if len(self.train_items_for_batch) == 0:
-                self.train_items_for_batch = copy.copy(self.train_items) # Copy only references
-                random.shuffle(self.train_items_for_batch)
-            train_item = self.train_items_for_batch.pop()
-            self.next_batch_items.append(train_item)
+            if len(self._train_items_for_batch) == 0:
+                self._train_items_for_batch = copy.copy(self._train_items) # Copy only references
+                random.shuffle(self._train_items_for_batch)
+            train_item = self._train_items_for_batch.pop()
+            self._next_batch_items.append(train_item)
 
     # (n_batch_size,n_time_steps,n_features)
     def get_train_batch_data(self,time_step_count=0):
-        return self._get_data(self.next_batch_items,time_step_count)
+        return self._get_data(self._next_batch_items, time_step_count)
 
     # (n_batch_size,n_time_steps,n_features)
     def get_test_data(self, time_step_count=0):
-        return self._get_data(self.test_items,time_step_count)
+        return self._get_data(self._test_items, time_step_count)
 
     def _get_data(self,items,time_step_count=0):
         data = []
@@ -119,11 +124,11 @@ class WordDataSet(object):
 
     # (n_batch_size,n_unique_chars)
     def get_train_batch_first_char_one_hot_labels(self):
-        return self._get_first_char_one_hot_labels(self.next_batch_items)
+        return self._get_first_char_one_hot_labels(self._next_batch_items)
 
     # (n_batch_size,n_unique_chars)
     def get_test_first_char_one_hot_labels(self):
-        return self._get_first_char_one_hot_labels(self.test_items)
+        return self._get_first_char_one_hot_labels(self._test_items)
 
     def _get_first_char_one_hot_labels(self,items):
         one_hot_labels = []
@@ -137,10 +142,10 @@ class WordDataSet(object):
         return one_hot_labels
 
     def get_train_batch_labels(self):
-        return self._get_labels(self.next_batch_items)
+        return self._get_labels(self._next_batch_items)
 
     def get_test_labels(self):
-        return self._get_labels(self.test_items)
+        return self._get_labels(self._test_items)
 
     def _get_labels(self,items):
         labels = []
@@ -151,7 +156,7 @@ class WordDataSet(object):
 
     def get_unique_chars(self):
         chars = []
-        for item in self.all_items:
+        for item in self._all_items:
             label = item.get_label()
             for char in label:
                 if not char in chars:
@@ -163,7 +168,16 @@ class WordDataSet(object):
 
     def get_max_time_steps(self):
         max_time_steps = 0
-        for item in self.all_items:
+        for item in self._all_items:
             if (item.get_time_step_count() > max_time_steps):
                 max_time_steps = item.get_time_step_count()
         return max_time_steps
+
+    def get_max_label_length(self):
+        max_length = 0
+        for item in self._all_items:
+            label = item.get_label()
+            if (len(label) > max_length):
+                max_length = len(label)
+
+        return max_length
