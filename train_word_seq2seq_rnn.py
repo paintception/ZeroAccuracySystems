@@ -156,10 +156,13 @@ with tf.Session() as sess:
                      feed_dict={label_rnn_input_data: train_one_hot_labels,
                                 label_rnn_target_data: train_index_labels})
 
+            #print("COST:",cost_value)
+
             # Generate latin
             text_label = ""
-            for i in range(n_label_rnn_steps):
-                test_label = wd.START_WORD_CHAR + text_label[:n_label_rnn_steps-1]
+            for i in range(len(text_label)+1,n_label_rnn_steps):
+                test_label = wd.START_WORD_CHAR + text_label
+                test_label = test_label[:n_label_rnn_steps]
                 test_label = test_label.ljust(n_label_rnn_steps)
                 one_hot_test_labels = dataset.get_one_hot_labels([test_label])
                 predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
@@ -167,6 +170,8 @@ with tf.Session() as sess:
 
                 text_labels = dataset.get_text_labels(predicted_index_labels)
                 text_label = text_labels[0]
+                text_label = text_label[:i]
+                #print(text_label)
 
             print(cost_value, text_label)
 
