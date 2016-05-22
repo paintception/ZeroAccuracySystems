@@ -241,3 +241,13 @@ class WordDataSet(object):
             char_index = unique_chars.index(char)
             char_index_label.append(char_index)
         return char_index_label
+
+    def get_text_labels(self,index_labels):
+        unique_chars = self.get_unique_chars()
+        text_labels = []
+        for index_label in index_labels:
+            text_label = ""
+            for index in index_label:
+                text_label = text_label + unique_chars[index]
+            text_labels.append(text_label)
+        return text_labels
