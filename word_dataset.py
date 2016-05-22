@@ -5,18 +5,20 @@ import copy
 
 class WordDataItem(object):
     def __init__(self,file_path):
-        self.file_path = file_path
-        self.label = pf.get_word_label_from_filename(self.file_path)
-        self.load_data()
+        self._file_path = file_path
+        self._label = pf.get_word_label_from_filename(self._file_path)
+        self._data = None
 
     def load_data(self):
-        self.data = pf.get_feature_data(self.file_path)
+        self._data = pf.get_feature_data(self._file_path)
 
     def get_data(self):
-        return self.data
+        if self._data == None:
+            self.load_data()
+        return self._data
 
     def get_data_with_fixed_time_step_count(self,time_step_count):
-        tmp_data = copy.copy(self.data) # Weak copy timesteps
+        tmp_data = copy.copy(self.get_data()) # Weak copy timesteps
         if (len(tmp_data) > time_step_count):
             tmp_data = tmp_data[:time_step_count] # Cut off some timesteps
         else:
@@ -26,13 +28,13 @@ class WordDataItem(object):
         return tmp_data
 
     def get_label(self):
-        return self.label
+        return self._label
 
     def get_width(self):
-        return len(self.data)
+        return len(self.get_data())
 
     def get_height(self):
-        return len(self.data[0])
+        return len(self.get_data()[0])
 
     def get_time_step_count(self):
         return self.get_width()
@@ -64,8 +66,8 @@ class WordDataSet(object):
             file_path = os.path.join(file_dir_path,file_name)
 
             word_data_item = WordDataItem(file_path)
-            if (word_data_item.get_width() <= self.max_image_width):
-                items.append(word_data_item)
+            #if (word_data_item.get_width() <= self.max_image_width):
+            items.append(word_data_item)
 
             if len(items) % 100 == 0:
                 print("Loaded %d %s images" % (len(items),train_vs_test))
@@ -150,7 +152,7 @@ class WordDataSet(object):
     def get_unique_chars(self):
         chars = []
         for item in self.all_items:
-            label = item.label
+            label = item.get_label()
             for char in label:
                 if not char in chars:
                     chars.append(char)
