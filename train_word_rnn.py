@@ -16,7 +16,7 @@ print("Training items:",dataset.get_train_item_count())
 print("Test items:",dataset.get_test_item_count())
 
 # Parameters
-learning_rate = 0.0001
+learning_rate = 0.0005
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
@@ -30,11 +30,11 @@ n_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:",n_steps)
 n_cells = 2 # Number of cells/layers
 print("Cells:", n_cells)
-n_hidden = 128 # hidden layer num of features
+n_hidden = 192 # hidden layer num of features
 print("Hidden units:",n_hidden)
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
 print("Classes:",n_classes)
-display_time_interval_sec = 30
+display_time_interval_sec = 60
 
 # Saved models
 model_dir_path = dirs.KNMP_MODEL_DIR_PATH
@@ -91,8 +91,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, max_acc_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, max_acc_model_file_path)
 
     step = 1
     prev_output_time = datetime.datetime.now()
