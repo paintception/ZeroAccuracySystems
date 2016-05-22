@@ -101,13 +101,13 @@ if n_label_rnn_cells > 1:
 label_rnn_initial_state = label_lstm_cell.zero_state(batch_size, tf.float32)
 label_rnn_outputs, label_rnn_states = rnn.rnn(label_lstm_cell, label_rnn_inputs, initial_state=label_rnn_initial_state, scope="RNN2")
 
-label_rnn_outputs = [tf.matmul(lro, w_label_out) + b_label_out for lro in label_rnn_outputs]
+label_rnn_outputs = [tf.matmul(lro, w_label_out) + b_label_out for lro in label_rnn_outputs] # n_label_rnn_steps * (n_batch_size,n_classes)
 
-# for label_rnn_target_output in label_rnn_target_outputs:
-#     print(label_rnn_target_output)
-
-# label_rnn_outputs_conc = tf.concat(0,label_rnn_outputs)
-# label_rnn_predicted_data = tf.reshape(label_rnn_outputs_conc,[n_label_rnn_steps,-1,n_classes])
+label_rnn_predicted_index_labels = tf.pack(label_rnn_outputs) # (n_label_rnn_steps,n_batch_size,n_classes)
+label_rnn_predicted_index_labels = tf.transpose(label_rnn_predicted_index_labels,[1,0,2]) # (n_batch_size,n_label_rnn_steps,n_classes)
+#label_rnn_predicted_index_labels = tf.concat(0,label_rnn_outputs) # (n_label_rnn_steps*n_batch_size,n_classes)
+# label_rnn_predicted_index_labels = tf.reshape(label_rnn_predicted_index_labels,[-1,n_label_rnn_steps,n_classes]) # (n_batch_size,n_label_rnn_steps,n_classes)
+label_rnn_predicted_index_labels = tf.argmax(label_rnn_predicted_index_labels,2) # (n_batch_size, n_label_rnn_steps)
 
 # Optimization
 
@@ -143,16 +143,27 @@ with tf.Session() as sess:
         # Training
         dataset.prepare_next_train_batch(n_batch_size)
         train_batch_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
-        train_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
+        train_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=False) # (batch_size,n_output_steps,n_classes)
         train_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps) # (batch_size,n_output_steps)
 
         sess.run(optimizer, feed_dict={image_rnn_input_data: train_batch_data,label_rnn_input_data:train_one_hot_labels,label_rnn_target_data:train_index_labels})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
         if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
-            print(sess.run(cost,
+            cost_value = sess.run(cost,
                      feed_dict={image_rnn_input_data: train_batch_data, label_rnn_input_data: train_one_hot_labels,
-                                label_rnn_target_data: train_index_labels}))
+                                label_rnn_target_data: train_index_labels})
+
+            predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
+                                 feed_dict={image_rnn_input_data: train_batch_data,
+                                            label_rnn_input_data: train_one_hot_labels,
+                                            label_rnn_target_data: train_index_labels})
+
+            train_index_labels = dataset.get_text_labels(train_index_labels[:5])
+            print("TRAIN: ", train_index_labels)
+            predicted_index_labels = predicted_index_labels[:5]
+            text_labels = dataset.get_text_labels(predicted_index_labels)
+            print(cost_value,text_labels)
 
             # # Calculate training batch accuracy
             # batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys})
