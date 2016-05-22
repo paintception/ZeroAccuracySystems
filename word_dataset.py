@@ -179,6 +179,14 @@ class WordDataSet(object):
             one_hot_labels.append(one_hot_label)
         return one_hot_labels
 
+    def get_one_hot_labels(self, labels):
+        one_hot_labels = []
+
+        for label in labels:
+            one_hot_label = self._get_one_hot_label(label)
+            one_hot_labels.append(one_hot_label)
+        return one_hot_labels
+
     def get_train_batch_fixed_length_index_labels(self, fixed_length):  # (n_batch_size,n_fixed_length)
         return self._get_fixed_length_index_labels(self._next_batch_items, fixed_length)
 
