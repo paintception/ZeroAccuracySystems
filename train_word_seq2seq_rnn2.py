@@ -22,9 +22,9 @@ n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.0005
+learning_rate = 0.0001
 print("Learning rate:",learning_rate)
-n_batch_size = 256
+n_batch_size = 128
 print("Batch size:",n_batch_size)
 dropout_input_keep_prob_value = 0.5
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
@@ -36,12 +36,12 @@ n_image_features = dataset.get_feature_count() # Features = image height
 print("Features:", n_image_features)
 n_image_rnn_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:", n_image_rnn_steps)
-n_image_rnn_cells = 1
-n_image_rnn_hidden = 128 # hidden layer num of features
+n_image_rnn_cells = 2
+n_image_rnn_hidden = 129 # hidden layer num of features
 print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
-n_label_rnn_cells = 3
-n_label_rnn_hidden = 256 # hidden layer num of features
-print("Label LSTM hidden cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
+n_label_rnn_cells = 2
+n_label_rnn_hidden = 128 # hidden layer num of features
+print("Label LSTM cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
 display_time_interval_sec = 5
 
 # Saved models
@@ -55,27 +55,25 @@ if not os.path.exists(model_dir_path):
 default_dropout_prob = tf.constant(1,"float")
 dropout_input_keep_prob = tf.placeholder_with_default(default_dropout_prob,[])
 dropout_output_keep_prob = tf.placeholder_with_default(default_dropout_prob,[])
-# image_rnn_input_data = tf.placeholder("float", [None, n_image_rnn_steps, n_image_features]) # (n_batch_size, n_steps, n_features)
-#image_batch_size = tf.shape(image_rnn_input_data)[0]
+image_rnn_input_data = tf.placeholder("float", [None, n_image_rnn_steps, n_image_features]) # (n_batch_size, n_steps, n_features)
+image_batch_size = tf.shape(image_rnn_input_data)[0]
 label_rnn_input_data = tf.placeholder("float", [None, n_label_rnn_steps, n_classes])
 label_batch_size = tf.shape(label_rnn_input_data)[0]
 label_rnn_target_data = tf.placeholder("int64", [None, n_label_rnn_steps]) # (n_batch_size,n_label_rnn_steps)
 
 # Weights
-# w_image_hidden = tf.Variable(tf.random_normal([n_image_features, n_image_rnn_hidden]))
-# b_image_hidden = tf.Variable(tf.random_normal([n_image_rnn_hidden]))
-# w_image2label = tf.Variable(tf.random_normal([n_image_rnn_hidden, n_label_rnn_hidden]))
-# b_image2label = tf.Variable(tf.random_normal([n_label_rnn_hidden]))
+w_image_hidden = tf.Variable(tf.random_normal([n_image_features, n_image_rnn_hidden]))
+b_image_hidden = tf.Variable(tf.random_normal([n_image_rnn_hidden]))
 w_label_hidden = tf.Variable(tf.random_normal([n_classes, n_label_rnn_hidden]))
 b_label_hidden = tf.Variable(tf.random_normal([n_label_rnn_hidden]))
 w_label_out = tf.Variable(tf.random_normal([n_label_rnn_hidden,n_classes]))
 b_label_out = tf.Variable(tf.random_normal([n_classes]))
 
 # Transform input data for image RNN
-# image_rnn_inputs = tf.transpose(image_rnn_input_data, [1, 0, 2]) # (n_input_steps,n_batch_size,n_features)
-# image_rnn_inputs = tf.reshape(image_rnn_inputs, [-1, n_image_features]) # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
-# image_rnn_inputs = tf.matmul(image_rnn_inputs, w_image_hidden) + b_image_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
-# image_rnn_inputs = tf.split(0, n_image_rnn_steps, image_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
+image_rnn_inputs = tf.transpose(image_rnn_input_data, [1, 0, 2]) # (n_input_steps,n_batch_size,n_features)
+image_rnn_inputs = tf.reshape(image_rnn_inputs, [-1, n_image_features]) # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
+image_rnn_inputs = tf.matmul(image_rnn_inputs, w_image_hidden) + b_image_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
+image_rnn_inputs = tf.split(0, n_image_rnn_steps, image_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
 
 # Transform input data for label RNN
 label_rnn_inputs = tf.transpose(label_rnn_input_data, [1, 0, 2]) # (n_output_steps,n_batch_size,n_classes)
@@ -89,10 +87,13 @@ label_rnn_target_outputs = tf.split(0,n_label_rnn_steps,label_rnn_target_outputs
 label_rnn_target_outputs = [tf.squeeze(lrt) for lrt in label_rnn_target_outputs]
 
 # Image RNN
-# image_lstm_cell = rnn_cell.LSTMCell(n_image_rnn_hidden)
-# image_rnn_initial_state = image_lstm_cell.zero_state(batch_size, tf.float32)
-# image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, scope="RNN1")
-# image_rnn_output = image_rnn_outputs[-1]
+image_lstm_cell = rnn_cell.LSTMCell(n_image_rnn_hidden)
+image_lstm_cell = rnn_cell.DropoutWrapper(image_lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+if n_image_rnn_cells > 1:
+    image_lstm_cell = rnn_cell.MultiRNNCell([image_lstm_cell] * n_image_rnn_cells)
+image_rnn_initial_state = image_lstm_cell.zero_state(image_batch_size, tf.float32)
+image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, scope="RNN1")
+image_rnn_output = image_rnn_outputs[-1]
 
 # Label RNN
 label_lstm_cell = rnn_cell.LSTMCell(n_label_rnn_hidden)
@@ -101,27 +102,25 @@ if n_label_rnn_cells > 1:
     label_lstm_cell = rnn_cell.MultiRNNCell([label_lstm_cell] * n_label_rnn_cells)
 
 label_rnn_initial_state = label_lstm_cell.zero_state(label_batch_size, tf.float32)
+
+w_image2label = tf.Variable(tf.random_normal([image_rnn_output.get_shape()[1].value, label_rnn_initial_state.get_shape()[1].value]))
+b_image2label = tf.Variable(tf.random_normal([label_rnn_initial_state.get_shape()[1].value]))
+
+label_rnn_initial_state = tf.matmul(image_rnn_output, w_image2label) + b_image2label
 label_rnn_outputs, label_rnn_states = rnn.rnn(label_lstm_cell, label_rnn_inputs, initial_state=label_rnn_initial_state, scope="RNN2")
 
 label_rnn_outputs = [tf.matmul(lro, w_label_out) + b_label_out for lro in label_rnn_outputs] # n_label_rnn_steps * (n_batch_size,n_classes)
 
 label_rnn_predicted_index_labels = tf.pack(label_rnn_outputs) # (n_label_rnn_steps,n_batch_size,n_classes)
 label_rnn_predicted_index_labels = tf.transpose(label_rnn_predicted_index_labels,[1,0,2]) # (n_batch_size,n_label_rnn_steps,n_classes)
-#label_rnn_predicted_index_labels = tf.concat(0,label_rnn_outputs) # (n_label_rnn_steps*n_batch_size,n_classes)
-# label_rnn_predicted_index_labels = tf.reshape(label_rnn_predicted_index_labels,[-1,n_label_rnn_steps,n_classes]) # (n_batch_size,n_label_rnn_steps,n_classes)
 label_rnn_predicted_index_labels = tf.argmax(label_rnn_predicted_index_labels,2) # (n_batch_size, n_label_rnn_steps)
 
 # Optimization
 
-#cost = tf.nn.sparse_softmax_cross_entropy_with_logits(label_rnn_predicted_data,label_rnn_target_data)
 sequence_loss_weights = [tf.ones(tf.shape(label_rnn_target_outputs[0]))]*n_label_rnn_steps
 cost = sequence_loss(label_rnn_outputs,label_rnn_target_outputs,sequence_loss_weights)
 
-# cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y)) # Softmax loss
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost) # Adam Optimizer
-#
-# correct_pred = tf.equal(tf.argmax(y_pred,1), tf.argmax(y,1))
-# accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 # Initializing the variables
 init = tf.initialize_all_variables()
@@ -148,32 +147,42 @@ with tf.Session() as sess:
         train_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
         train_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps) # (batch_size,n_output_steps)
 
-        sess.run(optimizer, feed_dict={label_rnn_input_data:train_one_hot_labels,label_rnn_target_data:train_index_labels})
+        sess.run(optimizer, feed_dict={image_rnn_input_data:train_batch_data,label_rnn_input_data:train_one_hot_labels,label_rnn_target_data:train_index_labels})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
         if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
             cost_value = sess.run(cost,
-                     feed_dict={label_rnn_input_data: train_one_hot_labels,
+                     feed_dict={image_rnn_input_data:train_batch_data,
+                                label_rnn_input_data: train_one_hot_labels,
                                 label_rnn_target_data: train_index_labels})
 
-            #print("COST:",cost_value)
+            predicted_train_batch_index_labels = sess.run(label_rnn_predicted_index_labels,
+                                                          feed_dict={image_rnn_input_data: train_batch_data,
+                                                                     label_rnn_input_data: train_one_hot_labels,
+                                                                     label_rnn_target_data: train_index_labels})
+
+            print("Iter:", step * n_batch_size, "Cost:", cost_value)
+            target_train_batch_text_labels = dataset.get_text_labels(train_index_labels)
+            print(target_train_batch_text_labels)
+            predicted_train_batch_text_labels = dataset.get_text_labels(predicted_train_batch_index_labels)
+            print(predicted_train_batch_text_labels)
+
 
             # Generate latin
-            text_label = ""
-            for i in range(len(text_label)+1,n_label_rnn_steps):
-                test_label = wd.START_WORD_CHAR + text_label
-                test_label = test_label[:n_label_rnn_steps]
-                test_label = test_label.ljust(n_label_rnn_steps)
-                one_hot_test_labels = dataset.get_one_hot_labels([test_label])
-                predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
-                                                  feed_dict={label_rnn_input_data: one_hot_test_labels})
-
-                text_labels = dataset.get_text_labels(predicted_index_labels)
-                text_label = text_labels[0]
-                text_label = text_label[:i]
-                #print(text_label)
-
-            print("Iter:",step*n_batch_size,"Cost:",cost_value, "Generated latin:",text_label)
+            # text_label = ""
+            # for i in range(len(text_label)+1,n_label_rnn_steps):
+            #     test_label = wd.START_WORD_CHAR + text_label
+            #     test_label = test_label[:n_label_rnn_steps]
+            #     test_label = test_label.ljust(n_label_rnn_steps)
+            #     one_hot_test_labels = dataset.get_one_hot_labels([test_label])
+            #     predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
+            #                                       feed_dict={label_rnn_input_data: one_hot_test_labels})
+            #
+            #     text_labels = dataset.get_text_labels(predicted_index_labels)
+            #     text_label = text_labels[0]
+            #     text_label = text_label[:i]
+            #
+            # print("Iter:",step*n_batch_size,"Cost:",cost_value, "Generated latin:",text_label)
 
             # # Calculate training batch accuracy
             # batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys})
