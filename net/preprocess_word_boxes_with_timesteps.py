@@ -4,7 +4,8 @@ import shutil
 from PIL import Image
 import random
 import pickle
-
+import tqdm
+import math
 
 def sheer_image(image, sheer_factor=0):
     if sheer_factor == 0:
@@ -24,10 +25,10 @@ def resize_image(image, resize_ratio=0.5):
 
 
 if __name__ == "__main__":
-    # source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
-    # target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
-    source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-    target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+    source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+    target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
+    # source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+    # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
     train_dir_path = os.path.join(target_dir_path, "train")
     test_dir_path = os.path.join(target_dir_path, "test")
@@ -56,6 +57,9 @@ if __name__ == "__main__":
     total_width = 0
     train_file_count = int(len(word_info) * train_ratio)
     train_file_counter = 0
+
+    pbar = tqdm.tqdm(desc="Preprocessing words", total=len(word_info))
+
     for word in word_info:
         source_file_counter += 1
         train = True
@@ -66,8 +70,6 @@ if __name__ == "__main__":
 
         source_file_path = os.path.join(source_dir_path, word["box_image_name"])
 
-        print(source_file_path)
-
         image = Image.open(source_file_path)
         image = image.convert("LA")  # Greyscale
 
@@ -77,24 +79,29 @@ if __name__ == "__main__":
                 train_image = image
                 train_image = sheer_image(train_image, (sheer_ratio * 0.05))
                 train_image = resize_image(train_image, resize_ratio=resize_ratio)
-                word['char_positions'] = [int(x * resize_ratio) for x in word['char_positions']]
                 train_file_counter += 1
                 target_file_name = str(train_file_counter).rjust(6, "0") + "_" + word["box_image_name"]
                 target_file_path = os.path.join(train_dir_path, target_file_name)
                 train_image.save(target_file_path)
                 ready_files.append(target_file_path)
 
+            word['char_positions'] = [int(round(x * resize_ratio)) for x in word['char_positions']]
             word['ready_files'] = ready_files
             train_word_info.append(word)
 
         elif test:
-            image = resize_image(image)
+            image = resize_image(image, resize_ratio=resize_ratio)
             target_file_path = os.path.join(test_dir_path, word["box_image_name"])
             image.save(target_file_path)
             ready_files.append(target_file_path)
 
+            word['char_positions'] = [int(round(x * resize_ratio)) for x in word['char_positions']]
             word['ready_files'] = ready_files
             test_word_info.append(word)
+
+        pbar.update(1)
+
+    pbar.close()
 
     with open(os.path.join(train_dir_path, 'word_info'), 'wb') as word_info_file:
         pickle.dump(train_word_info, word_info_file)
