@@ -43,6 +43,7 @@ class WordDataItem(object):
 
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
+# noinspection PyMethodMayBeStatic
 class WordDataSet(object):
     def __init__(self, dir_path, max_image_width=1000):
         self.dir_path = dir_path
@@ -120,22 +121,36 @@ class WordDataSet(object):
                 data.append(item.get_data_with_fixed_time_step_count(time_step_count))
         return data
 
-    def get_train_batch_sequence_lengths(self):
-        return [item.get_time_step_count() for item in self.next_batch_items]
+    def get_train_batch_sequence_lengths(self, time_step_count=None):
+        return self._get_sequence_length(self.next_batch_items, time_step_count)
 
-    def get_train_batch_labels_with_timesteps(self):
-        return self._get_labels_with_timesteps(self.next_batch_items)
+    def get_test_sequence_lengths(self, time_step_count=None):
+        return self._get_sequence_length(self.test_items, time_step_count)
 
-    def get_test_labels_with_timesteps(self):
-        return self._get_labels_with_timesteps(self.test_items)
+    def _get_sequence_length(self, items, time_step_count=None):
+        if time_step_count:
+            return [item.get_time_step_count() if item.get_time_step_count() < time_step_count else time_step_count
+                    for item in items]
+        else:
+            return [item.get_time_step_count() for item in items]
 
-    def _get_labels_with_timesteps(self, items):
+    def get_train_batch_labels_with_timesteps(self, time_step_count=None):
+        return self._get_labels_with_timesteps(self.next_batch_items, time_step_count)
+
+    def get_test_labels_with_timesteps(self, time_step_count=None):
+        return self._get_labels_with_timesteps(self.test_items, time_step_count)
+
+    def _get_labels_with_timesteps(self, items, time_step_count=None):
         label_index = []
         labels = []
 
         for idx, item in enumerate(items):
-            label_index += map(lambda x: [idx, x], item.label_timesteps)
-            labels += map(lambda x: self.unique_chars.index(x), item.label)
+            if time_step_count:
+                label_index_item = [[idx, x] for x in item.label_timesteps if x < time_step_count]
+            else:
+                label_index_item = [[idx, x] for x in item.label_timesteps]
+            labels += map(lambda x: self.unique_chars.index(x), item.label[0:len(label_index_item)])
+            label_index += label_index_item
 
         return label_index, labels
 
@@ -201,5 +216,5 @@ class WordDataSet(object):
 
 if __name__ == "__main__":
     import dirs
-    wd = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
+    wd = WordDataSet(dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
     pass
