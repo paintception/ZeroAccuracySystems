@@ -145,33 +145,16 @@ class WordDataSet(object):
         labels = []
 
         for idx, item in enumerate(items):
+            i_timesteps = sorted(item.label_timesteps)
+            i_lables = [l for _, l in sorted(zip(item.label_timesteps, item.label))]
             if time_step_count:
-                label_index_item = [[idx, x] for x in item.label_timesteps if x < time_step_count]
+                label_index_item = [[idx, x] for x in i_timesteps if x < time_step_count]
             else:
-                label_index_item = [[idx, x] for x in item.label_timesteps]
-            labels += map(lambda x: self.unique_chars.index(x), item.label[0:len(label_index_item)])
+                label_index_item = [[idx, x] for x in i_timesteps]
+            labels += map(lambda x: self.unique_chars.index(x), i_lables[0:len(label_index_item)])
             label_index += label_index_item
 
         return label_index, labels
-
-    # (n_batch_size,n_unique_chars)
-    def get_train_batch_first_char_one_hot_labels(self):
-        return self._get_first_char_one_hot_labels(self.next_batch_items)
-
-    # (n_batch_size,n_unique_chars)
-    def get_test_first_char_one_hot_labels(self):
-        return self._get_first_char_one_hot_labels(self.test_items)
-
-    def _get_first_char_one_hot_labels(self, items):
-        one_hot_labels = []
-        unique_chars = self.get_unique_chars()
-
-        for item in items:
-            label = item.get_label()
-            char = label[0]
-            char_index = unique_chars.index(char)
-            one_hot_labels.append(pf.get_one_hot(char_index, len(unique_chars)))
-        return one_hot_labels
 
     def get_train_batch_labels(self):
         return self._get_labels(self.next_batch_items)
@@ -213,8 +196,25 @@ class WordDataSet(object):
                 max_time_steps = item.get_time_step_count()
         return max_time_steps
 
+    def get_chars_from_indexes(self, indexes):
+        return [self.unique_chars[i] for i in indexes]
+
+    def get_words_from_indexes(self, indexes, values, n_words):
+        words = [""] * n_words
+
+        w_begin = 0
+        for idx, iv in enumerate(indexes):
+            if idx == len(indexes) - 1:
+                words[iv[0]] = "".join(values[w_begin:])
+            elif iv[0] != indexes[idx + 1][0]:
+                words[iv[0]] = "".join(values[w_begin:idx + 1])
+                w_begin = idx + 1
+
+        return words
+
 
 if __name__ == "__main__":
     import dirs
-    wd = WordDataSet(dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+
+    wd = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
     pass

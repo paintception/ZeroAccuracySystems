@@ -25,15 +25,15 @@ def resize_image(image, resize_ratio=0.5):
 
 
 if __name__ == "__main__":
-    source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
-    target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
-    # source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-    # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+    # source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+    # target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
+    source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+    target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
     train_dir_path = os.path.join(target_dir_path, "train")
     test_dir_path = os.path.join(target_dir_path, "test")
 
-    train_ratio = 0.9
+    test_imgs = 128  # This should be equal to batch size
 
     resize_ratio = 0.5
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     source_file_counter = 0
     max_width = 0
     total_width = 0
-    train_file_count = int(len(word_info) * train_ratio)
+    train_file_count = len(word_info) - test_imgs
     train_file_counter = 0
 
     pbar = tqdm.tqdm(desc="Preprocessing words", total=len(word_info))

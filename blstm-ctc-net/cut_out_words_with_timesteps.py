@@ -11,11 +11,11 @@ import pickle
 
 if __name__ == "__main__":
     # Parameters
-    # pages_dir_path = os.path.join(dirs.BASE_DIR_PATH, "labels")
-    # pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
-    # word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-    pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
-    word_image_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+
+    pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
+    word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+    # pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+    # word_image_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
 
     # Delete and create directories
     if os.path.exists(word_image_dir_path):
@@ -61,12 +61,13 @@ if __name__ == "__main__":
                         char_positions.append(char_position)
                         char_counter += 1
 
-                    word_info.append({
-                        'box_image_name': box_image_name,
-                        'word_length': word_length,
-                        'char_labels': char_labels,
-                        'char_positions': char_positions
-                    })
+                    if char_labels:
+                        word_info.append({
+                            'box_image_name': box_image_name,
+                            'word_length': word_length,
+                            'char_labels': char_labels,
+                            'char_positions': char_positions
+                        })
 
                 except Exception as e:
                     raise e

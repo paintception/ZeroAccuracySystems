@@ -7,18 +7,21 @@ import datetime
 
 import net.word_dataset_with_timesteps as wd
 import net.dirs as dirs
+import metrics
 
 print("Loading data")
-word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
+# word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
 
-display_time = 10
+display_time = 60
 
 # Global parameters
 learning_rate = 0.001
-learning_iterations = 100  # number of mini-batches
+learning_iterations = 5000  # number of mini-batches
 batch_size = 128  # number of words in a batch
 n_hidden_layer = 128  # number of nodes in hidden layer
 n_output_classes = len(word_dataset.unique_chars) + 1  # Number of letters in our alphabet and empty label
+print("Output_classes: ", n_output_classes)
 
 n_input = word_dataset.get_feature_count()  # Number of input features for each sliding window of 1px
 max_input_timesteps = 100
@@ -69,13 +72,14 @@ def blstm_layer(_X, _x_length):
     outputs = tf.concat(0, outputs)
     activation = tf.matmul(outputs, output_weights) + output_biases
 
-    tf.Print(activation, [activation], message="Activation: ")
     return tf.reshape(activation, [max_input_timesteps, batch_size, n_output_classes])
 
 
 prediction = blstm_layer(x, x_length)
 
-cost = tf.reduce_mean(ctc.ctc_loss(prediction, tf.SparseTensor(indices=y_index, values=y_labels, shape=[batch_size, max_input_timesteps]), x_length))
+target_labels = tf.SparseTensor(indices=y_index, values=y_labels, shape=[batch_size, max_input_timesteps])
+
+cost = tf.reduce_mean(ctc.ctc_loss(prediction, target_labels, x_length))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 decoder = ctc.ctc_beam_search_decoder(prediction, x_length)
@@ -93,9 +97,10 @@ with tf.Session() as sess:
 
     test_ys_index, test_ys_labels = word_dataset.get_test_labels_with_timesteps(max_input_timesteps)
 
-    print("Test index: ", test_ys_index)
-    print("Test labels: ", test_ys_labels)
+    # print(test_ys_index)
+    # print(test_ys_labels)
 
+    test_words = word_dataset.get_words_from_indexes(test_ys_index, word_dataset.get_chars_from_indexes(test_ys_labels), batch_size)
     print("Start training")
     while step < learning_iterations:
 
@@ -105,6 +110,9 @@ with tf.Session() as sess:
         batch_xs_length = word_dataset.get_train_batch_sequence_lengths(max_input_timesteps)
 
         batch_ys_index, batch_ys_labels = word_dataset.get_train_batch_labels_with_timesteps(max_input_timesteps)
+
+        # print(batch_ys_index)
+        # print(batch_ys_labels)
 
         sess.run(optimizer, feed_dict={x: batch_xs,
                                        x_length: batch_xs_length,
@@ -121,16 +129,39 @@ with tf.Session() as sess:
                                                    y_labels: batch_ys_labels
                                                    })
 
+            batch_decoded, _ = sess.run(decoder, feed_dict={x: batch_xs,
+                                                            x_length: batch_xs_length,
+                                                            })
+
             test_decoded, _ = sess.run(decoder, feed_dict={x: test_xs,
                                                            x_length: test_xs_length
                                                            })
 
+            test_words_decoded = word_dataset.get_words_from_indexes(test_decoded.indices,
+                                                                     word_dataset.get_chars_from_indexes(test_decoded.values),
+                                                                     batch_size)
+
+            batch_words = word_dataset.get_words_from_indexes(batch_ys_index,
+                                                              word_dataset.get_chars_from_indexes(batch_ys_labels),
+                                                              batch_size)
+
+            batch_words_decoded = word_dataset.get_words_from_indexes(batch_decoded.indices,
+                                                                      word_dataset.get_chars_from_indexes(batch_decoded.values),
+                                                                      batch_size)
+
             print("=====")
-            print("Step %d batch loss %f " % (step, batch_loss))
-            print("-----")
-            print("Test index decoded: ", test_decoded.indices)
-            print("Test labels decoded: ", test_decoded.values)
-            print("=====")
+            print("Step %d" % step)
+            print("Batch loss: ", batch_loss)
+            print("Batch accuracy words: %f chars: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
+                                                          metrics.get_char_level_accuracy(batch_words, batch_words_decoded)))
+            print("Test accuracy words: %f chars: %f" % (metrics.get_word_level_accuracy(test_words, test_words_decoded),
+                                                         metrics.get_char_level_accuracy(test_words, test_words_decoded)))
+            print("Test labels")
+            print(test_words)
+            print(test_words_decoded)
+            print("Batch labels")
+            print(batch_words)
+            print(batch_words_decoded)
 
             prev_output_time = datetime.datetime.now()
         step += 1
