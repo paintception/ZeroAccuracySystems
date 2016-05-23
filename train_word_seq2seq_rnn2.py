@@ -22,7 +22,7 @@ n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.0001
+learning_rate = 0.00001
 print("Learning rate:",learning_rate)
 n_batch_size = 128
 print("Batch size:",n_batch_size)
@@ -37,7 +37,7 @@ print("Features:", n_image_features)
 n_image_rnn_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:", n_image_rnn_steps)
 n_image_rnn_cells = 2
-n_image_rnn_hidden = 129 # hidden layer num of features
+n_image_rnn_hidden = 256 # hidden layer num of features
 print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
 n_label_rnn_cells = 2
 n_label_rnn_hidden = 128 # hidden layer num of features
