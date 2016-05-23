@@ -169,14 +169,6 @@ class WordDataSet(object):
             labels.append(item.get_label())
         return labels
 
-    # def get_train_batch_label_lengths(self):
-    #     batch_label_lengths = []
-    #
-    #     for item in self.next_batch_items:
-    #         batch_label_lengths.append(len(item.label))
-    #
-    #     return batch_label_lengths
-
     def get_unique_chars(self):
         chars = []
         for item in self.all_items:
@@ -199,15 +191,15 @@ class WordDataSet(object):
     def get_chars_from_indexes(self, indexes):
         return [self.unique_chars[i] for i in indexes]
 
-    def get_words_from_indexes(self, indexes, values, n_words):
-        words = [""] * n_words
+    def get_words_from_indexes(self, indexes, values, n_words, pad_to=1):
+        words = [" " * pad_to] * n_words
 
         w_begin = 0
         for idx, iv in enumerate(indexes):
             if idx == len(indexes) - 1:
-                words[iv[0]] = "".join(values[w_begin:])
+                words[iv[0]] = "".join(values[w_begin:]).ljust(pad_to)
             elif iv[0] != indexes[idx + 1][0]:
-                words[iv[0]] = "".join(values[w_begin:idx + 1])
+                words[iv[0]] = "".join(values[w_begin:idx + 1]).ljust(pad_to)
                 w_begin = idx + 1
 
         return words

@@ -6,8 +6,8 @@ from PIL import Image
 import os
 import shutil
 import dirs
-import sys
 import pickle
+import tqdm
 
 if __name__ == "__main__":
     # Parameters
@@ -26,8 +26,13 @@ if __name__ == "__main__":
     char_counter = 0
     # Go through page files
     word_info = []
-    for page_image_name in [f for f in os.listdir(pages_dir_path) if f.endswith(".jpg")]:
-        print(page_image_name)
+
+    image_files = [f for f in os.listdir(pages_dir_path) if f.endswith(".jpg")]
+
+    pbar = tqdm.tqdm(desc="Cutting pages", total=len(image_files))
+
+    for page_image_name in image_files:
+
         page_image_file_path = os.path.join(pages_dir_path, page_image_name)
 
         # Find label file
@@ -72,6 +77,10 @@ if __name__ == "__main__":
                 except Exception as e:
                     raise e
                     # print("Unexpected error:", sys.exc_info()[0])
+
+        pbar.update(1)
+
+    pbar.close()
 
     with open(os.path.join(word_image_dir_path, 'word_info'), 'wb') as word_info_file:
         pickle.dump(word_info, word_info_file)

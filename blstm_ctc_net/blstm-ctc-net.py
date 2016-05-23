@@ -2,21 +2,23 @@ import tensorflow as tf
 from tensorflow.models.rnn import rnn, rnn_cell
 from tensorflow.contrib import ctc
 
-import numpy as np
+import os
 import datetime
 
-import net.word_dataset_with_timesteps as wd
-import net.dirs as dirs
+import blstm_ctc_net.word_dataset_with_timesteps as wd
+import blstm_ctc_net.dirs as dirs
 import metrics
 
 print("Loading data")
 word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
 # word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
 
+save_path = os.path.join(os.path.dirname(__file__), "current.model")
+
 display_time = 60
 
 # Global parameters
-learning_rate = 0.001
+learning_rate = 0.00001
 learning_iterations = 5000  # number of mini-batches
 batch_size = 128  # number of words in a batch
 n_hidden_layer = 128  # number of nodes in hidden layer
@@ -88,6 +90,10 @@ init = tf.initialize_all_variables()
 
 with tf.Session() as sess:
     sess.run(init)
+
+    saver = tf.train.Saver()
+    saver.restore(sess, save_path)
+
     step = 1
     prev_output_time = datetime.datetime.now()
     # Keep training until reach max iterations
@@ -102,7 +108,7 @@ with tf.Session() as sess:
 
     test_words = word_dataset.get_words_from_indexes(test_ys_index, word_dataset.get_chars_from_indexes(test_ys_labels), batch_size)
     print("Start training")
-    while step < learning_iterations:
+    while True:
 
         word_dataset.prepare_next_train_batch(batch_size)
 
@@ -152,16 +158,21 @@ with tf.Session() as sess:
             print("=====")
             print("Step %d" % step)
             print("Batch loss: ", batch_loss)
-            print("Batch accuracy words: %f chars: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
-                                                          metrics.get_char_level_accuracy(batch_words, batch_words_decoded)))
-            print("Test accuracy words: %f chars: %f" % (metrics.get_word_level_accuracy(test_words, test_words_decoded),
-                                                         metrics.get_char_level_accuracy(test_words, test_words_decoded)))
+            print("Batch accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
+                                                                               metrics.get_char_level_accuracy(batch_words, batch_words_decoded),
+                                                                               metrics.get_avg_word_distance(batch_words, batch_words_decoded)))
+            print("Test accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(test_words, test_words_decoded),
+                                                                              metrics.get_char_level_accuracy(test_words, test_words_decoded),
+                                                                              metrics.get_avg_word_distance(test_words, test_words_decoded)))
             print("Test labels")
-            print(test_words)
-            print(test_words_decoded)
+            print([word.ljust(15) for word in test_words])
+            print([word.ljust(15) for word in test_words_decoded])
             print("Batch labels")
-            print(batch_words)
-            print(batch_words_decoded)
+            print([word.ljust(15) for word in batch_words])
+            print([word.ljust(15) for word in batch_words_decoded])
+
+            saver.save(sess, save_path)
 
             prev_output_time = datetime.datetime.now()
+
         step += 1
