@@ -8,6 +8,7 @@ import dirs
 import random
 import os
 from tensorflow.python.ops.seq2seq import sequence_loss
+import metrics
 
 # Read data set
 fixed_timestep_count = 50
@@ -16,13 +17,14 @@ dataset = WordDataSet(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=ma
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
-print("Test items:",dataset.get_test_item_count())
+n_test_items = dataset.get_test_item_count()
+print("Test items:",n_test_items)
 print("Max time steps (width):",dataset.get_max_time_steps())
 n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.00001
+learning_rate = 0.0001
 print("Learning rate:",learning_rate)
 n_batch_size = 128
 print("Batch size:",n_batch_size)
@@ -36,13 +38,13 @@ n_image_features = dataset.get_feature_count() # Features = image height
 print("Features:", n_image_features)
 n_image_rnn_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:", n_image_rnn_steps)
-n_image_rnn_cells = 2
-n_image_rnn_hidden = 256 # hidden layer num of features
+n_image_rnn_cells = 1
+n_image_rnn_hidden = 128 # hidden layer num of features
 print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
-n_label_rnn_cells = 2
+n_label_rnn_cells = 1
 n_label_rnn_hidden = 128 # hidden layer num of features
 print("Label LSTM cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
-display_time_interval_sec = 5
+display_time_interval_sec = 10
 
 # Saved models
 model_dir_path = dirs.KNMP_MODEL_DIR_PATH
@@ -132,13 +134,18 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    # restore_saver = tf.train.Saver()
-    # restore_saver.restore(sess, max_acc_model_file_path)
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, last_model_file_path)
 
     step = 1
     prev_output_time = datetime.datetime.now()
-    best_test_acc = 0
+    best_test_char_level_accuracy = 0
     batch_losses = []
+
+    test_data = dataset.get_test_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+    test_index_labels = dataset.get_test_fixed_length_index_labels(
+        n_label_rnn_steps)  # (batch_size,n_output_steps)
+    test_text_labels = dataset.get_text_labels(test_index_labels) # (batch_size)
 
     while True:
         # Training
@@ -147,70 +154,68 @@ with tf.Session() as sess:
         train_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
         train_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps) # (batch_size,n_output_steps)
 
-        sess.run(optimizer, feed_dict={image_rnn_input_data:train_batch_data,label_rnn_input_data:train_one_hot_labels,label_rnn_target_data:train_index_labels})
+        sess.run(optimizer, feed_dict={image_rnn_input_data:train_batch_data,
+                                       label_rnn_input_data:train_one_hot_labels,
+                                       label_rnn_target_data:train_index_labels,
+                                       dropout_input_keep_prob:1,
+                                       dropout_output_keep_prob:1})
 
         from_prev_output_time = datetime.datetime.now() - prev_output_time
         if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
-            cost_value = sess.run(cost,
-                     feed_dict={image_rnn_input_data:train_batch_data,
+            batch_loss = sess.run(cost,
+                                              feed_dict={image_rnn_input_data:train_batch_data,
                                 label_rnn_input_data: train_one_hot_labels,
                                 label_rnn_target_data: train_index_labels})
+            batch_losses.append(batch_loss)
+            avg_count = 10
+            last_batch_losses = batch_losses[-min(avg_count, len(batch_losses)):]
+            average_batch_loss = sum(last_batch_losses) / len(last_batch_losses)
 
             predicted_train_batch_index_labels = sess.run(label_rnn_predicted_index_labels,
                                                           feed_dict={image_rnn_input_data: train_batch_data,
                                                                      label_rnn_input_data: train_one_hot_labels,
                                                                      label_rnn_target_data: train_index_labels})
 
-            print("Iter:", step * n_batch_size, "Cost:", cost_value)
             target_train_batch_text_labels = dataset.get_text_labels(train_index_labels)
-            print(target_train_batch_text_labels)
             predicted_train_batch_text_labels = dataset.get_text_labels(predicted_train_batch_index_labels)
+
+            train_batch_word_level_accuracy = metrics.get_word_level_accuracy(target_train_batch_text_labels,predicted_train_batch_text_labels)
+            train_batch_char_level_accuracy = metrics.get_char_level_accuracy(target_train_batch_text_labels,predicted_train_batch_text_labels)
+
+            predicted_test_text_labels = [""] * n_test_items
+            for i in range(n_label_rnn_steps):
+                input_labels = predicted_test_text_labels
+                input_labels = [wd.START_WORD_CHAR + label for label in input_labels] # Add start-word character
+                input_labels = [label[:n_label_rnn_steps] for label in input_labels] # Set fixed size length
+                input_labels = [label.ljust(n_label_rnn_steps) for label in input_labels] # Pad with spaces to right size
+                one_hot_input_labels = dataset.get_one_hot_labels(input_labels) # Transform to one-hot labels
+
+                predicted_test_index_labels = sess.run(label_rnn_predicted_index_labels,
+                                                              feed_dict={image_rnn_input_data: test_data,
+                                                                         label_rnn_input_data: one_hot_input_labels})
+                predicted_test_text_labels = dataset.get_text_labels(predicted_test_index_labels)
+                predicted_test_text_labels = [label[:i+1] for label in predicted_test_text_labels] # Cut off anything after current step
+
+            test_word_level_accuracy = metrics.get_word_level_accuracy(test_text_labels,predicted_test_text_labels)
+            test_char_level_accuracy = metrics.get_char_level_accuracy(test_text_labels,predicted_test_text_labels)
+
+            print("Iter:", step * n_batch_size, "TRAINING Batch loss: " + "{:.5f}".format(batch_loss), "[{:.5f}]".format(average_batch_loss), "Word accuracy: " + "{:.4f}".format(train_batch_word_level_accuracy), "Char accuracy: " + "{:.4f}".format(train_batch_char_level_accuracy),
+                  "TEST Word accuracy: " + "{:.4f}".format(test_word_level_accuracy), "Char accuracy: " + "{:.4f}".format(test_char_level_accuracy),
+                  "*" if test_char_level_accuracy > best_test_char_level_accuracy else "")
+            print("TRAINING BATCH:")
+            print(target_train_batch_text_labels)
             print(predicted_train_batch_text_labels)
+            print("TEST:")
+            print(test_text_labels)
+            print(predicted_test_text_labels)
+            print()
 
+            saver = tf.train.Saver()
+            saver.save(sess, last_model_file_path)
 
-            # Generate latin
-            # text_label = ""
-            # for i in range(len(text_label)+1,n_label_rnn_steps):
-            #     test_label = wd.START_WORD_CHAR + text_label
-            #     test_label = test_label[:n_label_rnn_steps]
-            #     test_label = test_label.ljust(n_label_rnn_steps)
-            #     one_hot_test_labels = dataset.get_one_hot_labels([test_label])
-            #     predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
-            #                                       feed_dict={label_rnn_input_data: one_hot_test_labels})
-            #
-            #     text_labels = dataset.get_text_labels(predicted_index_labels)
-            #     text_label = text_labels[0]
-            #     text_label = text_label[:i]
-            #
-            # print("Iter:",step*n_batch_size,"Cost:",cost_value, "Generated latin:",text_label)
-
-            # # Calculate training batch accuracy
-            # batch_acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys})
-            # # Calculate training batch loss
-            # batch_loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys})
-            # batch_losses.append(batch_loss)
-            # avg_count = 10
-            # last_batch_losses = batch_losses[-min(avg_count, len(batch_losses)):]
-            # average_batch_loss = sum(last_batch_losses) / len(last_batch_losses)
-            #
-            # # Calculate test accuracy
-            # test_xs = dataset.get_test_data(time_step_count=fixed_timestep_count)
-            # test_ys = dataset.get_test_first_char_one_hot_labels()
-            #
-            # test_acc = sess.run(accuracy, feed_dict={x: test_xs, y: test_ys})
-            #
-            # print ("Iteration " + str(step*n_batch_size) + ", Minibatch Loss = " + "{:.5f}".format(batch_loss) + \
-            #       " [{:.5f}]".format(average_batch_loss) + \
-            #       ", Training Accuracy = " + "{:.4f}".format(batch_acc) + \
-            #        ", Test Accuracy = " + "{:.4f}".format(test_acc),
-            #         "*" if test_acc > best_test_acc else "")
-            #
-            # saver = tf.train.Saver()
-            # saver.save(sess, last_model_file_path)
-            #
-            # if (test_acc > best_test_acc):
-            #     best_test_acc = test_acc
-            # saver.save(sess, max_acc_model_file_path)
+            if test_char_level_accuracy > best_test_char_level_accuracy:
+                best_test_char_level_accuracy = test_char_level_accuracy
+                saver.save(sess, max_acc_model_file_path)
 
             prev_output_time = datetime.datetime.now()
 
