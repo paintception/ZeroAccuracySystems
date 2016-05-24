@@ -24,7 +24,7 @@ n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.01
+learning_rate = 0.001
 print("Learning rate:",learning_rate)
 n_batch_size = 128
 print("Batch size:",n_batch_size)
@@ -39,10 +39,10 @@ print("Features:", n_image_features)
 n_image_rnn_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:", n_image_rnn_steps)
 n_image_rnn_cells = 1
-n_image_rnn_hidden = 32 # hidden layer num of features
+n_image_rnn_hidden = 128 # hidden layer num of features
 print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
 n_label_rnn_cells = 1
-n_label_rnn_hidden = 32 # hidden layer num of features
+n_label_rnn_hidden = 64 # hidden layer num of features
 print("Label LSTM cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
 display_time_interval_sec = 10
 
@@ -122,10 +122,12 @@ if n_label_rnn_cells > 1:
     label_lstm_cell = rnn_cell.MultiRNNCell([label_lstm_cell] * n_label_rnn_cells)
 
 # label_rnn_initial_state = image_rnn_output
-label_rnn_initial_state = label_lstm_cell.zero_state(label_batch_size, tf.float32)
-w_image2label = tf.Variable(tf.random_normal([image_rnn_output.get_shape()[1].value, label_rnn_initial_state.get_shape()[1].value]))
-b_image2label = tf.Variable(tf.random_normal([label_rnn_initial_state.get_shape()[1].value]))
-label_rnn_initial_state = tf.tanh(tf.matmul(image_rnn_output, w_image2label) + b_image2label)
+# label_rnn_initial_state = label_lstm_cell.zero_state(label_batch_size, tf.float32)
+# w_image2label = tf.Variable(tf.random_normal([image_rnn_output.get_shape()[1].value, label_rnn_initial_state.get_shape()[1].value]))
+# b_image2label = tf.Variable(tf.random_normal([label_rnn_initial_state.get_shape()[1].value]))
+# label_rnn_initial_state = tf.tanh(tf.matmul(image_rnn_output, w_image2label) + b_image2label)
+
+label_rnn_initial_state = image_rnn_output
 
 label_rnn_outputs, label_rnn_states = rnn.rnn(label_lstm_cell, label_rnn_inputs, initial_state=label_rnn_initial_state, scope="RNN2")
 
@@ -137,7 +139,13 @@ label_rnn_predicted_index_labels = tf.argmax(label_rnn_predicted_index_labels,2)
 
 # Optimization
 
-sequence_loss_weights = [tf.ones(tf.shape(label_rnn_target_outputs[0]))]*n_label_rnn_steps
+weights_shape = tf.shape(label_rnn_target_outputs[0])
+sequence_loss_weights = [tf.ones(weights_shape)]*n_label_rnn_steps
+sequence_loss_weight_value = 10.0
+# Higher weights for first characters 10,5,2.5,1.25,...
+for i in range(len(sequence_loss_weights)):
+    sequence_loss_weights[i] = tf.fill(weights_shape,sequence_loss_weight_value)
+    sequence_loss_weight_value = sequence_loss_weight_value * 0.7
 cost = sequence_loss(label_rnn_outputs,label_rnn_target_outputs,sequence_loss_weights)
 
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost) # Adam Optimizer

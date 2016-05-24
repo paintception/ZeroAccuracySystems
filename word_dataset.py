@@ -26,7 +26,8 @@ class WordDataItem(object):
             # Add timesteps
             for i in range(self.get_time_step_count(), time_step_count):
                 tmp_data.append([0] * self.get_feature_count())
-        return list(reversed(tmp_data))
+        #return list(reversed(tmp_data))
+        return tmp_data
 
     def get_label(self):
         return self._label
