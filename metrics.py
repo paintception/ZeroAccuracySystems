@@ -28,5 +28,7 @@ def get_char_level_accuracy(target_words, predicted_words):
 
 
 def get_avg_word_distance(target_words, predicted_words):
-    dists = [1 - jellyfish.levenshtein_distance(t, p) / max(len(t), len(p)) for t, p in zip(target_words, predicted_words)]
+    trim_target_words = [word.strip() for word in target_words]
+    trim_predicted_words = [word.strip() for word in predicted_words]
+    dists = [1 - jellyfish.levenshtein_distance(t, p) / max(len(t), len(p)) for t, p in zip(trim_target_words, trim_predicted_words)]
     return sum(dists) / len(dists)
