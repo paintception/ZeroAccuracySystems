@@ -3,6 +3,7 @@ import os
 import shutil
 from PIL import Image
 import random
+import prepare_features as pf
 
 def sheer_image(image,sheer_factor=0):
     if sheer_factor == 0:
@@ -14,12 +15,12 @@ def sheer_image(image,sheer_factor=0):
     return image.transform((new_width, height), Image.AFFINE,
                         (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC)
 
-def resize_image(image):
-    resize_ratio = 0.5
-    new_width = int(image.width * resize_ratio * 0.5)
-    new_height = 28
-    return image.resize((new_width, new_height))
-
+# def resize_image(image):
+#     resize_ratio = 0.5
+#     new_width = int(image.width * resize_ratio * 0.5)
+#     new_height = 28
+#     return image.resize((new_width, new_height))
+#
 
 source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
@@ -57,21 +58,21 @@ for source_file_name in source_file_names:
     print(source_file_path)
 
     image = Image.open(source_file_path)
-    image = image.convert("LA") # Greyscale
+    # image = image.convert("LA") # Greyscale
 
     if train:
-#        for sheer_ratio in range(-2,3):
-        for sheer_ratio in [0]:
+        for sheer_ratio in range(-2,3):
+#        for sheer_ratio in [0]:
             train_image = image
             train_image = sheer_image(train_image,(sheer_ratio*0.05))
-            train_image = resize_image(train_image)
+            train_image = pf.preprocess_image(train_image)
             train_file_counter += 1
             target_file_name = str(train_file_counter).rjust(6, "0") + "_" + source_file_name
             target_file_path = os.path.join(train_dir_path, target_file_name)
             train_image.save(target_file_path)
 
     if test:
-        image = resize_image(image)
+        image = pf.preprocess_image(image)
         target_file_path = os.path.join(test_dir_path, source_file_name)
         image.save(target_file_path)
 

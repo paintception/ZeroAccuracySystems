@@ -11,7 +11,7 @@ class WordDataItem(object):
         self.file_path = file_path
         self.label = label
         self.label_timesteps = label_timesteps
-        self.data = pf.get_feature_data(self.file_path)
+        self.data = pf.get_feature_data_for_file(self.file_path)
 
     def get_data_with_fixed_time_step_count(self, time_step_count):
         tmp_data = copy.copy(self.data)  # Weak copy timesteps

@@ -4,9 +4,7 @@ import random
 import copy
 from PIL import Image
 
-START_WORD_CHAR = "%"
-
-class WordDataItem(object):
+class WordDataItemRM(object):
     def __init__(self,file_path):
         self._file_path = file_path
         self._label = pf.get_word_label_from_filename(self._file_path)
@@ -15,19 +13,11 @@ class WordDataItem(object):
 
     def get_data(self):
         if self._data is None:
-            self._data = pf.get_feature_data(self._file_path)
+            self._data = pf.get_feature_data_for_file(self._file_path)
         return self._data
 
     def get_data_with_fixed_time_step_count(self,time_step_count):
-        tmp_data = copy.copy(self.get_data()) # Weak copy timesteps
-        if (len(tmp_data) > time_step_count):
-            tmp_data = tmp_data[:time_step_count] # Cut off some timesteps
-        else:
-            # Add timesteps
-            for i in range(self.get_time_step_count(), time_step_count):
-                tmp_data.append([0] * self.get_feature_count())
-        #return list(reversed(tmp_data))
-        return tmp_data
+        return pf.get_data_with_fixed_time_step_count(self.get_data(),time_step_count)
 
     def get_label(self):
         return self._label
@@ -50,16 +40,10 @@ class WordDataItem(object):
         return self.get_height()
 
     def get_fixed_length_label(self,fixed_length,start_word_char=False):
-        start_char = ""
-        if start_word_char is True:
-            start_char = START_WORD_CHAR
-        tmp_label = start_char + self.get_label()
-        if (len(tmp_label) > fixed_length):
-            tmp_label = tmp_label[:fixed_length]
-        return tmp_label.ljust(fixed_length)
+        return pf.get_fixed_length_label(self.get_label(),fixed_length,start_word_char)
 
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
-class WordDataSet(object):
+class WordDataSetRM(object):
     def __init__(self, dir_path,max_image_width=1000):
         self._dir_path = dir_path
         self._max_image_width = max_image_width
@@ -81,7 +65,7 @@ class WordDataSet(object):
         for file_name in file_names:
             file_path = os.path.join(file_dir_path,file_name)
 
-            word_data_item = WordDataItem(file_path)
+            word_data_item = WordDataItemRM(file_path)
             if (word_data_item.get_width() <= self._max_image_width):
                 items.append(word_data_item)
 
@@ -176,17 +160,12 @@ class WordDataSet(object):
 
         for item in items:
             label = item.get_fixed_length_label(fixed_length,start_word_char)
-            one_hot_label = self._get_one_hot_label(label)
+            one_hot_label = pf.get_one_hot_label(self.get_unique_chars(),label)
             one_hot_labels.append(one_hot_label)
         return one_hot_labels
 
     def get_one_hot_labels(self, labels):
-        one_hot_labels = []
-
-        for label in labels:
-            one_hot_label = self._get_one_hot_label(label)
-            one_hot_labels.append(one_hot_label)
-        return one_hot_labels
+        return pf.get_one_hot_labels(self.get_unique_chars(),labels)
 
     def get_train_batch_fixed_length_index_labels(self, fixed_length):  # (n_batch_size,n_fixed_length)
         return self._get_fixed_length_index_labels(self._next_batch_items, fixed_length)
@@ -199,13 +178,13 @@ class WordDataSet(object):
 
         for item in items:
             label = item.get_fixed_length_label(fixed_length)
-            index_label = self._get_index_label(label)
+            index_label = pf.get_index_label(self.get_unique_chars(),label)
             index_labels.append(index_label)
         return index_labels
 
     def get_unique_chars(self): # List of ['a','A','B',....]
         if self._unique_chars is None:
-            chars = [' ',START_WORD_CHAR] # Always add space and start-word character
+            chars = [' ',pf.START_WORD_CHAR] # Always add space and start-word character
             for item in self._all_items:
                 label = item.get_label()
                 for char in label:
@@ -213,6 +192,11 @@ class WordDataSet(object):
                         chars.append(char)
             self._unique_chars = sorted(chars)
         return self._unique_chars
+
+    # def get_unique_chars_as_string(self):
+    #     unique_chars = self.get_unique_chars()
+    #     for unique_char in unique_chars:
+    #
 
     def get_max_image_width(self):
         return self.get_max_time_steps()
@@ -234,29 +218,22 @@ class WordDataSet(object):
 
         return max_length
 
-    def _get_one_hot_label(self,label):
-        unique_chars = self.get_unique_chars()
-        one_hot_label = []
-        for char in label:
-            char_index = unique_chars.index(char)
-            one_hot_char = pf.get_one_hot(char_index,len(unique_chars))
-            one_hot_label.append(one_hot_char)
-        return one_hot_label
+    # def _get_one_hot_label(self,label):
+    #     unique_chars = self.get_unique_chars()
+    #     one_hot_label = []
+    #     for char in label:
+    #         char_index = unique_chars.index(char)
+    #         one_hot_char = pf.get_one_hot(char_index,len(unique_chars))
+    #         one_hot_label.append(one_hot_char)
+    #     return one_hot_label
 
-    def _get_index_label(self,label): # "abc" => [1,2,3]
-        unique_chars = self.get_unique_chars()
-        char_index_label = []
-        for char in label:
-            char_index = unique_chars.index(char)
-            char_index_label.append(char_index)
-        return char_index_label
+    # def _get_index_label(self,label): # "abc" => [1,2,3]
+    #     unique_chars = self.get_unique_chars()
+    #     char_index_label = []
+    #     for char in label:
+    #         char_index = unique_chars.index(char)
+    #         char_index_label.append(char_index)
+    #     return char_index_label
 
     def get_text_labels(self,index_labels):
-        unique_chars = self.get_unique_chars()
-        text_labels = []
-        for index_label in index_labels:
-            text_label = ""
-            for index in index_label:
-                text_label = text_label + unique_chars[index]
-            text_labels.append(text_label)
-        return text_labels
+        return pf.get_text_labels(self.get_unique_chars(),index_labels)
