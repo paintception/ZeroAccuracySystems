@@ -4,7 +4,7 @@ from toolbox import wordio
 import prepare_features as pf
 
 from recognizer_seq2seq import recognize_seq2seq
-import blstm_ctc_net.blstm_ctc_net as blstm_ctc_net
+import blstm_ctc_net.blstm_ctc_net_model as blstm_ctc_net
 
 
 def parse_args():
