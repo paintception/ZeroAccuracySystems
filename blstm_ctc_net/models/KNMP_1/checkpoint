@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/yaron/handwriting_recognition/ZeroAccuracySystems/blstm_ctc_net/current.model"
+all_model_checkpoint_paths: "/home/yaron/handwriting_recognition/ZeroAccuracySystems/blstm_ctc_net/current.model"
