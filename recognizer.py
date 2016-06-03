@@ -1,5 +1,4 @@
 import sys
-import toolbox
 from PIL import Image
 from toolbox import wordio
 import prepare_features as pf
@@ -21,9 +20,9 @@ def get_parameters():
 check_parameters()
 
 # Get command line arguments
-ppm_file_path,input_words_file_path,output_words_file_path = get_parameters()
+page_file_path, input_words_file_path, output_words_file_path = get_parameters()
 
-print("PPM file:",ppm_file_path)
+print("Page file:", page_file_path)
 print("Input labels file:",input_words_file_path)
 print("Output labels file:",output_words_file_path)
 
@@ -43,7 +42,7 @@ print("Maximal number of characters in a word:",n_label_rnn_steps)
 print("Classes:",n_classes)
 
 # Read PPM
-page_image = Image.open(ppm_file_path)
+page_image = Image.open(page_file_path)
 print("Page image size:",page_image.width,"x",page_image.height)
 
 # Define RNN
@@ -85,7 +84,7 @@ predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predic
 
 for word_box,predicted_train_sample_text_label in zip(word_boxes,predicted_train_sample_text_labels):
     predicted_text = predicted_train_sample_text_label.strip()
-    print("Word box:",(word_box.left, word_box.top, word_box.right, word_box.bottom),"Predicted word:",predicted_text)
+    print("Word box:",(word_box.left, word_box.top, word_box.right, word_box.bottom),"Correct word:",word_box.text,"Predicted word:",predicted_text)
     word_box.text = predicted_text
 
 # Save output .words file

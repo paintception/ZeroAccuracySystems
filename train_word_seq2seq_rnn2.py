@@ -96,8 +96,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    # restore_saver = tf.train.Saver()
-    # restore_saver.restore(sess, last_model_file_path)
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, last_model_file_path)
 
     step = 1
     prev_output_time = datetime.datetime.now()
