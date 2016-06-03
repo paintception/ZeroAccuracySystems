@@ -150,7 +150,7 @@ with tf.Session() as sess:
 
             if (test_acc > best_test_acc):
                 best_test_acc = test_acc
-            saver.save(sess, max_acc_model_file_path)
+                saver.save(sess, max_acc_model_file_path)
 
             prev_output_time = datetime.datetime.now()
 

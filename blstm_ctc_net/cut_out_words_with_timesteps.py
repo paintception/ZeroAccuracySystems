@@ -12,10 +12,10 @@ import tqdm
 if __name__ == "__main__":
     # Parameters
 
-    pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
-    word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-    # pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
-    # word_image_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+    # pages_dir_path = dirs.KNMP_PAGES_DIR_PATH
+    # word_image_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+    pages_dir_path = dirs.STANFORD_PAGES_DIR_PATH
+    word_image_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
 
     # Delete and create directories
     if os.path.exists(word_image_dir_path):

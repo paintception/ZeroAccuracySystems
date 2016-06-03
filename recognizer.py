@@ -2,7 +2,7 @@ import sys
 from PIL import Image
 from toolbox import wordio
 import prepare_features as pf
-import rnn_seq2seq_model as model
+import blstm_seq2seq.rnn_seq2seq_model as model
 import tensorflow as tf
 
 def check_parameters():
