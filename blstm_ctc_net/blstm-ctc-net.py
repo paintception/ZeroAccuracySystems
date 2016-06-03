@@ -8,18 +8,19 @@ import datetime
 import blstm_ctc_net.word_dataset_with_timesteps as wd
 import blstm_ctc_net.dirs as dirs
 import metrics
+import blstm_ctc_net.plot_words as plotter
 
 print("Loading data")
-word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
-# word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+# word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
+word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
 
 save_path = os.path.join(os.path.dirname(__file__), "current.model")
 
 display_time = 60
 
 # Global parameters
-learning_rate = 0.00001
-learning_iterations = 5000  # number of mini-batches
+learning_rate = 0.0001
+learning_iterations = 1000  # number of mini-batches
 batch_size = 128  # number of words in a batch
 n_hidden_layer = 128  # number of nodes in hidden layer
 n_output_classes = len(word_dataset.unique_chars) + 1  # Number of letters in our alphabet and empty label
@@ -98,6 +99,8 @@ with tf.Session() as sess:
     prev_output_time = datetime.datetime.now()
     # Keep training until reach max iterations
 
+    test_xs_e = word_dataset.get_test_data(0)
+
     test_xs = word_dataset.get_test_data(max_input_timesteps)
     test_xs_length = word_dataset.get_test_sequence_lengths(max_input_timesteps)
 
@@ -108,7 +111,7 @@ with tf.Session() as sess:
 
     test_words = word_dataset.get_words_from_indexes(test_ys_index, word_dataset.get_chars_from_indexes(test_ys_labels), batch_size)
     print("Start training")
-    while True:
+    while step < learning_iterations:
 
         word_dataset.prepare_next_train_batch(batch_size)
 
@@ -171,8 +174,9 @@ with tf.Session() as sess:
             print([word.ljust(15) for word in batch_words])
             print([word.ljust(15) for word in batch_words_decoded])
 
+            plotter.plot_words_with_labels(test_xs_e[0:17], test_words[0:17], test_words_decoded[0:17])
+
             saver.save(sess, save_path)
 
             prev_output_time = datetime.datetime.now()
-
         step += 1

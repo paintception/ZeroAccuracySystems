@@ -25,10 +25,10 @@ def resize_image(image, resize_ratio=0.5):
 
 
 if __name__ == "__main__":
-    # source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
-    # target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
-    source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-    target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+    source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+    target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
+    # source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+    # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
     train_dir_path = os.path.join(target_dir_path, "train")
     test_dir_path = os.path.join(target_dir_path, "test")

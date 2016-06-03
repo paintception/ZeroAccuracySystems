@@ -56,6 +56,7 @@ class WordDataSet(object):
         self.train_items = self.load_data_items("train")
         self.test_items = self.load_data_items("test")
         self.all_items = self.train_items + self.test_items
+        # self.all_items = self.test_items
         self.unique_chars = self.get_unique_chars()
 
     def load_data_items(self, train_vs_test):
