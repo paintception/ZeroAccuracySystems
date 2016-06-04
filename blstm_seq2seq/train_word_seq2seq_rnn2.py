@@ -2,18 +2,18 @@ import datetime
 import tensorflow as tf
 from tensorflow.models.rnn import rnn, rnn_cell
 import numpy as np
-import word_dataset as wd
-from word_dataset import WordDataSetRM,WordDataItemRM
+import blstm_seq2seq.word_dataset as wd
+from blstm_seq2seq.word_dataset import WordDataSetRM,WordDataItemRM
 import dirs
 import random
 import os
 from tensorflow.python.ops.seq2seq import sequence_loss
 import metrics
-import rnn_seq2seq_model as model
+import blstm_seq2seq.rnn_seq2seq_model as model
 import prepare_features as pf
 
 # Saved models
-model_dir_path = dirs.KNMP_MODEL_DIR_PATH
+model_dir_path = dirs.STANFORD_MODEL_DIR_PATH
 last_model_file_path = os.path.join(model_dir_path,"last.model")
 max_acc_model_file_path = os.path.join(model_dir_path,"max_acc.model")
 if not os.path.exists(model_dir_path):
@@ -22,7 +22,7 @@ if not os.path.exists(model_dir_path):
 # Read data set
 fixed_timestep_count = 50
 max_image_width = 50
-dataset = WordDataSetRM(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
+dataset = WordDataSetRM(dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
@@ -35,11 +35,11 @@ print("Max label length:", n_label_rnn_steps)
 # Parameters
 learning_rate = 0.1
 print("Learning rate:",learning_rate)
-n_batch_size = 128
+n_batch_size = 256
 print("Batch size:",n_batch_size)
-dropout_input_keep_prob_value = 0.75
+dropout_input_keep_prob_value = 1.0
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
-dropout_output_keep_prob_value = 0.75
+dropout_output_keep_prob_value = 1.0
 print('Dropout output keep probability:',dropout_output_keep_prob_value)
 
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
@@ -49,7 +49,7 @@ print(dataset.get_unique_chars())
 print("Features:", n_image_features)
 n_image_rnn_steps = fixed_timestep_count # Timesteps = image width
 print("Time steps:", n_image_rnn_steps)
-display_time_interval_sec = 60
+display_time_interval_sec = 30
 
 # Placeholders
 default_dropout_prob = tf.constant(1,"float")
@@ -119,24 +119,6 @@ with tf.Session() as sess:
     test_index_labels = dataset.get_test_fixed_length_index_labels(
         n_label_rnn_steps)  # (batch_size,n_output_steps)
     test_text_labels = dataset.get_text_labels(test_index_labels) # (batch_size)
-
-    # Iterate label RNN to get final result
-    # def get_label_rnn_result(image_data):
-    #     predicted_text_labels = [""] * len(image_data)
-    #     for i in range(n_label_rnn_steps):
-    #         input_labels = predicted_text_labels
-    #         input_labels = [pf.START_WORD_CHAR + label for label in input_labels]  # Add start-word character
-    #         input_labels = [label[:n_label_rnn_steps] for label in input_labels]  # Set fixed size length
-    #         input_labels = [label.ljust(n_label_rnn_steps) for label in input_labels]  # Pad with spaces to right size
-    #         one_hot_input_labels = dataset.get_one_hot_labels(input_labels)  # Transform to one-hot labels
-    #
-    #         predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
-    #                                           feed_dict={image_rnn_input_data: image_data,
-    #                                                      label_rnn_input_data: one_hot_input_labels})
-    #         predicted_text_labels = dataset.get_text_labels(predicted_index_labels)
-    #         predicted_text_labels = [label[:i + 1] for label in
-    #                                  predicted_text_labels]  # Cut off anything after current step
-    #     return predicted_text_labels
 
     while True:
         # Training

@@ -15,20 +15,13 @@ def sheer_image(image,sheer_factor=0):
     return image.transform((new_width, height), Image.AFFINE,
                         (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC)
 
-# def resize_image(image):
-#     resize_ratio = 0.5
-#     new_width = int(image.width * resize_ratio * 0.5)
-#     new_height = 28
-#     return image.resize((new_width, new_height))
-#
-
-source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
-target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
 
 train_dir_path = os.path.join(target_dir_path,"train")
 test_dir_path = os.path.join(target_dir_path,"test")
 
-train_ratio = 0.95
+test_file_count = 100
 
 # Delete and create target directories
 if os.path.exists(target_dir_path):
@@ -43,15 +36,14 @@ random.shuffle(source_file_names)
 source_file_counter = 0
 max_width = 0
 total_width = 0
-train_file_count = int(len(source_file_names) * train_ratio)
 train_file_counter = 0
 for source_file_name in source_file_names:
     source_file_counter += 1
-    train = True
-    test = False
-    if (source_file_counter > train_file_count):
-        train = False
-        test = True
+    train = False
+    test = True
+    if (source_file_counter > test_file_count):
+        train = True
+        test = False
 
     source_file_path = os.path.join(source_dir_path, source_file_name)
 
@@ -61,10 +53,10 @@ for source_file_name in source_file_names:
     # image = image.convert("LA") # Greyscale
 
     if train:
-        for sheer_ratio in range(-2,3):
+        for sheer_ratio in [-0.20,-0.15,-0.10,-0.05,0,0.05,0.10,0.15,0.20]:
 #        for sheer_ratio in [0]:
             train_image = image
-            train_image = sheer_image(train_image,(sheer_ratio*0.05))
+            train_image = sheer_image(train_image,(sheer_ratio))
             train_image = pf.preprocess_image(train_image)
             train_file_counter += 1
             target_file_name = str(train_file_counter).rjust(6, "0") + "_" + source_file_name

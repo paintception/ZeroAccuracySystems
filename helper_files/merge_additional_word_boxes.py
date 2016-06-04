@@ -5,8 +5,8 @@ import dirs
 import os
 import shutil
 
-source_dir_path = dirs.KNMP_ADDITIONAL_WORD_BOXES_DIR_PATH
-target_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+source_dir_path = dirs.STANFORD_ADDITIONAL_WORD_BOXES_DIR_PATH
+target_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
 
 for source_image_name in [f for f in os.listdir(source_dir_path) if f.endswith(".png")]:
     source_image_path = os.path.join(source_dir_path,source_image_name)

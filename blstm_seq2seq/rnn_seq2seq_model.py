@@ -17,10 +17,10 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dr
 
     # Define RNN architecture
     n_image_rnn_cells = 1
-    n_image_rnn_hidden = 96  # hidden layer num of features
+    n_image_rnn_hidden = 64  # hidden layer num of features
     print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
     n_label_rnn_cells = 1
-    n_label_rnn_hidden = 96  # hidden layer num of features
+    n_label_rnn_hidden = 64  # hidden layer num of features
     print("Label LSTM cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
 
     # Retrieve dimensions from input data
@@ -67,31 +67,31 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dr
     # label_rnn_target_outputs = [tf.squeeze(lrt) for lrt in label_rnn_target_outputs]
 
     # Image RNN
-    # image_lstm_cell = rnn_cell.LSTMCell(n_image_rnn_hidden)
-    # image_lstm_cell = rnn_cell.DropoutWrapper(image_lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+    image_lstm_cell = rnn_cell.LSTMCell(n_image_rnn_hidden)
+    image_lstm_cell = rnn_cell.DropoutWrapper(image_lstm_cell, input_keep_prob=dropout_input_keep_prob, output_keep_prob=dropout_output_keep_prob)
+    if n_image_rnn_cells > 1:
+        image_lstm_cell = rnn_cell.MultiRNNCell([image_lstm_cell] * n_image_rnn_cells)
+    image_rnn_initial_state = image_lstm_cell.zero_state(image_batch_size, tf.float32)
+    image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, scope="RNN1")
+    # image_lstm_fw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
+    # image_lstm_fw_cell = rnn_cell.DropoutWrapper(image_lstm_fw_cell, input_keep_prob=dropout_input_keep_prob,
+    #                                              output_keep_prob=dropout_output_keep_prob)
     # if n_image_rnn_cells > 1:
-    #     image_lstm_cell = rnn_cell.MultiRNNCell([image_lstm_cell] * n_image_rnn_cells)
-    # image_rnn_initial_state = image_lstm_cell.zero_state(image_batch_size, tf.float32)
-    # image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, scope="RNN1")
-    image_lstm_fw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
-    image_lstm_fw_cell = rnn_cell.DropoutWrapper(image_lstm_fw_cell, input_keep_prob=dropout_input_keep_prob,
-                                                 output_keep_prob=dropout_output_keep_prob)
-    if n_image_rnn_cells > 1:
-        image_lstm_fw_cell = rnn_cell.MultiRNNCell([image_lstm_fw_cell] * n_image_rnn_cells)
-    image_rnn_initial_state_fw = image_lstm_fw_cell.zero_state(image_batch_size, tf.float32)
-
-    image_lstm_bw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
-    image_lstm_bw_cell = rnn_cell.DropoutWrapper(image_lstm_bw_cell, input_keep_prob=dropout_input_keep_prob,
-                                                 output_keep_prob=dropout_output_keep_prob)
-    if n_image_rnn_cells > 1:
-        image_lstm_bw_cell = rnn_cell.MultiRNNCell([image_lstm_bw_cell] * n_image_rnn_cells)
-    image_rnn_initial_state_bw = image_lstm_bw_cell.zero_state(image_batch_size, tf.float32)
-
-    image_rnn_outputs, image_rnn_state_fw, image_rnn_state_bw = rnn.bidirectional_rnn(image_lstm_fw_cell,
-                                                                                      image_lstm_bw_cell,
-                                                                                      image_rnn_inputs,
-                                                                                      initial_state_fw=image_rnn_initial_state_fw,
-                                                                                      initial_state_bw=image_rnn_initial_state_bw)
+    #     image_lstm_fw_cell = rnn_cell.MultiRNNCell([image_lstm_fw_cell] * n_image_rnn_cells)
+    # image_rnn_initial_state_fw = image_lstm_fw_cell.zero_state(image_batch_size, tf.float32)
+    #
+    # image_lstm_bw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
+    # image_lstm_bw_cell = rnn_cell.DropoutWrapper(image_lstm_bw_cell, input_keep_prob=dropout_input_keep_prob,
+    #                                              output_keep_prob=dropout_output_keep_prob)
+    # if n_image_rnn_cells > 1:
+    #     image_lstm_bw_cell = rnn_cell.MultiRNNCell([image_lstm_bw_cell] * n_image_rnn_cells)
+    # image_rnn_initial_state_bw = image_lstm_bw_cell.zero_state(image_batch_size, tf.float32)
+    #
+    # image_rnn_outputs, image_rnn_state_fw, image_rnn_state_bw = rnn.bidirectional_rnn(image_lstm_fw_cell,
+    #                                                                                   image_lstm_bw_cell,
+    #                                                                                   image_rnn_inputs,
+    #                                                                                   initial_state_fw=image_rnn_initial_state_fw,
+    #                                                                                   initial_state_bw=image_rnn_initial_state_bw)
 
     image_rnn_output = image_rnn_outputs[-1]
 

@@ -3,7 +3,7 @@ import os
 import shutil
 from PIL import Image
 
-dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH + "/train"
+dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH + "/train"
 
 file_names = [f for f in os.listdir(dir_path) if f.endswith(".png")]
 
