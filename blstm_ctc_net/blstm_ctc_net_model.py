@@ -3,7 +3,12 @@ from tensorflow.models.rnn import rnn, rnn_cell
 from tensorflow.contrib import ctc
 
 import os
+import sys
 import datetime
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 import blstm_ctc_net.word_dataset_with_timesteps as wd
 import blstm_ctc_net.dirs as dirs
@@ -13,11 +18,11 @@ from word_model.word_m import WordM
 
 print("Loading data")
 if __name__ == "__main__":
-    # word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
-    word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+    word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH])
+    # word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
 else:
-    # word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
-    word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
+    word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
+    # word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
 
 word_model = WordM()
 
@@ -26,10 +31,10 @@ save_path = os.path.join(os.path.dirname(__file__), "last_model", "current.model
 display_time = 60
 
 # Global parameters
-learning_rate = 0.0001
-learning_iterations = 10000  # number of mini-batches
-batch_size = 128  # number of words in a batch
-n_hidden_layer = 128  # number of nodes in hidden layer
+learning_rate = 0.001
+learning_iterations = 100000  # number of mini-batches
+batch_size = 256  # number of words in a batch
+n_hidden_layer = 256  # number of nodes in hidden layer
 n_output_classes = len(word_dataset.unique_chars) + 1  # Number of letters in our alphabet and empty label
 print("Output_classes: ", n_output_classes)
 
@@ -99,7 +104,8 @@ def blstm_ctc_train():
         sess.run(init)
 
         saver = tf.train.Saver()
-        saver.restore(sess, save_path)
+        if os.path.exists(save_path):
+            saver.restore(sess, save_path)
 
         step = 1
         prev_output_time = datetime.datetime.now()
@@ -184,14 +190,14 @@ def blstm_ctc_train():
                                                                                           metrics.get_char_level_accuracy(test_words, test_words_decoded_lexicon),
                                                                                           metrics.get_avg_word_distance(test_words, test_words_decoded_lexicon)))
                 print("-----")
-                print("Test labels")
-                print([word.ljust(15) for word in test_words])
-                print([word.ljust(15) for word in test_words_decoded])
-                print([word.ljust(15) for word in test_words_decoded_lexicon])
-                print("Batch labels")
-                print([word.ljust(15) for word in batch_words])
-                print([word.ljust(15) for word in batch_words_decoded])
-                print([word.ljust(15) for word in batch_words_decoded_lexicon])
+                # print("Test labels")
+                # print([word.ljust(15) for word in test_words])
+                # print([word.ljust(15) for word in test_words_decoded])
+                # print([word.ljust(15) for word in test_words_decoded_lexicon])
+                # print("Batch labels")
+                # print([word.ljust(15) for word in batch_words])
+                # print([word.ljust(15) for word in batch_words_decoded])
+                # print([word.ljust(15) for word in batch_words_decoded_lexicon])
 
                 # plotter.plot_words_with_labels(test_xs[0:17], test_words[0:17], test_words_decoded[0:17])
 
@@ -224,7 +230,7 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
                                                                   word_dataset.get_chars_from_indexes(batch_decoded.values),
                                                                   batch_s)
 
-        plotter.plot_words_with_labels(batch_xs[0:17], batch_words[0:17], batch_words_decoded[0:17])
+        plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded)
 
         print("Batch labels")
         print([word.ljust(15) for word in batch_words])

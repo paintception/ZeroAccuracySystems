@@ -57,15 +57,18 @@ class WordDataSet(object):
         self.init_train_batch()
 
     def load_data(self):
-        self.train_items = self.load_data_items("train")
-        self.test_items = self.load_data_items("test")
+        self.train_items = []
+        self.test_items = []
+        for dir in self.dir_path:
+            self.train_items.extend(self.load_data_items(dir, "train"))
+            self.test_items.extend(self.load_data_items(dir, "test"))
         self.all_items = self.train_items + self.test_items
         # self.all_items = self.test_items
         self.unique_chars = self.get_unique_chars()
 
-    def load_data_items(self, train_vs_test):
+    def load_data_items(self, dir_path, train_vs_test):
         items = []
-        file_dir_path = os.path.join(self.dir_path, train_vs_test)
+        file_dir_path = os.path.join(dir_path, train_vs_test)
 
         with open(os.path.join(file_dir_path, 'word_info'), 'rb') as word_info_file:
             word_info = pickle.load(word_info_file)
