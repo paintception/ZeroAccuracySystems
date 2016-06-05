@@ -100,7 +100,7 @@ with tf.Session() as sess:
     restore_saver = tf.train.Saver()
     restore_saver.restore(sess, last_model_file_path)
 
-    step = 1
+    processed_items = 0
     prev_output_time = datetime.datetime.now()
     best_accuracy = 0
     train_sample_losses = []
@@ -124,27 +124,9 @@ with tf.Session() as sess:
     test_text_labels = dataset.get_text_labels(test_index_labels) # (batch_size)
 
     sequence_lengths = dataset.get_all_sequence_lengths(time_step_count=fixed_timestep_count)
-    while True:
-        # Training
-        batch_sequence_length = random.sample(sequence_lengths,1)[0]
-        batch_sequence_length_interval = (int(batch_sequence_length/1.2),int(batch_sequence_length*1.2))
-        # length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
-        # dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
-        dataset.prepare_next_train_batch(n_batch_size, batch_sequence_length_interval)
-        train_batch_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
-        train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count) # (batch_size)
-        train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
-        train_batch_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps) # (batch_size,n_output_steps)
-
-        sess.run(optimizer_step, feed_dict={image_rnn_input_data:train_batch_data,
-                                       image_rnn_input_lengths:train_batch_lengths,
-                                       label_rnn_input_data:train_batch_one_hot_labels,
-                                       label_rnn_target_data:train_batch_index_labels,
-                                       dropout_input_keep_prob:dropout_input_keep_prob_value,
-                                       dropout_output_keep_prob:dropout_output_keep_prob_value})
-
+    for step in range(1000000000):
         from_prev_output_time = datetime.datetime.now() - prev_output_time
-        if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
+        if step == 0 or from_prev_output_time.seconds > display_time_interval_sec:
             train_sample_loss = sess.run(cost,
                                          feed_dict={image_rnn_input_data:train_sample_data,
                                 image_rnn_input_lengths:train_sample_lengths,
@@ -165,7 +147,7 @@ with tf.Session() as sess:
             test_char_level_accuracy = metrics.get_char_level_accuracy(test_text_labels,predicted_test_text_labels)
             test_avg_word_distance = metrics.get_avg_word_distance(test_text_labels, predicted_test_text_labels)
 
-            print("Iter:", step * n_batch_size, "TRAINING Loss: " + "{:.5f}".format(train_sample_loss), "[{:.5f}]".format(average_batch_loss), "Word acc.: " + "{:.4f}".format(train_sample_word_level_accuracy), "Char acc.: " + "{:.4f}".format(train_sample_char_level_accuracy), "Levenstein: " + "{:.4f}".format(train_sample_avg_word_distance),
+            print("Iter:", processed_items, "TRAINING Loss: " + "{:.5f}".format(train_sample_loss), "[{:.5f}]".format(average_batch_loss), "Word acc.: " + "{:.4f}".format(train_sample_word_level_accuracy), "Char acc.: " + "{:.4f}".format(train_sample_char_level_accuracy), "Levenstein: " + "{:.4f}".format(train_sample_avg_word_distance),
                   "TEST","Word acc.: " + "{:.4f}".format(test_word_level_accuracy), "Char acc.: " + "{:.4f}".format(test_char_level_accuracy), "Levenstein: " + "{:.4f}".format(test_avg_word_distance),
                   "*" if test_avg_word_distance > best_accuracy else "")
             max_output_items = 15
@@ -187,6 +169,28 @@ with tf.Session() as sess:
 
             prev_output_time = datetime.datetime.now()
 
-        step += 1
+        # Training
+        batch_sequence_length = random.sample(sequence_lengths, 1)[0]
+        batch_sequence_length_interval = (0, int(batch_sequence_length * 1.1))
+        # length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
+        # dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
+        dataset.prepare_next_train_batch(n_batch_size, batch_sequence_length_interval)
+        train_batch_data = dataset.get_train_batch_data(
+            time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+        if len(train_batch_data) == 0:
+            continue
+        processed_items = processed_items + len(train_batch_data)
+        train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count)  # (batch_size)
+        train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps,
+                                                                                         start_word_char=True)  # (batch_size,n_output_steps,n_classes)
+        train_batch_index_labels = dataset.get_train_batch_fixed_length_index_labels(
+            n_label_rnn_steps)  # (batch_size,n_output_steps)
+
+        sess.run(optimizer_step, feed_dict={image_rnn_input_data: train_batch_data,
+                                            image_rnn_input_lengths: train_batch_lengths,
+                                            label_rnn_input_data: train_batch_one_hot_labels,
+                                            label_rnn_target_data: train_batch_index_labels,
+                                            dropout_input_keep_prob: dropout_input_keep_prob_value,
+                                            dropout_output_keep_prob: dropout_output_keep_prob_value})
 
     sess.close()

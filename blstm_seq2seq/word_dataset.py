@@ -69,7 +69,7 @@ class WordDataSetRM(object):
             if (word_data_item.get_width() <= self._max_image_width):
                 items.append(word_data_item)
 
-            if len(items) % 100 == 0:
+            if len(items) % 1000 == 0:
                 print("Loaded %d %s images" % (len(items),train_vs_test))
         print("Loaded all %d %s images" % (len(items),train_vs_test))
         return items
@@ -92,13 +92,17 @@ class WordDataSetRM(object):
 
     def prepare_next_train_batch(self, batch_size, length_interval=(0,9999)):
         self._next_batch_items = []
-        for b in range(batch_size):
+        counter = 0
+        for b in range(batch_size*3):
             if len(self._train_items_for_batch) == 0:
                 self._train_items_for_batch = copy.copy(self._train_items) # Copy only references
                 random.shuffle(self._train_items_for_batch)
             train_item = self._train_items_for_batch.pop()
             if train_item.get_time_step_count() >= length_interval[0] and train_item.get_time_step_count() <= length_interval[1]:
-                self._next_batch_items.append(train_item)
+                if not train_item in self._next_batch_items:
+                    self._next_batch_items.append(train_item)
+            if len(self._next_batch_items) == batch_size:
+                break
 
     # (n_batch_size,n_time_steps,n_features)
     def get_train_batch_data(self,time_step_count=0):
