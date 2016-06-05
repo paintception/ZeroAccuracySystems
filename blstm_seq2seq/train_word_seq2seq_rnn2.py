@@ -177,7 +177,7 @@ with tf.Session() as sess:
         dataset.prepare_next_train_batch(n_batch_size, batch_sequence_length_interval)
         train_batch_data = dataset.get_train_batch_data(
             time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
-        if len(train_batch_data) == 0:
+        if len(train_batch_data) < n_batch_size*0.5:
             continue
         processed_items = processed_items + len(train_batch_data)
         train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count)  # (batch_size)
