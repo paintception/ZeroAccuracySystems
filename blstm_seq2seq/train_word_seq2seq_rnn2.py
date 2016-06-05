@@ -122,10 +122,14 @@ with tf.Session() as sess:
         n_label_rnn_steps)  # (batch_size,n_output_steps)
     test_text_labels = dataset.get_text_labels(test_index_labels) # (batch_size)
 
+    sequence_lengths = dataset.get_all_sequence_lengths(time_step_count=fixed_timestep_count)
     while True:
         # Training
-        length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
-        dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
+        batch_sequence_length = random.sample(sequence_lengths,1)[0]
+        batch_sequence_length_interval = (int(batch_sequence_length/1.2),int(batch_sequence_length*1.2))
+        # length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
+        # dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
+        dataset.prepare_next_train_batch(n_batch_size, batch_sequence_length_interval)
         train_batch_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
         train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count) # (batch_size)
         train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
