@@ -5,13 +5,13 @@ import random
 import os
 import prepare_features as pf
 
-def define_seq2seq_rnn_for_prediction(image_rnn_input_data,label_rnn_input_data):
+def define_seq2seq_rnn_for_prediction(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data):
     default_dropout_prob = tf.constant(1, "float")
     dropout_input_keep_prob = tf.placeholder_with_default(default_dropout_prob, default_dropout_prob.get_shape())
     dropout_output_keep_prob = tf.placeholder_with_default(default_dropout_prob, default_dropout_prob.get_shape())
-    return define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob)
+    return define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob)
 
-def define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob):
+def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob):
     # image_rnn_input_data (n_batch_size, n_steps, n_features)
     # label_rnn_input_data (n_batch_size, n_label_rnn_steps, n_classes)
 
@@ -72,7 +72,7 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dr
     if n_image_rnn_cells > 1:
         image_lstm_cell = rnn_cell.MultiRNNCell([image_lstm_cell] * n_image_rnn_cells)
     image_rnn_initial_state = image_lstm_cell.zero_state(image_batch_size, tf.float32)
-    image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, scope="RNN1")
+    image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, sequence_length=image_rnn_input_lengths, scope="RNN1")
     # image_lstm_fw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
     # image_lstm_fw_cell = rnn_cell.DropoutWrapper(image_lstm_fw_cell, input_keep_prob=dropout_input_keep_prob,
     #                                              output_keep_prob=dropout_output_keep_prob)
@@ -125,9 +125,10 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dr
 
 
 # Iterate label RNN to get final result
-def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,label_rnn_input_data,unique_chars,image_data):
+def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,unique_chars,image_data):
     sess = tf.get_default_session()
     n_label_rnn_steps = label_rnn_input_data.get_shape()[1].value
+    image_lengths = [len(f) for f in image_data]
     predicted_text_labels = [""] * len(image_data)
     for i in range(n_label_rnn_steps):
         input_labels = predicted_text_labels
@@ -138,6 +139,7 @@ def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,l
 
         predicted_index_labels = sess.run(label_rnn_predicted_index_labels,
                                           feed_dict={image_rnn_input_data: image_data,
+                                                     image_rnn_input_lengths: image_lengths,
                                                      label_rnn_input_data: one_hot_input_labels})
         predicted_text_labels = pf.get_text_labels(unique_chars,predicted_index_labels)
         predicted_text_labels = [label[:i + 1] for label in

@@ -13,7 +13,7 @@ import blstm_seq2seq.rnn_seq2seq_model as model
 import prepare_features as pf
 
 # Saved models
-model_dir_path = dirs.STANFORD_MODEL_DIR_PATH
+model_dir_path = dirs.KNMP_MODEL_DIR_PATH
 last_model_file_path = os.path.join(model_dir_path,"last.model")
 max_acc_model_file_path = os.path.join(model_dir_path,"max_acc.model")
 if not os.path.exists(model_dir_path):
@@ -22,7 +22,7 @@ if not os.path.exists(model_dir_path):
 # Read data set
 fixed_timestep_count = 50
 max_image_width = 50
-dataset = WordDataSetRM(dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
+dataset = WordDataSetRM(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
@@ -56,12 +56,13 @@ default_dropout_prob = tf.constant(1,"float")
 dropout_input_keep_prob = tf.placeholder_with_default(default_dropout_prob,[])
 dropout_output_keep_prob = tf.placeholder_with_default(default_dropout_prob,[])
 image_rnn_input_data = tf.placeholder("float", [None, n_image_rnn_steps, n_image_features]) # (n_batch_size, n_steps, n_features)
+image_rnn_input_lengths = tf.placeholder("int32", [None]) # (n_batch_size)
 label_rnn_input_data = tf.placeholder("float", [None, n_label_rnn_steps, n_classes])
 label_rnn_target_data = tf.placeholder("int64", [None, n_label_rnn_steps]) # (n_batch_size,n_label_rnn_steps)
 
 # Define RNN
 
-label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_training(image_rnn_input_data,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob)
+label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dropout_input_keep_prob,dropout_output_keep_prob)
 
 # Transform target data for label RNN
 label_rnn_target_outputs = tf.transpose(label_rnn_target_data, [1, 0]) # (n_label_rnn_steps,n_batch_size)
@@ -96,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, last_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, last_model_file_path)
 
     step = 1
     prev_output_time = datetime.datetime.now()
@@ -108,6 +109,7 @@ with tf.Session() as sess:
     random.seed(0)
     dataset.prepare_next_train_batch(n_test_items)
     train_sample_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+    train_sample_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count) # (batch_size)
     train_sample_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps,
                                                                                start_word_char=True)  # (batch_size,n_output_steps,n_classes)
     train_sample_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps)  # (batch_size,n_output_steps)
@@ -122,12 +124,15 @@ with tf.Session() as sess:
 
     while True:
         # Training
-        dataset.prepare_next_train_batch(n_batch_size)
+        length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
+        dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
         train_batch_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+        train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count) # (batch_size)
         train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps, start_word_char=True) # (batch_size,n_output_steps,n_classes)
         train_batch_index_labels = dataset.get_train_batch_fixed_length_index_labels(n_label_rnn_steps) # (batch_size,n_output_steps)
 
         sess.run(optimizer_step, feed_dict={image_rnn_input_data:train_batch_data,
+                                       image_rnn_input_lengths:train_batch_lengths,
                                        label_rnn_input_data:train_batch_one_hot_labels,
                                        label_rnn_target_data:train_batch_index_labels,
                                        dropout_input_keep_prob:dropout_input_keep_prob_value,
@@ -137,6 +142,7 @@ with tf.Session() as sess:
         if step == 1 or from_prev_output_time.seconds > display_time_interval_sec:
             train_sample_loss = sess.run(cost,
                                          feed_dict={image_rnn_input_data:train_sample_data,
+                                image_rnn_input_lengths:train_sample_lengths,
                                 label_rnn_input_data: train_sample_one_hot_labels,
                                 label_rnn_target_data: train_sample_index_labels})
             train_sample_losses.append(train_sample_loss)
@@ -144,12 +150,12 @@ with tf.Session() as sess:
             last_batch_losses = train_sample_losses[-min(avg_count, len(train_sample_losses)):]
             average_batch_loss = sum(last_batch_losses) / len(last_batch_losses)
 
-            predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,label_rnn_input_data,dataset.get_unique_chars(),train_sample_data)
+            predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),train_sample_data)
             train_sample_word_level_accuracy = metrics.get_word_level_accuracy(train_sample_text_labels, predicted_train_sample_text_labels)
             train_sample_char_level_accuracy = metrics.get_char_level_accuracy(train_sample_text_labels, predicted_train_sample_text_labels)
             train_sample_avg_word_distance = metrics.get_avg_word_distance(train_sample_text_labels, predicted_train_sample_text_labels)
 
-            predicted_test_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,label_rnn_input_data,dataset.get_unique_chars(),test_data)
+            predicted_test_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),test_data)
             test_word_level_accuracy = metrics.get_word_level_accuracy(test_text_labels,predicted_test_text_labels)
             test_char_level_accuracy = metrics.get_char_level_accuracy(test_text_labels,predicted_test_text_labels)
             test_avg_word_distance = metrics.get_avg_word_distance(test_text_labels, predicted_test_text_labels)

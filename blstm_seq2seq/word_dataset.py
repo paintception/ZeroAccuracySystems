@@ -90,14 +90,15 @@ class WordDataSetRM(object):
         self._train_items_for_batch = []
         self._next_batch_items = []
 
-    def prepare_next_train_batch(self, batch_size):
+    def prepare_next_train_batch(self, batch_size, length_interval=(0,9999)):
         self._next_batch_items = []
         for b in range(batch_size):
             if len(self._train_items_for_batch) == 0:
                 self._train_items_for_batch = copy.copy(self._train_items) # Copy only references
                 random.shuffle(self._train_items_for_batch)
             train_item = self._train_items_for_batch.pop()
-            self._next_batch_items.append(train_item)
+            if train_item.get_time_step_count() >= length_interval[0] and train_item.get_time_step_count() <= length_interval[1]:
+                self._next_batch_items.append(train_item)
 
     # (n_batch_size,n_time_steps,n_features)
     def get_train_batch_data(self,time_step_count=0):
@@ -116,6 +117,19 @@ class WordDataSetRM(object):
             else:
                 data.append(item.get_data_with_fixed_time_step_count(time_step_count))
         return data
+
+    def get_train_batch_sequence_lengths(self, time_step_count=None):
+        return self._get_sequence_length(self._next_batch_items, time_step_count)
+
+    def get_test_sequence_lengths(self, time_step_count=None):
+        return self._get_sequence_length(self._test_items, time_step_count)
+
+    def _get_sequence_length(self, items, time_step_count=None):
+        if time_step_count:
+            return [item.get_time_step_count() if item.get_time_step_count() < time_step_count else time_step_count
+                    for item in items]
+        else:
+            return [item.get_time_step_count() for item in items]
 
     # (n_batch_size,n_unique_chars)
     def get_train_batch_first_char_one_hot_labels(self):

@@ -26,9 +26,10 @@ def recognize_seq2seq(images_data, word_boxes, text_lines, output_words_file_pat
     # Define RNN
     print("Initializing RNN...")
     image_rnn_input_data = tf.placeholder("float", [None, n_image_rnn_steps, n_image_features]) # (n_batch_size, n_steps, n_features)
+    image_rnn_input_lengths = tf.placeholder("int32", [None])  # (n_batch_size)
     label_rnn_input_data = tf.placeholder("float", [None, n_label_rnn_steps, n_classes]) # (n_batch_size,n_label_rnn_steps)
 
-    label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_prediction(image_rnn_input_data,label_rnn_input_data)
+    label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_prediction(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data)
 
     # Initialize session
     sess = tf.InteractiveSession()
@@ -42,7 +43,8 @@ def recognize_seq2seq(images_data, word_boxes, text_lines, output_words_file_pat
 
     print("Recognizing...")
     predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,
-                                                                    image_rnn_input_data, label_rnn_input_data,
+                                                                    image_rnn_input_data, image_rnn_input_lengths,
+                                                                    label_rnn_input_data,
                                                                     unique_chars, images_data)
 
     for word_box,predicted_train_sample_text_label in zip(word_boxes,predicted_train_sample_text_labels):
