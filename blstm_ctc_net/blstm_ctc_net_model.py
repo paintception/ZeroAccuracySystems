@@ -9,10 +9,17 @@ import blstm_ctc_net.word_dataset_with_timesteps as wd
 import blstm_ctc_net.dirs as dirs
 import metrics
 import blstm_ctc_net.plot_words as plotter
+from word_model.word_m import WordM
 
 print("Loading data")
-word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
-# word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+if __name__ == "__main__":
+    # word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH)
+    word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH)
+else:
+    # word_dataset = wd.WordDataSet(dir_path=dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
+    word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
+
+word_model = WordM()
 
 save_path = os.path.join(os.path.dirname(__file__), "last_model", "current.model")
 
@@ -20,7 +27,7 @@ display_time = 60
 
 # Global parameters
 learning_rate = 0.0001
-learning_iterations = 1000  # number of mini-batches
+learning_iterations = 10000  # number of mini-batches
 batch_size = 128  # number of words in a batch
 n_hidden_layer = 128  # number of nodes in hidden layer
 n_output_classes = len(word_dataset.unique_chars) + 1  # Number of letters in our alphabet and empty label
@@ -96,9 +103,8 @@ def blstm_ctc_train():
 
         step = 1
         prev_output_time = datetime.datetime.now()
-        # Keep training until reach max iterations
 
-        test_xs_e = word_dataset.get_test_data(0)
+        # test_xs_e = word_dataset.get_test_data(0)
 
         test_xs = word_dataset.get_test_data(max_input_timesteps)
         test_xs_length = word_dataset.get_test_sequence_lengths(max_input_timesteps)
@@ -157,23 +163,37 @@ def blstm_ctc_train():
                                                                           word_dataset.get_chars_from_indexes(batch_decoded.values),
                                                                           batch_size)
 
+                batch_words_decoded_lexicon = [word_model.get_closest_word(word) for word in batch_words_decoded]
+                test_words_decoded_lexicon = [word_model.get_closest_word(word) for word in test_words_decoded]
+
                 print("=====")
                 print("Step %d" % step)
                 print("Batch loss: ", batch_loss)
+                print("-----")
                 print("Batch accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
                                                                                    metrics.get_char_level_accuracy(batch_words, batch_words_decoded),
                                                                                    metrics.get_avg_word_distance(batch_words, batch_words_decoded)))
                 print("Test accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(test_words, test_words_decoded),
                                                                                   metrics.get_char_level_accuracy(test_words, test_words_decoded),
                                                                                   metrics.get_avg_word_distance(test_words, test_words_decoded)))
+                print("-----")
+                print("Batch lexicon accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded_lexicon),
+                                                                                           metrics.get_char_level_accuracy(batch_words, batch_words_decoded_lexicon),
+                                                                                           metrics.get_avg_word_distance(batch_words, batch_words_decoded_lexicon)))
+                print("Test lexicon accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(test_words, test_words_decoded_lexicon),
+                                                                                          metrics.get_char_level_accuracy(test_words, test_words_decoded_lexicon),
+                                                                                          metrics.get_avg_word_distance(test_words, test_words_decoded_lexicon)))
+                print("-----")
                 print("Test labels")
                 print([word.ljust(15) for word in test_words])
                 print([word.ljust(15) for word in test_words_decoded])
+                print([word.ljust(15) for word in test_words_decoded_lexicon])
                 print("Batch labels")
                 print([word.ljust(15) for word in batch_words])
                 print([word.ljust(15) for word in batch_words_decoded])
+                print([word.ljust(15) for word in batch_words_decoded_lexicon])
 
-                # plotter.plot_words_with_labels(test_xs_e[0:17], test_words[0:17], test_words_decoded[0:17])
+                # plotter.plot_words_with_labels(test_xs[0:17], test_words[0:17], test_words_decoded[0:17])
 
                 saver.save(sess, save_path)
 
@@ -202,7 +222,9 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
 
         batch_words_decoded = word_dataset.get_words_from_indexes(batch_decoded.indices,
                                                                   word_dataset.get_chars_from_indexes(batch_decoded.values),
-                                                                  batch_size)
+                                                                  batch_s)
+
+        plotter.plot_words_with_labels(batch_xs[0:17], batch_words[0:17], batch_words_decoded[0:17])
 
         print("Batch labels")
         print([word.ljust(15) for word in batch_words])
@@ -211,4 +233,3 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
 
 if __name__ == "__main__":
     blstm_ctc_train()
-

@@ -7,11 +7,14 @@ import tqdm
 
 
 class WordDataItem(object):
-    def __init__(self, file_path, label, label_timesteps):
+    def __init__(self, file_path, label, label_timesteps, train=True):
         self.file_path = file_path
         self.label = label
         self.label_timesteps = label_timesteps
-        self.data = pf.get_feature_data_for_file(self.file_path)
+        if train:
+            self.data = pf.get_feature_data_for_file(self.file_path)
+        else:
+            self.data = []
 
     def get_data_with_fixed_time_step_count(self, time_step_count):
         tmp_data = copy.copy(self.data)  # Weak copy timesteps
@@ -45,9 +48,10 @@ class WordDataItem(object):
 # The class, which keeps dataset (labels, image data etc.) and provides training/test data
 # noinspection PyMethodMayBeStatic
 class WordDataSet(object):
-    def __init__(self, dir_path, max_image_width=1000):
+    def __init__(self, dir_path, max_image_width=1000, train=True):
         self.dir_path = dir_path
         self.max_image_width = max_image_width
+        self.train = train
 
         self.load_data()
         self.init_train_batch()
@@ -67,10 +71,12 @@ class WordDataSet(object):
             word_info = pickle.load(word_info_file)
 
         pbar = tqdm.tqdm(desc="Loading " + train_vs_test, total=len(word_info))
-        for word in word_info:
+        for i, word in enumerate(word_info):
             for word_file in word['ready_files']:
 
-                word_data_item = WordDataItem(word_file, word['char_labels'], word['char_positions'])
+                word_data_item = WordDataItem(word_file, word['char_labels'], word['char_positions'],
+                                              train=True if i == 0 else self.train
+                                              )
                 if (word_data_item.get_width() <= self.max_image_width):
                     items.append(word_data_item)
 
