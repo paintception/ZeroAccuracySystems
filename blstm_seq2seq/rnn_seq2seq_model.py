@@ -44,22 +44,14 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
     b_label_out = tf.Variable(tf.random_normal([n_classes]))
 
     # Transform input data for image RNN
-    image_rnn_inputs = tf.transpose(image_rnn_input_data, [1, 0, 2])  # (n_input_steps,n_batch_size,n_features)
-    image_rnn_inputs = tf.reshape(image_rnn_inputs, [-1,
-                                                     n_image_features])  # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
-    image_rnn_inputs = tf.matmul(image_rnn_inputs,
-                                 w_image_hidden) + b_image_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
-    image_rnn_inputs = tf.split(0, n_image_rnn_steps,
-                                image_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
-
-    # Transform input data for label RNN
-    label_rnn_inputs = tf.transpose(label_rnn_input_data, [1, 0, 2])  # (n_output_steps,n_batch_size,n_classes)
-    label_rnn_inputs = tf.reshape(label_rnn_inputs, [-1,
-                                                     n_classes])  # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
-    label_rnn_inputs = tf.matmul(label_rnn_inputs,
-                                 w_label_hidden) + b_label_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
-    label_rnn_inputs = tf.split(0, n_label_rnn_steps,
-                                label_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
+    # image_rnn_inputs = tf.transpose(image_rnn_input_data, [1, 0, 2])  # (n_input_steps,n_batch_size,n_features)
+    # image_rnn_inputs = tf.reshape(image_rnn_inputs, [-1,
+    #                                                  n_image_features])  # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
+    # image_rnn_inputs = tf.matmul(image_rnn_inputs,
+    #                              w_image_hidden) + b_image_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
+    # image_rnn_inputs = tf.split(0, n_image_rnn_steps,
+    #                             image_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
+    image_rnn_inputs = image_rnn_input_data
 
     # Transform target data for label RNN
     # label_rnn_target_outputs = tf.transpose(label_rnn_target_data, [1, 0])  # (n_label_rnn_steps,n_batch_size)
@@ -72,7 +64,7 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
     if n_image_rnn_cells > 1:
         image_lstm_cell = rnn_cell.MultiRNNCell([image_lstm_cell] * n_image_rnn_cells)
     image_rnn_initial_state = image_lstm_cell.zero_state(image_batch_size, tf.float32)
-    image_rnn_outputs, image_rnn_states = rnn.rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, sequence_length=image_rnn_input_lengths, scope="RNN1")
+    image_rnn_outputs, image_rnn_states = rnn.dynamic_rnn(image_lstm_cell, image_rnn_inputs, initial_state=image_rnn_initial_state, sequence_length=image_rnn_input_lengths, scope="RNN1")
     # image_lstm_fw_cell = rnn_cell.LSTMCell(n_image_rnn_hidden, forget_bias=0)
     # image_lstm_fw_cell = rnn_cell.DropoutWrapper(image_lstm_fw_cell, input_keep_prob=dropout_input_keep_prob,
     #                                              output_keep_prob=dropout_output_keep_prob)
@@ -93,7 +85,17 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
     #                                                                                   initial_state_fw=image_rnn_initial_state_fw,
     #                                                                                   initial_state_bw=image_rnn_initial_state_bw)
 
-    image_rnn_output = image_rnn_outputs[-1]
+    #image_rnn_output = image_rnn_outputs[-1]
+    image_rnn_output = last_relevant(image_rnn_outputs,image_rnn_input_lengths)
+
+    # Transform input data for label RNN
+    label_rnn_inputs = tf.transpose(label_rnn_input_data, [1, 0, 2])  # (n_output_steps,n_batch_size,n_classes)
+    label_rnn_inputs = tf.reshape(label_rnn_inputs, [-1,
+                                                     n_classes])  # (n_steps*n_batch_size, n_features) (2D list with 28*256 vectors with 28 features each)
+    label_rnn_inputs = tf.matmul(label_rnn_inputs,
+                                 w_label_hidden) + b_label_hidden  # (n_steps*n_batch_size=28*256,n_hidden=128)
+    label_rnn_inputs = tf.split(0, n_label_rnn_steps,
+                                label_rnn_inputs)  # [(n_batch_size, n_features),(n_batch_size, n_features),...,(n_batch_size, n_features)]
 
     # Label RNN
     label_lstm_cell = rnn_cell.LSTMCell(n_label_rnn_hidden, forget_bias=0)
@@ -145,3 +147,12 @@ def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,i
         predicted_text_labels = [label[:i + 1] for label in
                                  predicted_text_labels]  # Cut off anything after current step
     return predicted_text_labels
+
+def last_relevant(output, length):
+    batch_size = tf.shape(output)[0]
+    max_length = int(output.get_shape()[1])
+    output_size = int(output.get_shape()[2])
+    index = tf.range(0, batch_size) * max_length + (length - 1)
+    flat = tf.reshape(output, [-1, output_size])
+    relevant = tf.gather(flat, index)
+    return relevant

@@ -93,7 +93,7 @@ class WordDataSetRM(object):
     def prepare_next_train_batch(self, batch_size, length_interval=(0,9999)):
         self._next_batch_items = []
         counter = 0
-        for b in range(batch_size*3):
+        for b in range(batch_size*5):
             if len(self._train_items_for_batch) == 0:
                 self._train_items_for_batch = copy.copy(self._train_items) # Copy only references
                 random.shuffle(self._train_items_for_batch)

@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, last_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, last_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()
@@ -170,15 +170,16 @@ with tf.Session() as sess:
             prev_output_time = datetime.datetime.now()
 
         # Training
-        batch_sequence_length = random.sample(sequence_lengths, 1)[0]
-        batch_sequence_length_interval = (0, int(batch_sequence_length * 1.1))
-        # length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
-        # dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
-        dataset.prepare_next_train_batch(n_batch_size, batch_sequence_length_interval)
+        #batch_sequence_length = random.sample(sequence_lengths, 1)[0]
+        #batch_sequence_length_interval = (0, int(batch_sequence_length * 1.1))
+        length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
+        dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
+        #dataset.prepare_next_train_batch(n_batch_size)
         train_batch_data = dataset.get_train_batch_data(
             time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
-        if len(train_batch_data) < n_batch_size*0.5:
-            continue
+        #print(len(train_batch_data))
+        # if len(train_batch_data) < n_batch_size*0.5:
+        #     continue
         processed_items = processed_items + len(train_batch_data)
         train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count)  # (batch_size)
         train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps,
