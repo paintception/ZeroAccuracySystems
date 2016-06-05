@@ -9,7 +9,7 @@ import tensorflow as tf
 def recognize_seq2seq(images_data, word_boxes, text_lines, output_words_file_path, n_rnn_steps):
 
     # Parameters
-    model_file_path = "./models/knmp_seq2seq_1x96_1x96_0.6757.model" # Assume current directory
+    model_file_path = "./models/stanford_seq2seq_1x64_1x64_word_acc_0.7660_levenshtein_acc_0.8140.model" # Assume current directory
     # model_file_path = "/Users/rmencis/RUG/Handwriting_Recognition/models/KNMP/last.model" # Assume current directory
     n_image_rnn_steps = n_rnn_steps # Max width of word box
     n_image_features = pf.FEATURE_COUNT

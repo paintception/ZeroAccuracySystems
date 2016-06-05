@@ -37,9 +37,9 @@ learning_rate = 0.1
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
-dropout_input_keep_prob_value = 1.0
+dropout_input_keep_prob_value = 0.75
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
-dropout_output_keep_prob_value = 1.0
+dropout_output_keep_prob_value = 0.75
 print('Dropout output keep probability:',dropout_output_keep_prob_value)
 
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
@@ -71,11 +71,11 @@ label_rnn_target_outputs = [tf.squeeze(lrt) for lrt in label_rnn_target_outputs]
 # Optimization
 weights_shape = tf.shape(label_rnn_target_outputs[0])
 sequence_loss_weights = [tf.ones(weights_shape)]*n_label_rnn_steps
-sequence_loss_weight_value = 2.0
+sequence_loss_weight_value = 10.0
 # # Higher weights for first characters 10,5,2.5,1.25,...
 for i in range(len(sequence_loss_weights)):
     sequence_loss_weights[i] = tf.fill(weights_shape,sequence_loss_weight_value)
-    sequence_loss_weight_value = sequence_loss_weight_value * 0.8
+    sequence_loss_weight_value = sequence_loss_weight_value * 0.5
     if sequence_loss_weight_value < 1:
         break
 cost = sequence_loss(label_rnn_outputs,label_rnn_target_outputs,sequence_loss_weights)
