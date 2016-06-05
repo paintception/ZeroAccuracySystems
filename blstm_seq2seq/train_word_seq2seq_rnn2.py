@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    # restore_saver = tf.train.Saver()
-    # restore_saver.restore(sess, last_model_file_path)
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, last_model_file_path)
 
     step = 1
     prev_output_time = datetime.datetime.now()
@@ -118,6 +118,7 @@ with tf.Session() as sess:
 
     # Test data
     test_data = dataset.get_test_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+    test_lengths = dataset.get_test_sequence_lengths(time_step_count=fixed_timestep_count)
     test_index_labels = dataset.get_test_fixed_length_index_labels(
         n_label_rnn_steps)  # (batch_size,n_output_steps)
     test_text_labels = dataset.get_text_labels(test_index_labels) # (batch_size)
@@ -154,12 +155,12 @@ with tf.Session() as sess:
             last_batch_losses = train_sample_losses[-min(avg_count, len(train_sample_losses)):]
             average_batch_loss = sum(last_batch_losses) / len(last_batch_losses)
 
-            predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),train_sample_data)
+            predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),train_sample_data,train_sample_lengths)
             train_sample_word_level_accuracy = metrics.get_word_level_accuracy(train_sample_text_labels, predicted_train_sample_text_labels)
             train_sample_char_level_accuracy = metrics.get_char_level_accuracy(train_sample_text_labels, predicted_train_sample_text_labels)
             train_sample_avg_word_distance = metrics.get_avg_word_distance(train_sample_text_labels, predicted_train_sample_text_labels)
 
-            predicted_test_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),test_data)
+            predicted_test_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,dataset.get_unique_chars(),test_data,test_lengths)
             test_word_level_accuracy = metrics.get_word_level_accuracy(test_text_labels,predicted_test_text_labels)
             test_char_level_accuracy = metrics.get_char_level_accuracy(test_text_labels,predicted_test_text_labels)
             test_avg_word_distance = metrics.get_avg_word_distance(test_text_labels, predicted_test_text_labels)

@@ -125,10 +125,10 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
 
 
 # Iterate label RNN to get final result
-def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,unique_chars,image_data):
+def get_label_rnn_result(label_rnn_predicted_index_labels,image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data,unique_chars,image_data,image_lengths):
     sess = tf.get_default_session()
     n_label_rnn_steps = label_rnn_input_data.get_shape()[1].value
-    image_lengths = [len(f) for f in image_data]
+    #image_lengths = [len(f) for f in image_data]
     predicted_text_labels = [""] * len(image_data)
     for i in range(n_label_rnn_steps):
         input_labels = predicted_text_labels

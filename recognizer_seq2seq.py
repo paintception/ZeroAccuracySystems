@@ -6,7 +6,7 @@ import blstm_seq2seq.rnn_seq2seq_model as model
 import tensorflow as tf
 
 
-def recognize_seq2seq(images_data, word_boxes, text_lines, output_words_file_path, n_rnn_steps):
+def recognize_seq2seq(images_data, image_lengths, word_boxes, text_lines, output_words_file_path, n_rnn_steps):
 
     # Parameters
     model_file_path = "./models/stanford_seq2seq_1x64_1x64_word_acc_0.7660_levenshtein_acc_0.8140.model" # Assume current directory
@@ -45,7 +45,7 @@ def recognize_seq2seq(images_data, word_boxes, text_lines, output_words_file_pat
     predicted_train_sample_text_labels = model.get_label_rnn_result(label_rnn_predicted_index_labels,
                                                                     image_rnn_input_data, image_rnn_input_lengths,
                                                                     label_rnn_input_data,
-                                                                    unique_chars, images_data)
+                                                                    unique_chars, images_data, image_lengths)
 
     for word_box,predicted_train_sample_text_label in zip(word_boxes,predicted_train_sample_text_labels):
         predicted_text = predicted_train_sample_text_label.strip()

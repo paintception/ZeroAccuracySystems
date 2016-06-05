@@ -49,9 +49,12 @@ def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps):
             word_image = page_image.crop(box)
             preprocessed_word_image = pf.preprocess_image(word_image)
             image_data = pf.get_feature_data_for_image(preprocessed_word_image)
+            image_len = len(image_data)
+            if image_len > n_image_rnn_steps:
+                image_len = n_image_rnn_steps
             image_data = pf.get_data_with_fixed_time_step_count(image_data, n_image_rnn_steps)
             images_data.append(image_data)
-            images_length.append(len(images_data))
+            images_length.append(image_len)
 
     return text_lines, word_boxes, images_data, images_length
 
