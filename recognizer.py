@@ -4,8 +4,9 @@ from toolbox import wordio
 import prepare_features as pf
 
 from recognizer_seq2seq import recognize_seq2seq
-import blstm_ctc_net.blstm_ctc_net_model as blstm_ctc_net
+import blstm_ctc_net
 
+data_set = None
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Database initialization')
@@ -20,16 +21,20 @@ def parse_args():
     input_args = parser.parse_args()
 
     if input_args.seq2seq:
+        data_set = "KNMP" if "KNMP" in input_args.seq2seq[0][1] else "STANFORD"
         n_image_rnn_steps = 50
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
                                                                           feature_count=16, resize_ratio=0.25)
-        recognize_seq2seq("KNMP",images_data, images_length, word_boxes, text_lines, input_args.seq2seq[0][2], n_image_rnn_steps)
+        recognize_seq2seq(data_set,images_data, images_length, word_boxes, text_lines, input_args.seq2seq[0][2], n_image_rnn_steps)
     if input_args.ctc:
+        blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.ctc[0][1] else "STANFORD"
+
+        from blstm_ctc_net import blstm_ctc_net_model
         n_image_rnn_steps = 100
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.ctc[0][0], input_args.ctc[0][1], n_image_rnn_steps,
                                                                           feature_count=28, resize_ratio=0.5)
         batch_words = [word_box.text for word_box in word_boxes]
-        predicted_words = blstm_ctc_net.blstm_ctc_predict(images_data, images_length, batch_words)
+        predicted_words = blstm_ctc_net_model.blstm_ctc_predict(images_data, images_length, batch_words)
         save_results(text_lines, word_boxes, predicted_words, input_args.ctc[0][2])
 
 

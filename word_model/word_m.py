@@ -28,13 +28,15 @@ class WordM:
         return self.words[distances == distances.min()].sort_values(by='frequency', ascending=False).reset_index().loc[0, 'word']
 
 
-class WordMKNMP:
+class WordMOL:
 
-    word_file = os.path.join(dirs.KNMP_WORD_BOXES_DIR_PATH, "word_info")
+    word_file_KNMP = os.path.join(dirs.KNMP_WORD_BOXES_DIR_PATH, "word_info")
+    word_file_STANFORD = os.path.join(dirs.STANFORD_WORD_BOXES_DIR_PATH, "word_info")
     small_word_threshold = 1
 
-    def __init__(self):
-        with open(WordMKNMP.word_file, 'rb') as word_info_file:
+    def __init__(self, dataset):
+        word_file = WordMOL.word_file_KNMP if dataset == 'KNMP' else WordMOL.word_file_STANFORD
+        with open(word_file, 'rb') as word_info_file:
             temp_df = pd.DataFrame.from_dict(pickle.load(word_info_file))
 
         temp_df['word'] = temp_df['char_labels'].str.join('')
@@ -62,5 +64,5 @@ class WordMKNMP:
 
 
 if __name__ == "__main__":
-    wm = WordMKNMP()
+    wm = WordMOL()
     pass

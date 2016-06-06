@@ -14,7 +14,7 @@ import blstm_ctc_net.word_dataset_with_timesteps as wd
 import blstm_ctc_net.dirs as dirs
 import metrics
 #import blstm_ctc_net.plot_words as plotter
-from word_model.word_m import WordM, WordMKNMP
+from word_model.word_m import WordM, WordMOL
 
 
 # Override tensorflow function with a bug
@@ -37,13 +37,18 @@ print("Loading data")
 if __name__ == "__main__":
     # word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH])
     word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH])
+    save_path = os.path.join(os.path.dirname(__file__), "models", "KNMP_95ld", "current.model")
 else:
-    word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH], train=False)
-    # word_dataset = wd.WordDataSet(dir_path=dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH, train=False)
+    from blstm_ctc_net import data_set
+    if data_set == "KNMP":
+        word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH], train=False)
+        save_path = os.path.join(os.path.dirname(__file__), "models", "KNMP_95ld", "current.model")
+    else:
+        word_dataset = wd.WordDataSet(dir_path=[dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH], train=False)
+        save_path = os.path.join(os.path.dirname(__file__), "models", "STANFORD", "current.model")
 
-word_model = WordMKNMP()
+word_model = WordMOL(dataset=data_set)
 
-save_path = os.path.join(os.path.dirname(__file__), "last_model", "current.model")
 
 display_time = 60
 
