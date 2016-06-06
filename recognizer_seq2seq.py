@@ -12,7 +12,7 @@ def recognize_seq2seq(images_data, image_lengths, word_boxes, text_lines, output
     model_file_path = "./models/stanford_seq2seq_1x64_1x64_word_acc_0.7660_levenshtein_acc_0.8140.model" # Assume current directory
     # model_file_path = "/Users/rmencis/RUG/Handwriting_Recognition/models/KNMP/last.model" # Assume current directory
     n_image_rnn_steps = n_rnn_steps # Max width of word box
-    n_image_features = pf.FEATURE_COUNT
+    n_image_features = len(images_data[0][0])
     n_label_rnn_steps = 10 # Max number of characters in label
     unique_chars = [' ', '!', '#', '%', '&', 'A', 'B', 'C', 'D', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y']
     n_classes = len(unique_chars)

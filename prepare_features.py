@@ -4,8 +4,6 @@ import os
 import random
 
 START_WORD_CHAR = "%"
-FEATURE_COUNT = 16
-
 
 # Return 2D list (time_steps,features). Time steps = image width, Features = pixel values of 1px slices
 def get_feature_data_for_image(image, min_time_steps=0):
