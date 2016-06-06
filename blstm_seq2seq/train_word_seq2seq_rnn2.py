@@ -33,13 +33,13 @@ n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.01
+learning_rate = 0.1
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
-dropout_input_keep_prob_value = 1.0
+dropout_input_keep_prob_value = 0.9
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
-dropout_output_keep_prob_value = 1.0
+dropout_output_keep_prob_value = 0.9
 print('Dropout output keep probability:',dropout_output_keep_prob_value)
 
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, max_acc_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, max_acc_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()

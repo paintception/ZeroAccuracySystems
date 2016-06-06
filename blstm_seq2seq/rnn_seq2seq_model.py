@@ -17,10 +17,10 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
 
     # Define RNN architecture
     n_image_rnn_cells = 1
-    n_image_rnn_hidden = 64  # hidden layer num of features
+    n_image_rnn_hidden = 96  # hidden layer num of features
     print("Image LSTM cells:", n_image_rnn_cells, "Image LSTM hidden units:", n_image_rnn_hidden)
     n_label_rnn_cells = 1
-    n_label_rnn_hidden = 64  # hidden layer num of features
+    n_label_rnn_hidden = 96  # hidden layer num of features
     print("Label LSTM cells:", n_label_rnn_cells, "Label LSTM hidden units:", n_label_rnn_hidden)
 
     # Retrieve dimensions from input data
