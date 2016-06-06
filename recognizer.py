@@ -27,8 +27,8 @@ def parse_args():
         n_image_rnn_steps = 100
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.ctc[0][0], input_args.ctc[0][1], n_image_rnn_steps)
         batch_words = [word_box.text for word_box in word_boxes]
-        blstm_ctc_net.blstm_ctc_predict(images_data, images_length, batch_words)
-
+        predicted_words = blstm_ctc_net.blstm_ctc_predict(images_data, images_length, batch_words)
+        save_results(text_lines, word_boxes, predicted_words, input_args.ctc[0][2])
 
 
 def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps):
@@ -57,6 +57,13 @@ def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps):
             images_length.append(image_len)
 
     return text_lines, word_boxes, images_data, images_length
+
+
+def save_results(text_lines, word_boxes, predicted_words, output_path):
+    for word_b, predicted_w in zip(word_boxes, predicted_words):
+        word_b.text = predicted_w
+
+    wordio.save(text_lines, output_path)
 
 if __name__ == "__main__":
     parse_args()
