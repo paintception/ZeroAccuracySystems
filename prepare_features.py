@@ -132,9 +132,8 @@ def get_fixed_length_label(label, fixed_length, start_word_char=False):
 
 
 # Takes original word box and returns word box for NN training/predicting
-def preprocess_image(image, feature_count):
+def preprocess_image(image, feature_count=16, resize_ratio=0.25):
     image = image.convert("LA")  # Greyscale
-    resize_ratio = 0.5
-    new_width = int(image.width * resize_ratio * 0.5)
+    new_width = int(image.width * resize_ratio)
     new_height = feature_count
     return image.resize((new_width, new_height), Image.LANCZOS)
