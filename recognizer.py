@@ -22,7 +22,7 @@ def parse_args():
     if input_args.seq2seq:
         n_image_rnn_steps = 50
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
-                                                              feature_count=16, resize_ratio=0.25)
+                                                                          feature_count=16, resize_ratio=0.25)
         recognize_seq2seq(images_data, images_length, word_boxes, text_lines, input_args.seq2seq[0][2], n_image_rnn_steps)
     if input_args.ctc:
         n_image_rnn_steps = 100
@@ -66,6 +66,7 @@ def save_results(text_lines, word_boxes, predicted_words, output_path):
         word_b.text = predicted_w
 
     wordio.save(text_lines, output_path)
+
 
 if __name__ == "__main__":
     parse_args()

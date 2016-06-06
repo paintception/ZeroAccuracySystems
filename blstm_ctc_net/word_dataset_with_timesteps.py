@@ -78,7 +78,7 @@ class WordDataSet(object):
             for word_file in word['ready_files']:
 
                 word_data_item = WordDataItem(word_file, word['char_labels'], word['char_positions'],
-                                              train=True if i == 0 else self.train
+                                              train=self.train
                                               )
                 if (word_data_item.get_width() <= self.max_image_width):
                     items.append(word_data_item)

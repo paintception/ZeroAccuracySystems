@@ -38,7 +38,7 @@ n_hidden_layer = 128  # number of nodes in hidden layer
 n_output_classes = len(word_dataset.unique_chars) + 1  # Number of letters in our alphabet and empty label
 print("Output_classes: ", n_output_classes)
 
-n_input = word_dataset.get_feature_count()  # Number of input features for each sliding window of 1px
+n_input = 28  # Number of input features for each sliding window of 1px
 max_input_timesteps = 100
 
 # Network weights. Does not depend on batch size
