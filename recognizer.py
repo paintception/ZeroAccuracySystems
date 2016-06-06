@@ -21,17 +21,17 @@ def parse_args():
 
     if input_args.seq2seq:
         n_image_rnn_steps = 50
-        text_lines, word_boxes, images_data, _ = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps)
+        text_lines, word_boxes, images_data, _ = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps, 16)
         recognize_seq2seq(images_data, word_boxes, text_lines, input_args.seq2seq[0][2], n_image_rnn_steps)
     if input_args.ctc:
         n_image_rnn_steps = 100
-        text_lines, word_boxes, images_data, images_length = prepare_data(input_args.ctc[0][0], input_args.ctc[0][1], n_image_rnn_steps)
+        text_lines, word_boxes, images_data, images_length = prepare_data(input_args.ctc[0][0], input_args.ctc[0][1], n_image_rnn_steps, 28)
         batch_words = [word_box.text for word_box in word_boxes]
         predicted_words = blstm_ctc_net.blstm_ctc_predict(images_data, images_length, batch_words)
         save_results(text_lines, word_boxes, predicted_words, input_args.ctc[0][2])
 
 
-def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps):
+def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count):
     # Read PPM
     page_image = Image.open(page_file_path)
     print("Page image size:", page_image.width, "x", page_image.height)
@@ -47,7 +47,7 @@ def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps):
             word_boxes.append(word_box)
             box = (word_box.left, word_box.top, word_box.right, word_box.bottom)
             word_image = page_image.crop(box)
-            preprocessed_word_image = pf.preprocess_image(word_image)
+            preprocessed_word_image = pf.preprocess_image(word_image, feature_count)
             image_data = pf.get_feature_data_for_image(preprocessed_word_image)
             image_len = len(image_data)
             if image_len > n_image_rnn_steps:
