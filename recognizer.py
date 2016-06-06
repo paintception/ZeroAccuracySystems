@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 from PIL import Image
 from toolbox import wordio
@@ -25,7 +27,7 @@ def parse_args():
         n_image_rnn_steps = 50
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
                                                                           feature_count=16, resize_ratio=0.25)
-        predicted_words = recognize_seq2seq(data_set,images_data, images_length, word_boxes, n_image_rnn_steps)
+        predicted_words = recognize_seq2seq(data_set, images_data, images_length, word_boxes, n_image_rnn_steps)
         save_results(text_lines, word_boxes, predicted_words, input_args.seq2seq[0][2])
     if input_args.ctc:
         blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.ctc[0][1] else "STANFORD"
