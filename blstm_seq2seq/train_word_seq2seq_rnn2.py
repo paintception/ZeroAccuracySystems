@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    # restore_saver = tf.train.Saver()
-    # restore_saver.restore(sess, max_acc_model_file_path)
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, max_acc_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()

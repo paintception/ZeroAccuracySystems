@@ -32,8 +32,8 @@ def define_seq2seq_rnn_for_training(image_rnn_input_data,image_rnn_input_lengths
     n_label_rnn_steps = label_rnn_input_data.get_shape()[1].value
     n_classes = label_rnn_input_data.get_shape()[2].value
 
-    # print(n_image_rnn_steps,n_image_features)
-    # print(n_label_rnn_steps,n_classes)
+    print(n_image_rnn_steps,n_image_features)
+    print(n_label_rnn_steps,n_classes)
 
     # Define weights
     w_image_hidden = tf.Variable(tf.random_normal([n_image_features, n_image_rnn_hidden]))
