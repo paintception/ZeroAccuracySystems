@@ -75,15 +75,13 @@ if __name__ == "__main__":
 
         ready_files = []
         if train:
-            for sheer_ratio in range(-2, 3):
-                train_image = image
-                train_image = sheer_image(train_image, (sheer_ratio * 0.05))
-                train_image = resize_image(train_image, resize_ratio=resize_ratio)
-                train_file_counter += 1
-                target_file_name = str(train_file_counter).rjust(6, "0") + "_" + word["box_image_name"]
-                target_file_path = os.path.join(train_dir_path, target_file_name)
-                train_image.save(target_file_path)
-                ready_files.append(target_file_path)
+            train_image = image
+            train_image = resize_image(train_image, resize_ratio=resize_ratio)
+            train_file_counter += 1
+            target_file_name = str(train_file_counter).rjust(6, "0") + "_" + word["box_image_name"]
+            target_file_path = os.path.join(train_dir_path, target_file_name)
+            train_image.save(target_file_path)
+            ready_files.append(target_file_path)
 
             word['char_positions'] = [int(round(x * resize_ratio)) for x in word['char_positions']]
             word['ready_files'] = ready_files
