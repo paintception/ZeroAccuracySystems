@@ -13,7 +13,7 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 import blstm_ctc_net.word_dataset_with_timesteps as wd
 import blstm_ctc_net.dirs as dirs
 import metrics
-import blstm_ctc_net.plot_words as plotter
+#import blstm_ctc_net.plot_words as plotter
 from word_model.word_m import WordM, WordMKNMP
 
 
@@ -250,7 +250,7 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
         batch_words_decoded_lexicon = [word_model.get_closest_word(word) for word in batch_words_decoded]
 
         # plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded)
-        plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded_lexicon)
+        # plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded_lexicon)
 
         print("Batch accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
                                                                            metrics.get_char_level_accuracy(batch_words, batch_words_decoded),
