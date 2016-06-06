@@ -25,7 +25,8 @@ def parse_args():
         n_image_rnn_steps = 50
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
                                                                           feature_count=16, resize_ratio=0.25)
-        recognize_seq2seq(data_set,images_data, images_length, word_boxes, text_lines, input_args.seq2seq[0][2], n_image_rnn_steps)
+        predicted_words = recognize_seq2seq(data_set,images_data, images_length, word_boxes, n_image_rnn_steps)
+        save_results(text_lines, word_boxes, predicted_words, input_args.seq2seq[0][2])
     if input_args.ctc:
         blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.ctc[0][1] else "STANFORD"
 
@@ -41,7 +42,9 @@ def parse_args():
 def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio):
     # Read PPM
     page_image = Image.open(page_file_path)
+    print("Page:", page_file_path)
     print("Page image size:", page_image.width, "x", page_image.height)
+    print("Input words:",input_words_file_path)
 
     # Read .words file to get word boxes
     text_lines, image_name = wordio.read(input_words_file_path)
