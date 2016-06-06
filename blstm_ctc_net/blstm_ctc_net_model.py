@@ -16,6 +16,23 @@ import metrics
 import blstm_ctc_net.plot_words as plotter
 from word_model.word_m import WordM, WordMKNMP
 
+
+# Override tensorflow function with a bug
+from tensorflow.python.ops import gen_ctc_ops
+from tensorflow.python.framework import ops
+
+
+def ctc_beam_search(inputs, sequence_length, beam_width=100,
+                            top_paths=1, merge_repeated=True):
+    decoded_ixs, decoded_vals, decoded_shapes, log_probabilities = (
+        gen_ctc_ops._ctc_beam_search_decoder(
+            inputs, sequence_length, beam_width=beam_width, top_paths=top_paths,
+            merge_repeated=merge_repeated))
+    return ops.SparseTensor(decoded_ixs[0], decoded_vals[0], decoded_shapes[0]), log_probabilities
+
+ctc.ctc_beam_search_decoder = ctc_beam_search
+# =========================================
+
 print("Loading data")
 if __name__ == "__main__":
     # word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH])
@@ -233,7 +250,7 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
         batch_words_decoded_lexicon = [word_model.get_closest_word(word) for word in batch_words_decoded]
 
         # plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded)
-        # plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded_lexicon)
+        plotter.plot_words_with_labels(batch_xs, batch_words, batch_words_decoded_lexicon)
 
         print("Batch accuracy words: %f chars: %f average distance: %f" % (metrics.get_word_level_accuracy(batch_words, batch_words_decoded),
                                                                            metrics.get_char_level_accuracy(batch_words, batch_words_decoded),
