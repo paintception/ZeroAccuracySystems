@@ -36,8 +36,11 @@ ctc.ctc_beam_search_decoder = ctc_beam_search
 print("Loading data")
 if __name__ == "__main__":
     # word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH, dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH])
-    word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH])
-    save_path = os.path.join(os.path.dirname(__file__), "models", "KNMP_95ld", "current.model")
+    # word_dataset = wd.WordDataSet(dir_path=[dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH])
+    # save_path = os.path.join(os.path.dirname(__file__), "models", "KNMP_95ld", "current.model")
+    word_dataset = wd.WordDataSet(dir_path=[dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH])
+    save_path = os.path.join(os.path.dirname(__file__), "models", "STANFORD", "current.model")
+    word_model = WordMOL(dataset="STANFORD")
 else:
     from blstm_ctc_net import data_set
     if data_set == "KNMP":
@@ -46,8 +49,9 @@ else:
     else:
         word_dataset = wd.WordDataSet(dir_path=[dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH], train=False)
         save_path = os.path.join(os.path.dirname(__file__), "models", "STANFORD", "current.model")
+    word_model = WordMOL(dataset=data_set)
+    # word_model = WordM()
 
-word_model = WordMOL(dataset=data_set)
 
 
 display_time = 60
