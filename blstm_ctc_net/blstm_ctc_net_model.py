@@ -49,8 +49,8 @@ else:
     else:
         word_dataset = wd.WordDataSet(dir_path=[dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH], train=False)
         save_path = os.path.join(os.path.dirname(__file__), "models", "STANFORD", "current.model")
-    word_model = WordMOL(dataset=data_set)
-    # word_model = WordM()
+    # word_model = WordMOL(dataset=data_set)
+    word_model = WordM()
 
 
 
@@ -216,7 +216,7 @@ def blstm_ctc_train():
                                                                                           metrics.get_char_level_accuracy(test_words, test_words_decoded_lexicon),
                                                                                           metrics.get_avg_word_distance(test_words, test_words_decoded_lexicon)))
                 print("-----")
-                # print("Test labels")
+                print("Test labels")
                 print([word.ljust(15) for word in test_words])
                 print([word.ljust(15) for word in test_words_decoded])
                 print([word.ljust(15) for word in test_words_decoded_lexicon])
@@ -269,6 +269,7 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
                                                                                    metrics.get_char_level_accuracy(batch_words, batch_words_decoded_lexicon),
                                                                                    metrics.get_avg_word_distance(batch_words, batch_words_decoded_lexicon)))
 
+        print("-----")
         print("Batch labels")
         print([word.ljust(15) for word in batch_words])
         print([word.ljust(15) for word in batch_words_decoded])
