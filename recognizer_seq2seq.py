@@ -29,7 +29,7 @@ def recognize_seq2seq(images_data, image_lengths, word_boxes, text_lines, output
     image_rnn_input_lengths = tf.placeholder("int32", [None])  # (n_batch_size)
     label_rnn_input_data = tf.placeholder("float", [None, n_label_rnn_steps, n_classes]) # (n_batch_size,n_label_rnn_steps)
 
-    label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_prediction(image_rnn_input_data,image_rnn_input_lengths,label_rnn_input_data)
+    label_rnn_outputs,label_rnn_predicted_index_labels = model.define_seq2seq_rnn_for_prediction(image_rnn_input_data, label_rnn_input_data)
 
     # Initialize session
     sess = tf.InteractiveSession()
