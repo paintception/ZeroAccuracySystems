@@ -56,20 +56,20 @@ for source_file_name in source_file_names:
 
     if train:
         train_images = [image]
-        # for i in range(10):
-        #     train_image = image
-        #
-        #     # Crop vertically
-        #     crop_ratio = 0.1
-        #     new_top = int(train_image.height * random.uniform(-crop_ratio, crop_ratio))
-        #     new_bottom = train_image.height + int(train_image.height * random.uniform(-crop_ratio, crop_ratio))
-        #     crop_box = (0, new_top, train_image.width, new_bottom)
-        #     train_image = train_image.crop(crop_box)
-        #
-        #     # Sheer
-        #     sheer_ratio = random.uniform(-0.20,0.20)
-        #     train_image = sheer_image(train_image, (sheer_ratio))
-        #     train_images.append(train_image)
+        for i in range(10):
+            train_image = image
+
+            # Crop vertically
+            crop_ratio = 0.1
+            new_top = int(train_image.height * random.uniform(-crop_ratio, crop_ratio))
+            new_bottom = train_image.height + int(train_image.height * random.uniform(-crop_ratio, crop_ratio))
+            crop_box = (0, new_top, train_image.width, new_bottom)
+            train_image = train_image.crop(crop_box)
+
+            # Sheer
+            sheer_ratio = random.uniform(-0.20,0.20)
+            train_image = sheer_image(train_image, (sheer_ratio))
+            train_images.append(train_image)
             # Sheer
         # for sheer_ratio in [-0.20,-0.15,-0.10,-0.05,0.05,0.10,0.15,0.20]:
         #     train_image = sheer_image(image,(sheer_ratio))

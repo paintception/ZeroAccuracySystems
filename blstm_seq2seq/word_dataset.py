@@ -48,6 +48,7 @@ class WordDataSetRM(object):
         self._dir_path = dir_path
         self._max_image_width = max_image_width
         self._unique_chars = None
+        self._all_lengths = None
 
         self.load_data()
         self.init_train_batch()
@@ -90,10 +91,22 @@ class WordDataSetRM(object):
         self._train_items_for_batch = []
         self._next_batch_items = []
 
+    def prepare_balanced_next_train_batch(self, batch_size,time_step_count=9999):
+        all_lengths = self.get_all_sequence_lengths(time_step_count)
+        # interval_start_index = random.randrange(len(all_lengths))
+        # interval_start = all_lengths[interval_start_index]
+        # interval_end_index = interval_start_index + batch_size - 1
+        # if interval_end_index >= len(all_lengths):
+        #     interval_end_index = len(all_lengths)-1
+        # interval_end = all_lengths[interval_end_index]
+
+        interval_end = random.sample(all_lengths,1)[0]
+        self.prepare_next_train_batch(batch_size,(0,interval_end))
+
     def prepare_next_train_batch(self, batch_size, length_interval=(0,9999)):
         self._next_batch_items = []
         counter = 0
-        for b in range(batch_size*5):
+        for b in range(len(self._train_items)):
             if len(self._train_items_for_batch) == 0:
                 self._train_items_for_batch = copy.copy(self._train_items) # Copy only references
                 random.shuffle(self._train_items_for_batch)
@@ -103,6 +116,7 @@ class WordDataSetRM(object):
                     self._next_batch_items.append(train_item)
             if len(self._next_batch_items) == batch_size:
                 break
+        #print("Length interval:", length_interval,"Batch size:",len(self._next_batch_items))
 
     # (n_batch_size,n_time_steps,n_features)
     def get_train_batch_data(self,time_step_count=0):
@@ -129,7 +143,9 @@ class WordDataSetRM(object):
         return self._get_sequence_length(self._test_items, time_step_count)
 
     def get_all_sequence_lengths(self, time_step_count=None):
-        return self._get_sequence_length(self._all_items, time_step_count)
+        if self._all_lengths is None:
+            self._all_lengths = sorted(self._get_sequence_length(self._all_items, time_step_count))
+        return self._all_lengths
 
     def _get_sequence_length(self, items, time_step_count=None):
         if time_step_count:

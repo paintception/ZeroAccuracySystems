@@ -33,13 +33,13 @@ n_label_rnn_steps = dataset.get_max_label_length() + 1
 print("Max label length:", n_label_rnn_steps)
 
 # Parameters
-learning_rate = 0.1
+learning_rate = 0.01
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
-dropout_input_keep_prob_value = 0.75
+dropout_input_keep_prob_value = 1.0
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
-dropout_output_keep_prob_value = 0.75
+dropout_output_keep_prob_value = 1.0
 print('Dropout output keep probability:',dropout_output_keep_prob_value)
 
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
@@ -73,7 +73,7 @@ label_rnn_target_outputs = [tf.squeeze(lrt) for lrt in label_rnn_target_outputs]
 weights_shape = tf.shape(label_rnn_target_outputs[0])
 sequence_loss_weights = [tf.ones(weights_shape)]*n_label_rnn_steps
 sequence_loss_weight_value = 10.0
-# # Higher weights for first characters 10,5,2.5,1.25,...
+# # # Higher weights for first characters 10,5,2.5,1.25,...
 for i in range(len(sequence_loss_weights)):
     sequence_loss_weights[i] = tf.fill(weights_shape,sequence_loss_weight_value)
     sequence_loss_weight_value = sequence_loss_weight_value * 0.5
@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    # restore_saver = tf.train.Saver()
-    # restore_saver.restore(sess, last_model_file_path)
+    restore_saver = tf.train.Saver()
+    restore_saver.restore(sess, max_acc_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()
@@ -174,12 +174,11 @@ with tf.Session() as sess:
         #batch_sequence_length_interval = (0, int(batch_sequence_length * 1.1))
         length_intervals = [(0,9),(10,19),(20,29),(30,39),(40,9999)]
         dataset.prepare_next_train_batch(n_batch_size,random.sample(length_intervals,1)[0])
-        #dataset.prepare_next_train_batch(n_batch_size)
-        train_batch_data = dataset.get_train_batch_data(
-            time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
+        #dataset.prepare_balanced_next_train_batch(n_batch_size,time_step_count=fixed_timestep_count)
+        train_batch_data = dataset.get_train_batch_data(time_step_count=fixed_timestep_count)  # (batch_size,n_steps,n_input)
         #print(len(train_batch_data))
-        # if len(train_batch_data) < n_batch_size*0.5:
-        #     continue
+        if len(train_batch_data) < n_batch_size*0.5:
+             continue
         processed_items = processed_items + len(train_batch_data)
         train_batch_lengths = dataset.get_train_batch_sequence_lengths(time_step_count=fixed_timestep_count)  # (batch_size)
         train_batch_one_hot_labels = dataset.get_train_batch_fixed_length_one_hot_labels(n_label_rnn_steps,
