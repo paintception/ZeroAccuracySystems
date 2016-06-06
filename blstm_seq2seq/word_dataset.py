@@ -56,6 +56,7 @@ class WordDataSetRM(object):
     def load_data(self):
         self._train_items = self.load_data_items("train")
         self._test_items = self.load_data_items("test")
+        random.shuffle(self._test_items)
         self._all_items = self._train_items + self._test_items
 
     def load_data_items(self,train_vs_test):

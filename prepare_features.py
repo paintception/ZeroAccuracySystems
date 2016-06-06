@@ -4,7 +4,7 @@ import os
 import random
 
 START_WORD_CHAR = "%"
-FEATURE_COUNT = 28
+FEATURE_COUNT = 16
 
 # Return 2D list (time_steps,features). Time steps = image width, Features = pixel values of 1px slices
 def get_feature_data_for_image(image, min_time_steps=0):
@@ -122,6 +122,6 @@ def get_fixed_length_label(label, fixed_length, start_word_char=False):
 def preprocess_image(image):
     image = image.convert("LA") # Greyscale
     resize_ratio = 0.5
-    new_width = int(image.width * resize_ratio)
+    new_width = int(image.width * resize_ratio * 0.5)
     new_height = FEATURE_COUNT
     return image.resize((new_width, new_height),Image.LANCZOS)
