@@ -13,7 +13,7 @@ def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
         unique_chars = [' ', '!', '#', '%', '&', 'A', 'B', 'C', 'D', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y']
         n_label_rnn_steps = 10
     if ds == "STANFORD":
-        model_file_path = "./blstm_seq2seq/models/stanford_seq2seq_1x96_1x96_word_acc_0.7283_levenshtein_acc_0.7811.model"
+        model_file_path = "./blstm_seq2seq/models/stanford_seq2seq_1x96_1x96_word_acc_0.7500_levenshtein_acc_0.8141.model"
         unique_chars = [' ', '!', '#', '$', '%', '*', 'B', 'D', 'G', 'H', 'L', 'N', 'O', 'S', 'T', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y']
         n_label_rnn_steps = 9
 
