@@ -20,15 +20,11 @@ def parse_args():
 
     input_args = parser.parse_args()
 
-
-    blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.input_words[0] else "STANFORD"
-
-    from blstm_ctc_net import blstm_ctc_net_model
-    n_image_rnn_steps = 100
+    data_set = "KNMP" if "KNMP" in input_args.input_words[0] else "STANFORD"
+    n_image_rnn_steps = 50
     text_lines, word_boxes, images_data, images_length = prepare_data(input_args.input_image[0], input_args.input_words[0], n_image_rnn_steps,
-                                                                          feature_count=28, resize_ratio=0.5)
-    batch_words = [word_box.text for word_box in word_boxes]
-    predicted_words = blstm_ctc_net_model.blstm_ctc_predict(images_data, images_length, batch_words)
+                                                                      feature_count=16, resize_ratio=0.25)
+    predicted_words = recognize_seq2seq(data_set, images_data, images_length, word_boxes, n_image_rnn_steps)
     save_results(text_lines, word_boxes, predicted_words, input_args.output_words[0])
 
 
