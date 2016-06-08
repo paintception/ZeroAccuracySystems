@@ -11,34 +11,25 @@ import blstm_ctc_net
 data_set = None
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Recognizers')
-    group = parser.add_mutually_exclusive_group()
+    parser = argparse.ArgumentParser(description='CTC recognizer')
 
-    group.add_argument('-s', '--seq2seq', dest='seq2seq', action='append', nargs=3, metavar=('INPUT_IMAGE', 'INPUT_WORDS', 'OUTPUT_WORDS'),
-                       help='Use seq2seq model for recognition')
 
-    group.add_argument('-c', '--ctc', dest='ctc', action='append', nargs=3, metavar=('INPUT_IMAGE', 'INPUT_WORDS', 'OUTPUT_WORDS'),
-                       help='Use ctc model for recognition')
+    parser.add_argument('input_image', type=str, nargs=1, metavar='INPUT_IMAGE')
+    parser.add_argument('input_words', type=str, nargs=1, metavar='INPUT_WORDS')
+    parser.add_argument('output_words', type=str, nargs=1, metavar='OUTPUT_WORDS')
 
     input_args = parser.parse_args()
 
-    if input_args.seq2seq:
-        data_set = "KNMP" if "KNMP" in input_args.seq2seq[0][1] else "STANFORD"
-        n_image_rnn_steps = 50
-        text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
-                                                                          feature_count=16, resize_ratio=0.25)
-        predicted_words = recognize_seq2seq(data_set, images_data, images_length, word_boxes, n_image_rnn_steps)
-        save_results(text_lines, word_boxes, predicted_words, input_args.seq2seq[0][2])
-    if input_args.ctc:
-        blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.ctc[0][1] else "STANFORD"
 
-        from blstm_ctc_net import blstm_ctc_net_model
-        n_image_rnn_steps = 100
-        text_lines, word_boxes, images_data, images_length = prepare_data(input_args.ctc[0][0], input_args.ctc[0][1], n_image_rnn_steps,
+    blstm_ctc_net.data_set = "KNMP" if "KNMP" in input_args.input_words[0] else "STANFORD"
+
+    from blstm_ctc_net import blstm_ctc_net_model
+    n_image_rnn_steps = 100
+    text_lines, word_boxes, images_data, images_length = prepare_data(input_args.input_image[0], input_args.input_words[0], n_image_rnn_steps,
                                                                           feature_count=28, resize_ratio=0.5)
-        batch_words = [word_box.text for word_box in word_boxes]
-        predicted_words = blstm_ctc_net_model.blstm_ctc_predict(images_data, images_length, batch_words)
-        save_results(text_lines, word_boxes, predicted_words, input_args.ctc[0][2])
+    batch_words = [word_box.text for word_box in word_boxes]
+    predicted_words = blstm_ctc_net_model.blstm_ctc_predict(images_data, images_length, batch_words)
+    save_results(text_lines, word_boxes, predicted_words, input_args.output_words[0])
 
 
 def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio):
