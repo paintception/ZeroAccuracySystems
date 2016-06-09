@@ -24,11 +24,16 @@ def get_char_level_accuracy(target_words, predicted_words):
             if target_char == predicted_char:
                 correct_count += 1
 
-    return correct_count / total_count
-
+    if total_count > 0:
+        return correct_count / total_count
+    else:
+        return 0
 
 def get_avg_word_distance(target_words, predicted_words):
-    trim_target_words = [word.strip() for word in target_words]
-    trim_predicted_words = [word.strip() for word in predicted_words]
-    dists = [1 - jellyfish.levenshtein_distance(t, p) / max(len(t), len(p)) for t, p in zip(trim_target_words, trim_predicted_words)]
-    return sum(dists) / len(dists)
+    try:
+        trim_target_words = [word.strip() for word in target_words]
+        trim_predicted_words = [word.strip() for word in predicted_words]
+        dists = [1 - jellyfish.levenshtein_distance(t, p) / max(len(t), len(p)) for t, p in zip(trim_target_words, trim_predicted_words)]
+        return sum(dists) / len(dists)
+    except ZeroDivisionError:
+        return 0
