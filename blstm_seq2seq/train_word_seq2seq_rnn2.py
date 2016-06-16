@@ -13,7 +13,7 @@ import blstm_seq2seq.rnn_seq2seq_model as model
 import prepare_features as pf
 
 # Saved models
-model_dir_path = dirs.STANFORD_MODEL_DIR_PATH
+model_dir_path = dirs.KNMP_MODEL_DIR_PATH
 last_model_file_path = os.path.join(model_dir_path,"last.model")
 max_acc_model_file_path = os.path.join(model_dir_path,"max_acc.model")
 if not os.path.exists(model_dir_path):
@@ -22,7 +22,7 @@ if not os.path.exists(model_dir_path):
 # Read data set
 fixed_timestep_count = 50
 max_image_width = 50
-dataset = WordDataSetRM(dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
+dataset = WordDataSetRM(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
@@ -97,8 +97,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, last_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, max_acc_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()
