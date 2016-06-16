@@ -15,10 +15,12 @@ def sheer_image(image,sheer_factor=0):
     return image.transform((new_width, height), Image.AFFINE,
                         (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC)
 
-source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
-target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
+# source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
+# target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
 # source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+source_dir_path = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share/word_boxes/Otsu_Binarization_KNMP"
+target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
 train_dir_path = os.path.join(target_dir_path,"train")
 test_dir_path = os.path.join(target_dir_path,"test")
