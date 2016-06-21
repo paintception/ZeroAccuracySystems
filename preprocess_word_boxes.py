@@ -17,9 +17,9 @@ def sheer_image(image,sheer_factor=0):
 
 # source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
 # target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
-# source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
-source_dir_path = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share/word_boxes/Otsu_Binarization_KNMP"
+#source_dir_path = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share/word_boxes/Otsu_Binarization_KNMP"
 target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
 
 train_dir_path = os.path.join(target_dir_path,"train")
@@ -58,7 +58,7 @@ for source_file_name in source_file_names:
 
     if train:
         train_images = [image]
-        for i in range(10):
+        for i in range(0):
             train_image = image
 
             # Crop vertically
@@ -72,23 +72,6 @@ for source_file_name in source_file_names:
             sheer_ratio = random.uniform(-0.20,0.20)
             train_image = sheer_image(train_image, (sheer_ratio))
             train_images.append(train_image)
-            # Sheer
-        # for sheer_ratio in [-0.20,-0.15,-0.10,-0.05,0.05,0.10,0.15,0.20]:
-        #     train_image = sheer_image(image,(sheer_ratio))
-        #     train_images.append(train_image)
-        # for i in range(8):
-        #     new_top = int(image.height * random.uniform(-0.05,0.05))
-        #     new_bottom = image.height + int(image.height * random.uniform(-0.05,0.05))
-        #     crop_box = (0,new_top,image.width,new_bottom)
-        #     train_image = image.crop(crop_box)
-        #     train_images.append(train_image)
-        # Shrink/expand
-        # for width_ratio in [0.9,0.95,1/0.95,1/0.9]:
-        #     train_image = image
-        #     new_width = int(train_image.width * width_ratio)
-        #     if new_width != train_image.width:
-        #         train_image = train_image.resize((new_width, train_image.height),Image.LANCZOS)
-        #     train_images.append(train_image)
 
         # Save training images
         for train_image in train_images:

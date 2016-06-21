@@ -1,15 +1,12 @@
 import datetime
 import tensorflow as tf
-from tensorflow.models.rnn import rnn, rnn_cell
-import numpy as np
-import blstm_seq2seq.word_dataset as wd
 from blstm_seq2seq.word_dataset import WordDataSetRM,WordDataItemRM
 import dirs
 import random
 import os
 from tensorflow.python.ops.seq2seq import sequence_loss
 import metrics
-import blstm_seq2seq.rnn_seq2seq_model as model
+import blstm_seq2seq.rnn_seq2seq_model2 as model
 import prepare_features as pf
 
 # Saved models
@@ -22,7 +19,9 @@ if not os.path.exists(model_dir_path):
 # Read data set
 fixed_timestep_count = 50
 max_image_width = 50
-dataset = WordDataSetRM(dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH,max_image_width=max_image_width)
+#processed_word_boxes_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+processed_word_boxes_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/word_boxes_processed_grayscale_10x_expanded/KNMP"
+dataset = WordDataSetRM(processed_word_boxes_dir_path,max_image_width=max_image_width)
 
 print("Total items:",dataset.get_total_item_count())
 print("Training items:",dataset.get_train_item_count())
@@ -97,8 +96,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # Restore model, if necessary
-    restore_saver = tf.train.Saver()
-    restore_saver.restore(sess, max_acc_model_file_path)
+    # restore_saver = tf.train.Saver()
+    # restore_saver.restore(sess, max_acc_model_file_path)
 
     processed_items = 0
     prev_output_time = datetime.datetime.now()
