@@ -21,13 +21,30 @@ def define_seq2seq_rnn_for_training(image_input_data,image_input_lengths,label_r
 
     image_input_data_conv = tf.reshape(image_input_data, [-1, image_width, image_height, 1])
 
-    n_conv1_patch_size = 5
-    n_conv1_channels = 16
+    n_conv1_patch_size = 7
+    n_conv1_channels = 32
     print("Convolutional layer 1, Patch size:",n_conv1_patch_size,"Channels:",n_conv1_channels)
-    w_conv1 = tf.Variable(tf.random_normal([n_conv1_patch_size, n_conv1_patch_size, 1, n_conv1_channels]))
-    b_conv1 = tf.Variable(tf.random_normal([n_conv1_channels]))
+    w_conv1 = tf.Variable(tf.random_normal([n_conv1_patch_size, n_conv1_patch_size, 1, n_conv1_channels]),name="w_conv1")
+    b_conv1 = tf.Variable(tf.random_normal([n_conv1_channels]),name="b_conv1")
 
     conv1 = tf.tanh(tf.nn.conv2d(image_input_data_conv, w_conv1, strides=[1, 1, 1, 1], padding='SAME') + b_conv1)
+
+    # n_conv2_patch_size = 5
+    # n_conv2_channels = 16
+    # print("Convolutional layer 2, Patch size:", n_conv2_patch_size, "Channels:", n_conv2_channels)
+    # w_conv2 = tf.Variable(tf.random_normal([n_conv2_patch_size, n_conv2_patch_size, n_conv1_channels, n_conv2_channels]),name="w_conv2")
+    # b_conv2 = tf.Variable(tf.random_normal([n_conv2_channels]),name="b_conv2")
+    #
+    # conv2 = tf.tanh(tf.nn.conv2d(conv1, w_conv2, strides=[1, 1, 1, 1], padding='SAME') + b_conv2)
+    #
+    # n_conv3_patch_size = 5
+    # n_conv3_channels = 16
+    # print("Convolutional layer 3, Patch size:", n_conv3_patch_size, "Channels:", n_conv3_channels)
+    # w_conv3 = tf.Variable(
+    #     tf.random_normal([n_conv3_patch_size, n_conv3_patch_size, n_conv2_channels, n_conv3_channels]), name="w_conv3")
+    # b_conv3 = tf.Variable(tf.random_normal([n_conv3_channels]), name="b_conv3")
+    #
+    # conv3 = tf.tanh(tf.nn.conv2d(conv2, w_conv3, strides=[1, 1, 1, 1], padding='SAME') + b_conv3)
 
     image_rnn_inputs = tf.reshape(conv1, [-1, image_width, image_height*n_conv1_channels])
 
@@ -52,10 +69,10 @@ def define_seq2seq_rnn_for_training(image_input_data,image_input_lengths,label_r
     print(n_label_rnn_steps,n_classes)
 
     # Define RNN weights
-    w_label_hidden = tf.Variable(tf.random_normal([n_classes, n_label_rnn_hidden]))
-    b_label_hidden = tf.Variable(tf.random_normal([n_label_rnn_hidden]))
-    w_label_out = tf.Variable(tf.random_normal([n_label_rnn_hidden, n_classes]))
-    b_label_out = tf.Variable(tf.random_normal([n_classes]))
+    w_label_hidden = tf.Variable(tf.random_normal([n_classes, n_label_rnn_hidden]),name="w_label_hidden")
+    b_label_hidden = tf.Variable(tf.random_normal([n_label_rnn_hidden]),name="b_label_hidden")
+    w_label_out = tf.Variable(tf.random_normal([n_label_rnn_hidden, n_classes]),name="w_label_out")
+    b_label_out = tf.Variable(tf.random_normal([n_classes]),name="b_label_out")
 
     # Image RNN
     image_lstm_cell = rnn_cell.LSTMCell(n_image_rnn_hidden)

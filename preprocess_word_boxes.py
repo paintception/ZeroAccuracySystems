@@ -17,10 +17,11 @@ def sheer_image(image,sheer_factor=0):
 
 # source_dir_path = dirs.STANFORD_WORD_BOXES_DIR_PATH
 # target_dir_path = dirs.STANFORD_PROCESSED_WORD_BOXES_DIR_PATH
-source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
+#source_dir_path = dirs.KNMP_WORD_BOXES_DIR_PATH
 # target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
-#source_dir_path = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share/word_boxes/Otsu_Binarization_KNMP"
-target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+source_dir_path = "/Users/rmencis/Dropbox/Studies/RUG/Handwriting_recognition/HWR_Share/word_boxes/Otsu_Binarization_Stanford"
+#target_dir_path = dirs.KNMP_PROCESSED_WORD_BOXES_DIR_PATH
+target_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/word_boxes_processed_otsu_10x_expanded/Stanford"
 
 train_dir_path = os.path.join(target_dir_path,"train")
 test_dir_path = os.path.join(target_dir_path,"test")
@@ -58,7 +59,7 @@ for source_file_name in source_file_names:
 
     if train:
         train_images = [image]
-        for i in range(0):
+        for i in range(10):
             train_image = image
 
             # Crop vertically
