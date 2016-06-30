@@ -30,7 +30,7 @@ def parse_args():
     save_results(text_lines, word_boxes, predicted_words, input_args.output_words[0])
 
 
-def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio, otsufy=False):
+def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio, otsufy=True):
     # Read PPM
     page_image = Image.open(page_file_path)
     print("Page:", page_file_path)
