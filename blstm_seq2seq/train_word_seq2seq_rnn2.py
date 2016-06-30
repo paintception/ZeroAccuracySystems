@@ -37,9 +37,9 @@ learning_rate = 0.1
 print("Learning rate:",learning_rate)
 n_batch_size = 256
 print("Batch size:",n_batch_size)
-dropout_input_keep_prob_value = 0.9
+dropout_input_keep_prob_value = 0.8
 print('Dropout input keep probability:',dropout_input_keep_prob_value)
-dropout_output_keep_prob_value = 0.9
+dropout_output_keep_prob_value = 0.8
 print('Dropout output keep probability:',dropout_output_keep_prob_value)
 
 n_classes = len(dataset.get_unique_chars()) # Classes (A,a,B,b,c,...)
