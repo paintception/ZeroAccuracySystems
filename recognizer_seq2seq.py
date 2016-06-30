@@ -6,6 +6,7 @@ import blstm_seq2seq.rnn_seq2seq_model as model
 import tensorflow as tf
 from tensorflow.python.ops.seq2seq import sequence_loss
 import metrics
+from word_model.word_m import WordM
 
 def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
     if ds == "KNMP":
@@ -16,7 +17,9 @@ def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
     if ds == "STANFORD":
         model_file_path = "./blstm_seq2seq/models/stanford_otsu_seq2seq_1x96_1x96_word_acc_0.8202_levenshtein_acc_0.8867.model"
         unique_chars = [' ', '!', '#', '$', '%', '*', 'B', 'D', 'G', 'H', 'L', 'N', 'O', 'S', 'T', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y']
-        n_label_rnn_steps = 9
+        n_label_rnn_steps = 15
+
+    word_model = WordM()
 
     # model_file_path = "/Users/rmencis/RUG/Handwriting_Recognition/models/KNMP/last.model" # Assume current directory
     n_image_rnn_steps = n_rnn_steps # Max width of word box
@@ -56,6 +59,9 @@ def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
                                                                     unique_chars, images_data, image_lengths)
 
     predicted_labels = [label.strip() for label in predicted_labels]
+
+    predicted_labels = [word_model.get_closest_word(label) for label in predicted_labels]
+
     real_labels = [word_box.text.strip() for word_box in word_boxes]
 
     word_accuracy = metrics.get_word_level_accuracy(real_labels,predicted_labels)
