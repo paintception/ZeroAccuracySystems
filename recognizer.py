@@ -7,6 +7,7 @@ import prepare_features as pf
 
 from recognizer_seq2seq import recognize_seq2seq
 import blstm_ctc_net
+import preprocess_otsu
 
 data_set = None
 
@@ -26,7 +27,7 @@ def parse_args():
         data_set = "KNMP" if "KNMP" in input_args.seq2seq[0][1] else "STANFORD"
         n_image_rnn_steps = 50
         text_lines, word_boxes, images_data, images_length = prepare_data(input_args.seq2seq[0][0], input_args.seq2seq[0][1], n_image_rnn_steps,
-                                                                          feature_count=16, resize_ratio=0.25)
+                                                                          feature_count=16, resize_ratio=0.25, otsufy=True)
         predicted_words = recognize_seq2seq(data_set, images_data, images_length, word_boxes, n_image_rnn_steps)
         save_results(text_lines, word_boxes, predicted_words, input_args.seq2seq[0][2])
     if input_args.ctc:
@@ -41,7 +42,7 @@ def parse_args():
         save_results(text_lines, word_boxes, predicted_words, input_args.ctc[0][2])
 
 
-def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio):
+def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio, otsufy=False):
     # Read PPM
     page_image = Image.open(page_file_path)
     print("Page:", page_file_path)
@@ -59,6 +60,8 @@ def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, featu
             word_boxes.append(word_box)
             box = (word_box.left, word_box.top, word_box.right, word_box.bottom)
             word_image = page_image.crop(box)
+            if otsufy:
+                word_image = preprocess_otsu.otsufy_pillow_image(word_image)
             preprocessed_word_image = pf.preprocess_image(word_image, feature_count, resize_ratio=resize_ratio)
             image_data = pf.get_feature_data_for_image(preprocessed_word_image)
             image_len = len(image_data)
