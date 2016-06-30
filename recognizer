@@ -4,6 +4,8 @@ import argparse
 from PIL import Image
 from toolbox import wordio
 import prepare_features as pf
+import preprocess_otsu
+
 
 from recognizer_seq2seq import recognize_seq2seq
 import blstm_ctc_net
@@ -28,7 +30,7 @@ def parse_args():
     save_results(text_lines, word_boxes, predicted_words, input_args.output_words[0])
 
 
-def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio):
+def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, feature_count, resize_ratio, otsufy=False):
     # Read PPM
     page_image = Image.open(page_file_path)
     print("Page:", page_file_path)
@@ -46,6 +48,8 @@ def prepare_data(page_file_path, input_words_file_path, n_image_rnn_steps, featu
             word_boxes.append(word_box)
             box = (word_box.left, word_box.top, word_box.right, word_box.bottom)
             word_image = page_image.crop(box)
+            if otsufy:
+                word_image = preprocess_otsu.otsufy_pillow_image(word_image)
             preprocessed_word_image = pf.preprocess_image(word_image, feature_count, resize_ratio=resize_ratio)
             image_data = pf.get_feature_data_for_image(preprocessed_word_image)
             image_len = len(image_data)
