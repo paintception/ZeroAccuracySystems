@@ -6,7 +6,7 @@ import blstm_seq2seq.rnn_seq2seq_model as model
 import tensorflow as tf
 from tensorflow.python.ops.seq2seq import sequence_loss
 import metrics
-from word_model.word_m import WordM
+from word_model.word_m import WordM, WordMOL
 
 def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
     if ds == "KNMP":
@@ -19,6 +19,7 @@ def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
         unique_chars = [' ', '!', '#', '$', '%', '*', 'B', 'D', 'G', 'H', 'L', 'N', 'O', 'S', 'T', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y']
         n_label_rnn_steps = 15
 
+#    word_model = WordMOL(dataset=ds)
     word_model = WordM()
 
     # model_file_path = "/Users/rmencis/RUG/Handwriting_Recognition/models/KNMP/last.model" # Assume current directory
