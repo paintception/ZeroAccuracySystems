@@ -1,13 +1,14 @@
 import os
 import subprocess
 
-pages_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/subsettest"
-words_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/subsettest"
-output_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/subsettest/output/ctc"
+pages_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/finaltest"
+words_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/finaltest"
+output_dir_path = "/Users/rmencis/RUG/Handwriting_Recognition/finaltest/output/ctc"
 
 page_file_names = [f for f in os.listdir(pages_dir_path) if f.endswith(".ppm")]
 
 for page_file_name in page_file_names:
+    print("==========================================================================================================")
     print(page_file_name)
 
     words_file_name = page_file_name.replace(".ppm",".words")
