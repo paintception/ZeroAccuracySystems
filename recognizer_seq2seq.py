@@ -61,7 +61,7 @@ def recognize_seq2seq(ds,images_data, image_lengths, word_boxes, n_rnn_steps):
 
     predicted_labels = [label.strip() for label in predicted_labels]
 
-    predicted_labels = [word_model.get_closest_word(label) for label in predicted_labels]
+    #predicted_labels = [word_model.get_closest_word(label) for label in predicted_labels]
 
     real_labels = [word_box.text.strip() for word_box in word_boxes]
 

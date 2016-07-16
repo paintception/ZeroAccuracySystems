@@ -275,7 +275,7 @@ def blstm_ctc_predict(batch_xs, batch_xs_length, batch_words):
         print([word.ljust(15) for word in batch_words_decoded])
         print([word.ljust(15) for word in batch_words_decoded_lexicon])
 
-        return batch_words_decoded_lexicon
+        return batch_words_decoded
 
 
 if __name__ == "__main__":
